@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CEO Control Tower - Sữa tắm - 2026-07-10</title>
+  <style>
+    :root {
+      --ink:#17202a; --muted:#64748b; --line:#dbe3ef; --bg:#f6f8fb; --card:#ffffff;
+      --cur:#0f766e; --prev:#94a3b8; --accent:#b45309; --p1:#b91c1c; --p2:#b45309; --p3:#475569;
+      --good:#047857; --bad:#b91c1c; --soft:#ecfdf5; --warn:#fff7ed;
+    }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family: Arial, Helvetica, sans-serif; color:var(--ink); background:var(--bg); line-height:1.45; }
+    .page { max-width:1280px; margin:0 auto; padding:24px; }
+    .hero { background:linear-gradient(135deg,#0f766e,#115e59 58%,#334155); color:#fff; padding:28px; border-radius:8px; }
+    .hero h1 { margin:0 0 8px; font-size:28px; letter-spacing:0; }
+    .hero p { margin:4px 0; color:#dff7f3; }
+    .meta { display:flex; flex-wrap:wrap; gap:10px; margin-top:16px; }
+    .pill { display:inline-flex; align-items:center; gap:6px; border:1px solid rgba(255,255,255,.3); border-radius:999px; padding:6px 10px; font-size:13px; background:rgba(255,255,255,.1); }
+    .kpis { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:16px 0; }
+    .kpi { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:15px; }
+    .kpi small { color:var(--muted); display:block; margin-bottom:6px; }
+    .kpi strong { font-size:22px; display:block; }
+    .kpi span { font-size:13px; display:block; margin-top:5px; }
+    section { background:var(--card); border:1px solid var(--line); border-radius:8px; margin:14px 0; padding:18px; }
+    h2 { margin:0 0 12px; font-size:20px; }
+    h3 { margin:16px 0 8px; font-size:16px; }
+    ul { margin:8px 0 0 20px; padding:0; }
+    li { margin:6px 0; }
+    .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .callout { background:#f8fafc; border-left:4px solid var(--cur); padding:12px; border-radius:6px; }
+    .decision { background:#f0fdfa; border-color:#99f6e4; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; }
+    table { width:100%; border-collapse:collapse; min-width:760px; background:#fff; }
+    th, td { padding:9px 10px; border-bottom:1px solid #edf2f7; vertical-align:top; font-size:13px; }
+    th { text-align:left; background:#f8fafc; color:#334155; position:sticky; top:0; z-index:1; }
+    td.num, th.num { text-align:right; white-space:nowrap; }
+    tr.total, tbody tr:last-child td { border-bottom:0; }
+    .badge { display:inline-block; border-radius:999px; padding:3px 8px; font-size:12px; font-weight:700; white-space:nowrap; }
+    .p1 { color:#fff; background:var(--p1); }
+    .p2 { color:#fff; background:var(--p2); }
+    .p3 { color:#fff; background:var(--p3); }
+    .watch { color:#0f172a; background:#e2e8f0; }
+    .pos { color:var(--good); font-weight:700; }
+    .neg { color:var(--bad); font-weight:700; }
+    .charts { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .bar-row { border:1px solid var(--line); border-radius:8px; padding:12px; background:#fff; }
+    .bar-label { font-weight:700; margin-bottom:8px; }
+    .bar-line { display:grid; grid-template-columns:14px 1fr auto; gap:8px; align-items:center; min-height:24px; }
+    .bar { height:12px; border-radius:999px; display:block; min-width:2px; }
+    .bar.cur { background:var(--cur); }
+    .bar.prev { background:var(--prev); }
+    .legend-dot { width:10px; height:10px; border-radius:50%; display:inline-block; }
+    .legend-dot.cur { background:var(--cur); }
+    .legend-dot.prev { background:var(--prev); }
+    .note { color:var(--muted); font-size:13px; }
+    .footer { color:var(--muted); font-size:12px; text-align:center; padding:18px; }
+    @media (max-width:900px) { .kpis, .grid2, .charts { grid-template-columns:1fr; } .page { padding:12px; } .hero h1 { font-size:23px; } }
+  </style>
+</head>
+<body>
+<div class="page">
+  <header class="hero">
+    <h1>CEO Control Tower - Hiệu quả bán sữa tắm</h1>
+    <p><strong>Ngày 2026-07-10</strong> so với <strong>Ngày 2026-07-09</strong></p>
+    <div class="meta">
+      <span class="pill">Generated: 2026-07-11T11:15:53</span>
+      <span class="pill">Timezone: Asia/Ho_Chi_Minh</span>
+    </div>
+  </header>
+
+  <div class="kpis">
+    <div class="kpi"><small>Net Sales</small><strong>65,032,000</strong><span><span class="pos">+1,864,000 | +3.0%</span></span></div>
+    <div class="kpi"><small>Profit</small><strong>5,191,452</strong><span><span class="neg">-2,325,723 | -30.9%</span></span></div>
+    <div class="kpi"><small>Profit Margin</small><strong>7.98%</strong><span><span class="neg">-3.92 điểm % | -32.9%</span></span></div>
+    <div class="kpi"><small>Ads/DS</small><strong>22.30%</strong><span><span class="neg">-1.51 điểm % | -6.4%</span></span></div>
+  </div>
+
+  <section>
+    <h2>Executive Summary</h2>
+    <ul><li>Toàn công ty: Net Sales 65,032,000 so với 63,168,000, tăng 1,864,000 (+3.0%), nhưng Profit giảm 2,325,723 xuống 5,191,452; ưu tiên bảo vệ lợi nhuận hơn là chỉ đẩy doanh thu.</li><li>Profit Margin giảm từ 11.90% xuống 7.98%; nguyên nhân vận hành cần kiểm tra ngay là COGS tăng 4,252,021 trong khi doanh thu chỉ tăng nhẹ.</li><li>NHANH chuyển từ lãi 1,174,523 sang lỗ -1,641,272; Ads/DS 71.3% là P1 và cần dừng ngân sách không sinh lời trong ngày.</li><li>GT tăng Net Sales lên 9,810,000 nhưng Profit giảm còn 400,013; đây là tín hiệu mix đơn/giá vốn đang ăn vào lợi nhuận.</li><li>TikTok hồi phục từ lỗ -166,071 lên lãi 1,555,970, Ads/DS giảm từ 32.1% xuống 17.0%; có thể scale có kiểm soát.</li><li>Shopee vẫn là kênh đóng góp lớn nhất với Net Sales 33,781,000, nhưng giảm 3,601,000 so với ngày trước và tỷ lệ hủy tăng lên 15.7%.</li><li>Tồn kho: tổng tồn 145,208, trong đó 10 SKU low-date dưới 12 tháng và 3 SKU out-of-stock; cảnh báo P1 chưa giảm so với ngày trước.</li></ul>
+  </section>
+
+  <section class="decision">
+    <h2>Decision Brief Cho CEO</h2>
+    <p><strong>Toàn cảnh:</strong> Doanh thu ngày 10/07 tăng nhẹ, nhưng lợi nhuận và margin đi xuống; quyết định hôm nay nên tập trung vào chất lượng doanh thu và kiểm soát ads/COGS.</p>
+    <ul><li>Điều đang xảy ra: doanh thu tăng nhẹ nhưng lợi nhuận giảm mạnh; tăng trưởng không còn chất lượng nếu tiếp tục để COGS/mix kênh và ads ăn biên.</li><li>Vì sao đáng chú ý: NHANH đang lỗ với Ads/DS vượt 70%, GT tụt biên dù tăng doanh thu, trong khi Shopee giảm doanh thu và hủy tăng.</li><li>CEO nên quyết hôm nay: khóa trần Ads/DS theo kênh, tắt campaign NHANH lỗ, giao Finance bóc COGS/mix đơn GT, và chỉ cho TikTok scale nếu giữ margin sau ads.</li><li>Tồn kho cần xử lý cùng ngày: xả có kiểm soát nhóm low-date dưới 12 tháng, nhưng không dùng voucher quá sâu trên SKU đang có biên tốt.</li><li>Theo dõi tái diễn: lịch sử memory cho thấy NHANH/TikTok từng nhiều lần bị cảnh báo profit margin thấp hoặc Ads/DS cao; đừng xử lý như sự cố một ngày.</li></ul>
+  </section>
+
+  <section>
+    <h2>Chỉ Số Điều Hành Chính</h2>
+    <div class="table-wrap "><table><thead><tr><th>Chỉ số</th><th class="num">Current 10/07</th><th class="num">Previous 09/07</th><th>Delta</th><th>Nhận xét</th></tr></thead><tbody><tr><td>Gross Sales</td><td class="num">81,117,333</td><td class="num">78,176,667</td><td><span class="pos">+2,940,667 | +3.8%</span></td><td>Theo dõi</td></tr>
+<tr><td>Net Sales</td><td class="num">65,032,000</td><td class="num">63,168,000</td><td><span class="pos">+1,864,000 | +3.0%</span></td><td>Theo dõi</td></tr>
+<tr><td>COGS</td><td class="num">20,790,107</td><td class="num">16,538,086</td><td><span class="pos">+4,252,021 | +25.7%</span></td><td>Theo dõi</td></tr>
+<tr><td>Ads</td><td class="num">14,503,021</td><td class="num">15,043,687</td><td><span class="neg">-540,666 | -3.6%</span></td><td>Theo dõi</td></tr>
+<tr><td>Profit</td><td class="num">5,191,452</td><td class="num">7,517,175</td><td><span class="neg">-2,325,723 | -30.9%</span></td><td>Ưu tiên kiểm soát</td></tr>
+<tr><td>Profit Margin</td><td class="num">7.98%</td><td class="num">11.90%</td><td><span class="neg">-3.92 điểm % | -32.9%</span></td><td>Ưu tiên kiểm soát</td></tr>
+<tr><td>Ads/DS</td><td class="num">22.30%</td><td class="num">23.82%</td><td><span class="neg">-1.51 điểm % | -6.4%</span></td><td>Ưu tiên kiểm soát</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>Biểu Đồ So Sánh Kỳ</h2>
+    <p class="note"><span class="legend-dot cur"></span> Current 10/07 &nbsp; <span class="legend-dot prev"></span> Previous 09/07. Biểu đồ CSS, không dùng JavaScript.</p>
+    <div class="charts">
+    <div class="bar-row">
+      <div class="bar-label">Net Sales</div>
+      <div class="bar-area">
+        <div class="bar-line"><span class="legend-dot cur"></span><span class="bar cur" style="width:100.0%"></span><strong>65,032,000</strong></div>
+        <div class="bar-line"><span class="legend-dot prev"></span><span class="bar prev" style="width:97.1%"></span><strong>63,168,000</strong></div>
+      </div>
+    </div>
+
+    <div class="bar-row">
+      <div class="bar-label">Profit</div>
+      <div class="bar-area">
+        <div class="bar-line"><span class="legend-dot cur"></span><span class="bar cur" style="width:69.1%"></span><strong>5,191,452</strong></div>
+        <div class="bar-line"><span class="legend-dot prev"></span><span class="bar prev" style="width:100.0%"></span><strong>7,517,175</strong></div>
+      </div>
+    </div>
+
+    <div class="bar-row">
+      <div class="bar-label">COGS</div>
+      <div class="bar-area">
+        <div class="bar-line"><span class="legend-dot cur"></span><span class="bar cur" style="width:100.0%"></span><strong>20,790,107</strong></div>
+        <div class="bar-line"><span class="legend-dot prev"></span><span class="bar prev" style="width:79.5%"></span><strong>16,538,086</strong></div>
+      </div>
+    </div>
+
+    <div class="bar-row">
+      <div class="bar-label">Ads</div>
+      <div class="bar-area">
+        <div class="bar-line"><span class="legend-dot cur"></span><span class="bar cur" style="width:96.4%"></span><strong>14,503,021</strong></div>
+        <div class="bar-line"><span class="legend-dot prev"></span><span class="bar prev" style="width:100.0%"></span><strong>15,043,687</strong></div>
+      </div>
+    </div>
+
+    <div class="bar-row">
+      <div class="bar-label">Profit Margin</div>
+      <div class="bar-area">
+        <div class="bar-line"><span class="legend-dot cur"></span><span class="bar cur" style="width:67.1%"></span><strong>8.0%</strong></div>
+        <div class="bar-line"><span class="legend-dot prev"></span><span class="bar prev" style="width:100.0%"></span><strong>11.9%</strong></div>
+      </div>
+    </div>
+
+    <div class="bar-row">
+      <div class="bar-label">Ads/DS</div>
+      <div class="bar-area">
+        <div class="bar-line"><span class="legend-dot cur"></span><span class="bar cur" style="width:93.6%"></span><strong>22.3%</strong></div>
+        <div class="bar-line"><span class="legend-dot prev"></span><span class="bar prev" style="width:100.0%"></span><strong>23.8%</strong></div>
+      </div>
+    </div></div>
+    <div class="callout" style="margin-top:12px;">Hàm ý điều hành: tăng doanh thu chưa đủ bù mức tăng COGS và suy giảm profit. CEO nên yêu cầu bóc COGS/mix SKU theo kênh trước khi scale ngân sách.</div>
+  </section>
+
+  <section>
+    <h2>CEO Email Scorecard Form</h2>
+   <div class="table-wrap wide"><table><thead><tr><th>STT</th><th>Kênh</th><th class="num">% TH</th><th class="num">Chỉ tiêu tháng</th><th class="num">Tổng TH tới ngày</th><th class="num">Doanh số ngày</th><th class="num">CP quảng cáo ngày</th><th class="num">% QC ngày</th><th class="num">% QC lũy kế</th><th class="num">Giá vốn</th><th class="num">VC/phí hoàn</th><th class="num">Backoffice</th><th class="num">Live in-house</th><th class="num">Booking</th><th class="num">Quảng cáo</th><th class="num">Bao bì</th><th class="num">Tiền thu</th><th class="num">LN còn lại</th></tr></thead><tbody><tr><td>1</td><td>MT</td><td class="num">19.3%</td><td class="num">600,000,000</td><td class="num">116,054,912</td><td class="num">0</td><td class="num">0</td><td class="num">0.0%</td><td class="num">0.0%</td><td class="num">41,932,794</td><td class="num">2,321,098</td><td class="num">17,408,237</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">116,054,912</td><td class="num">54,392,783</td></tr>
+<tr><td>2</td><td>GT</td><td class="num">30.9%</td><td class="num">350,000,000</td><td class="num">108,206,880</td><td class="num">9,810,000</td><td class="num">288,194</td><td class="num">2.9%</td><td class="num">2.3%</td><td class="num">55,988,392</td><td class="num">2,164,138</td><td class="num">16,231,032</td><td class="num">0</td><td class="num">0</td><td class="num">2,483,374</td><td class="num">0</td><td class="num">108,206,880</td><td class="num">31,339,945</td></tr>
+<tr><td>3</td><td>Digital</td><td class="num">16.5%</td><td class="num">400,000,000</td><td class="num">65,975,000</td><td class="num">8,234,000</td><td class="num">5,872,229</td><td class="num">71.3%</td><td class="num">53.0%</td><td class="num">19,792,032</td><td class="num">683,224</td><td class="num">9,836,550</td><td class="num">0</td><td class="num">0</td><td class="num">34,997,289</td><td class="num">970,000</td><td class="num">65,975,000</td><td class="num">-304,095</td></tr>
+<tr><td>4</td><td>Ecom</td><td class="num">25.4%</td><td class="num">2,300,000,000</td><td class="num">583,280,634</td><td class="num">46,988,000</td><td class="num">8,630,792</td><td class="num">18.4%</td><td class="num">18.9%</td><td class="num">144,812,743</td><td class="num">780,000</td><td class="num">57,883,514</td><td class="num">2,421,208</td><td class="num">111,888</td><td class="num">110,317,026</td><td class="num">6,718,000</td><td class="num">385,743,017</td><td class="num">62,698,638</td></tr>
+<tr><td>5</td><td>Shopee</td><td class="num">31.6%</td><td class="num">1,500,000,000</td><td class="num">474,149,024</td><td class="num">33,781,000</td><td class="num">6,382,049</td><td class="num">18.9%</td><td class="num">17.4%</td><td class="num">117,518,875</td><td class="num">660,000</td><td class="num">46,007,050</td><td class="num">0</td><td class="num">0</td><td class="num">82,622,971</td><td class="num">5,102,000</td><td class="num">306,713,669</td><td class="num">54,802,773</td></tr>
+<tr><td>6</td><td>Tiktok</td><td class="num">13.6%</td><td class="num">800,000,000</td><td class="num">109,131,610</td><td class="num">13,207,000</td><td class="num">2,248,743</td><td class="num">17.0%</td><td class="num">25.4%</td><td class="num">27,293,868</td><td class="num">120,000</td><td class="num">11,876,464</td><td class="num">2,421,208</td><td class="num">111,888</td><td class="num">27,694,055</td><td class="num">1,616,000</td><td class="num">79,029,348</td><td class="num">7,895,865</td></tr>
+<tr><td></td><td>Tổng</td><td class="num">23.9%</td><td class="num">3,650,000,000</td><td class="num">873,517,426</td><td class="num">65,032,000</td><td class="num">14,791,215</td><td class="num">22.7%</td><td class="num">16.9%</td><td class="num">262,525,961</td><td class="num">5,948,460</td><td class="num">101,359,333</td><td class="num">2,421,208</td><td class="num">111,888</td><td class="num">147,797,689</td><td class="num">7,688,000</td><td class="num">675,979,809</td><td class="num">148,127,270</td></tr></tbody></table></div>
+  </section>
+  <section>
+    <h2>Scorecard Theo Kênh</h2>
+    <div class="table-wrap "><table><thead><tr><th>Kênh</th><th class="num">Gross Sales</th><th class="num">Net Sales</th><th class="num">COGS</th><th class="num">Gross Margin</th><th class="num">GM%</th><th class="num">Phí sàn</th><th class="num">VC/hoàn</th><th class="num">Ads</th><th class="num">Ads/DS</th><th class="num">Live</th><th class="num">Booking</th><th class="num">Backoffice</th><th class="num">Packaging</th><th class="num">Payout</th><th class="num">Profit</th><th class="num">Profit Margin</th><th>Cảnh báo</th><th>Action</th></tr></thead><tbody><tr><td>GT</td><td class="num">9,083,333</td><td class="num">9,810,000</td><td class="num">7,454,093</td><td class="num">2,355,907</td><td class="num">24.02%</td><td class="num">0</td><td class="num">196,200</td><td class="num">288,194</td><td class="num">2.94%</td><td class="num">0</td><td class="num">0</td><td class="num">1,471,500</td><td class="num">0</td><td class="num">0</td><td class="num">400,013</td><td class="num">4.08%</td><td><span class="badge p2">P2: Margin thấp</span></td><td>Kiểm tra chi phí biến đổi và giá bán.</td></tr>
+<tr><td>NHANH</td><td class="num">8,600,000</td><td class="num">8,234,000</td><td class="num">2,520,993</td><td class="num">5,713,007</td><td class="num">69.38%</td><td class="num">0</td><td class="num">126,950</td><td class="num">5,872,229</td><td class="num">71.32%</td><td class="num">0</td><td class="num">0</td><td class="num">1,235,100</td><td class="num">120,000</td><td class="num">0</td><td class="num">-1,641,272</td><td class="num">-19.93%</td><td><span class="badge p1">P1: Profit margin rất thấp</span></td><td>Rà ngay chi phí ads/fee/live/booking và SKU đang kéo lỗ.</td></tr>
+<tr><td>SHOPEE</td><td class="num">45,451,000</td><td class="num">33,781,000</td><td class="num">7,557,198</td><td class="num">26,223,802</td><td class="num">77.63%</td><td class="num">11,981,043</td><td class="num">60,000</td><td class="num">6,382,049</td><td class="num">18.89%</td><td class="num">0</td><td class="num">0</td><td class="num">3,260,994</td><td class="num">336,000</td><td class="num">21,739,957</td><td class="num">4,203,716</td><td class="num">12.44%</td><td><span class="badge watch">Theo dõi</span></td><td>Duy trì, tối ưu SKU và ngân sách.</td></tr>
+<tr><td>TIKTOK</td><td class="num">17,983,000</td><td class="num">13,207,000</td><td class="num">3,257,823</td><td class="num">9,949,177</td><td class="num">75.33%</td><td class="num">4,200,376</td><td class="num">0</td><td class="num">2,248,743</td><td class="num">17.03%</td><td class="num">301,250</td><td class="num">0</td><td class="num">1,434,838</td><td class="num">208,000</td><td class="num">9,565,552</td><td class="num">1,555,970</td><td class="num">11.78%</td><td><span class="badge watch">Theo dõi</span></td><td>Duy trì, tối ưu SKU và ngân sách.</td></tr></tbody></table></div>
+    <h3>So sánh kênh với ngày trước</h3>
+    <div class="callout">Kênh tăng doanh thu mạnh nhất: <strong>GT</strong> (4,986,000). Kênh giảm doanh thu mạnh nhất: <strong>NHANH</strong> (-3,831,000). Kênh có lợi nhuận xấu đi mạnh nhất: <strong>NHANH</strong> (-2,815,795).</div>
+    <div class="table-wrap "><table><thead><tr><th>Kênh</th><th class="num">Net Sales current</th><th class="num">Net Sales previous</th><th>Delta Net Sales</th><th class="num">Profit current</th><th class="num">Profit previous</th><th>Delta Profit</th><th class="num">Ads/DS current</th><th class="num">Ads/DS previous</th></tr></thead><tbody><tr><td>GT</td><td class="num">9,810,000</td><td class="num">4,824,000</td><td><span class="pos">+4,986,000 | +103.4%</span></td><td class="num">400,013</td><td class="num">1,584,400</td><td><span class="neg">-1,184,386 | -74.8%</span></td><td class="num">2.94%</td><td class="num">6.80%</td></tr>
+<tr><td>NHANH</td><td class="num">8,234,000</td><td class="num">12,065,000</td><td><span class="neg">-3,831,000 | -31.8%</span></td><td class="num">-1,641,272</td><td class="num">1,174,523</td><td><span class="neg">-2,815,795 | -239.7%</span></td><td class="num">71.32%</td><td class="num">42.45%</td></tr>
+<tr><td>SHOPEE</td><td class="num">33,781,000</td><td class="num">37,382,000</td><td><span class="neg">-3,601,000 | -9.6%</span></td><td class="num">4,203,716</td><td class="num">4,414,050</td><td><span class="neg">-210,334 | -4.8%</span></td><td class="num">18.89%</td><td class="num">18.90%</td></tr>
+<tr><td>TIKTOK</td><td class="num">13,207,000</td><td class="num">8,897,000</td><td><span class="pos">+4,310,000 | +48.4%</span></td><td class="num">1,555,970</td><td class="num">-166,071</td><td><span class="pos">+1,722,041 | -1,036.9%</span></td><td class="num">17.03%</td><td class="num">32.10%</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>Top SKU Toàn Công Ty</h2>
+    <p class="note">SKU vẫn nằm top: 5; SKU mới vào top: 5; SKU rớt khỏi top: 5. Top SKU đóng góp theo kênh nằm trong cột Channels.</p>
+    <div class="table-wrap "><table><thead><tr><th class="num">Rank</th><th>SKU</th><th>Sản phẩm</th><th class="num">Qty sold</th><th class="num">Net Sales</th><th>Channels</th><th>Trạng thái</th></tr></thead><tbody><tr><td class="num">1</td><td>3574661761916</td><td>Dầu Xả Dưỡng Tóc Le Petit Marseillais Làm Mềm Mượt, Bóng Khỏe Nhanh Với Chiết Xuất Hạnh Nhâ...</td><td class="num">50</td><td class="num">4,350,000</td><td>GT</td><td><span class="badge p2">Mới vào top</span></td></tr>
+<tr><td class="num">2</td><td>3574661601496</td><td>Gel tắm Hữu Cơ Pháp Le Petit Marseillais Nhiều Mùi Hương 250ml, Thơm Lâu - Phù Hợp Mọi Loại...</td><td class="num">50</td><td class="num">3,900,000</td><td>GT</td><td><span class="badge p2">Mới vào top</span></td></tr>
+<tr><td class="num">3</td><td>ST01172</td><td>Sữa Tắm Pháp Le Petit Marseillais Cho Nam Chiết Xuất Thiên Nhiên 4in1 Nhiều Mùi Hương Dưỡng...</td><td class="num">21</td><td class="num">5,393,000</td><td>SHOPEE, TIKTOK</td><td><span class="badge p2">Mới vào top</span></td></tr>
+<tr><td class="num">4</td><td>3574661574035</td><td>Dầu Gội Le Petit Marseillais Sạch Gàu Dành Cho Nam Với Chiết Xuất Tinh Dầu Chanh Vàng Hữu C...</td><td class="num">20</td><td class="num">1,560,000</td><td>GT</td><td><span class="badge p2">Mới vào top</span></td></tr>
+<tr><td class="num">5</td><td>3574661701172</td><td>Sữa Tắm Dạng Kem Le Petit Marseillais 4 Trong 1 Mát Lạnh Với Chiết Xuất Gỗ Tuyết Tùng Và Dư...</td><td class="num">16</td><td class="num">3,184,000</td><td>NHANH</td><td><span class="badge watch">Giữ top</span></td></tr>
+<tr><td class="num">6</td><td>3574661701356</td><td>Sữa Tắm Pháp Le Petit Marseillais Cho Nam Chiết Xuất Thiên Nhiên 4in1 Nhiều Mùi Hương Dưỡng...</td><td class="num">11</td><td class="num">2,189,000</td><td>NHANH</td><td><span class="badge watch">Giữ top</span></td></tr>
+<tr><td class="num">7</td><td>3574661704371</td><td>Sữa Tắm Pháp Le Petit Marseillais Cho Nam Chiết Xuất Thiên Nhiên 4in1 Nhiều Mùi Hương Dưỡng...</td><td class="num">11</td><td class="num">199,000</td><td>NHANH</td><td><span class="badge p2">Mới vào top</span></td></tr>
+<tr><td class="num">8</td><td>ST01902</td><td>[KOL huynhdangthong x LPM] Sữa Tắm/Gel Tắm Pháp Le Petit Marseillais Chiết Xuất Thiên Nhiên...</td><td class="num">9</td><td class="num">3,966,000</td><td>SHOPEE, TIKTOK</td><td><span class="badge watch">Giữ top</span></td></tr>
+<tr><td class="num">9</td><td>ST01431</td><td>Sữa Tắm Pháp Le Petit Marseillais Cho Nam Chiết Xuất Thiên Nhiên 4in1 Nhiều Mùi Hương Dưỡng...</td><td class="num">9</td><td class="num">1,970,500</td><td>SHOPEE, TIKTOK</td><td><span class="badge watch">Giữ top</span></td></tr>
+<tr><td class="num">10</td><td>3574661701431</td><td>Sữa Tắm Pháp Le Petit Marseillais Cho Nam Chiết Xuất Thiên Nhiên 4in1 Nhiều Mùi Hương Dưỡng...</td><td class="num">8</td><td class="num">1,592,000</td><td>NHANH</td><td><span class="badge watch">Giữ top</span></td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>Top SKU Theo Kênh</h2>
+    <p class="note">Shopee có dữ liệu top SKU và được hiển thị đầy đủ trong bảng theo kênh.</p>
+    <div class="table-wrap "><table><thead><tr><th>Kênh</th><th class="num">Rank</th><th>SKU</th><th>Sản phẩm</th><th class="num">Qty sold</th><th class="num">Net Sales</th></tr></thead><tbody><tr><td>GT</td><td class="num">1</td><td>3574661761916</td><td>Dầu Xả Dưỡng Tóc Le Petit Marseillais Làm Mềm Mượt, Bóng Khỏe Nhanh Với Chiết Xuấ...</td><td class="num">50</td><td class="num">4,350,000</td></tr>
+<tr><td>GT</td><td class="num">2</td><td>3574661601496</td><td>Gel tắm Hữu Cơ Pháp Le Petit Marseillais Nhiều Mùi Hương 250ml, Thơm Lâu - Phù Hợ...</td><td class="num">50</td><td class="num">3,900,000</td></tr>
+<tr><td>GT</td><td class="num">3</td><td>3574661574035</td><td>Dầu Gội Le Petit Marseillais Sạch Gàu Dành Cho Nam Với Chiết Xuất Tinh Dầu Chanh ...</td><td class="num">20</td><td class="num">1,560,000</td></tr>
+<tr><td>NHANH</td><td class="num">1</td><td>3574661701172</td><td>Sữa Tắm Dạng Kem Le Petit Marseillais 4 Trong 1 Mát Lạnh Với Chiết Xuất Gỗ Tuyết ...</td><td class="num">16</td><td class="num">3,184,000</td></tr>
+<tr><td>NHANH</td><td class="num">2</td><td>3574661701356</td><td>Sữa Tắm Pháp Le Petit Marseillais Cho Nam Chiết Xuất Thiên Nhiên 4in1 Nhiều Mùi H...</td><td class="num">11</td><td class="num">2,189,000</td></tr>
+<tr><td>NHANH</td><td class="num">3</td><td>3574661704371</td><td>Sữa Tắm Pháp Le Petit Marseillais Cho Nam Chiết Xuất Thiên Nhiên 4in1 Nhiều Mùi H...</td><td class="num">11</td><td class="num">199,000</td></tr>
+<tr><td>NHANH</td><td class="num">4</td><td>3574661701431</td><td>Sữa Tắm Pháp Le Petit Marseillais Cho Nam Chiết Xuất Thiên Nhiên 4in1 Nhiều Mùi H...</td><td class="num">8</td><td class="num">1,592,000</td></tr>
+<tr><td>NHANH</td><td class="num">5</td><td>3574661768823</td><td>Sữa Tắm/Gel Tắm Pháp Le Petit Marseillais Chiết Xuất Thiên Nhiên 650ml - Sữa Tắm ...</td><td class="num">1</td><td class="num">359,000</td></tr>
+<tr><td>SHOPEE</td><td class="num">1</td><td>ST01431</td><td>Sữa Tắm Pháp Le Petit Marseillais Cho Nam Chiết Xuất Thiên Nhiên 4in1 Nhiều Mùi H...</td><td class="num">7</td><td class="num">1,432,500</td></tr>
+<tr><td>SHOPEE</td><td class="num">2</td><td>ST68823</td><td>[KOL huynhdangthong x LPM] Sữa Tắm/Gel Tắm Pháp Le Petit Marseillais Chiết Xuất T...</td><td class="num">6</td><td class="num">2,364,000</td></tr>
+<tr><td>SHOPEE</td><td class="num">3</td><td>MN75209</td><td>Mặt Nạ Dưỡng Tóc Le Petit Marseillais 4in1 Chiết Xuất Nước Dừa Hữu Cơ, Dưỡng Ẩm, ...</td><td class="num">5</td><td class="num">2,365,500</td></tr>
+<tr><td>SHOPEE</td><td class="num">4</td><td>ST01288</td><td>Sữa Tắm/Gel Tắm Pháp Le Petit Marseillais Chiết Xuất Thiên Nhiên 650ml - Sữa Tắm ...</td><td class="num">5</td><td class="num">1,970,000</td></tr>
+<tr><td>SHOPEE</td><td class="num">5</td><td>ST01902</td><td>[KOL huynhdangthong x LPM] Sữa Tắm/Gel Tắm Pháp Le Petit Marseillais Chiết Xuất T...</td><td class="num">5</td><td class="num">1,970,000</td></tr>
+<tr><td>TIKTOK</td><td class="num">1</td><td>ST01172</td><td>Sữa Tắm Pháp Le Petit Marseillais Cho Nam Chiết Xuất Thiên Nhiên 4in1 Nhiều Mùi H...</td><td class="num">17</td><td class="num">4,573,000</td></tr>
+<tr><td>TIKTOK</td><td class="num">2</td><td>ST01902</td><td>[KOL huynhdangthong x LPM] Sữa Tắm/Gel Tắm Pháp Le Petit Marseillais Chiết Xuất T...</td><td class="num">4</td><td class="num">1,996,000</td></tr>
+<tr><td>TIKTOK</td><td class="num">3</td><td>ST04371</td><td>Sữa Tắm Pháp Le Petit Marseillais Cho Nam Chiết Xuất Thiên Nhiên 4in1 Nhiều Mùi H...</td><td class="num">3</td><td class="num">807,000</td></tr>
+<tr><td>TIKTOK</td><td class="num">4</td><td>ST01240</td><td>Sữa Tắm/Gel Tắm Pháp Le Petit Marseillais Thiên Nhiên 250ml - Sữa Tắm Lưu Hương L...</td><td class="num">3</td><td class="num">807,000</td></tr>
+<tr><td>TIKTOK</td><td class="num">5</td><td>ST01288</td><td>Sữa Tắm/Gel Tắm Pháp Le Petit Marseillais Chiết Xuất Thiên Nhiên 650ml - Sữa Tắm ...</td><td class="num">2</td><td class="num">998,000</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>Tồn Kho Và Cảnh Báo Tồn Kho</h2>
+    <div class="grid2">
+      <div><div class="table-wrap "><table><thead><tr><th>Chỉ số tồn kho</th><th class="num">Current</th><th class="num">Previous</th><th>Delta</th></tr></thead><tbody><tr><td>Tổng SKU</td><td class="num">86</td><td class="num">86</td><td><span class="pos">+0.0 | +0.0%</span></td></tr>
+<tr><td>Tổng tồn</td><td class="num">145,208</td><td class="num">145,587</td><td><span class="neg">-379 | -0.3%</span></td></tr>
+<tr><td>Tồn HN</td><td class="num">114,629</td><td class="num">114,868</td><td><span class="neg">-239 | -0.2%</span></td></tr>
+<tr><td>Tồn HCM</td><td class="num">30,579</td><td class="num">30,719</td><td><span class="neg">-140 | -0.5%</span></td></tr>
+<tr><td>Out of stock SKU</td><td class="num">3</td><td class="num">3</td><td><span class="pos">+0.0 | +0.0%</span></td></tr>
+<tr><td>Low-date <12M SKU</td><td class="num">10</td><td class="num">10</td><td><span class="pos">+0.0 | +0.0%</span></td></tr>
+<tr><td>Low-date 12-18M SKU</td><td class="num">31</td><td class="num">31</td><td><span class="pos">+0.0 | +0.0%</span></td></tr></tbody></table></div></div>
+      <div class="callout">
+        <strong>Tóm tắt cảnh báo:</strong><br>
+        P1 current: 13; P2 current: 35; P3 current: 0.<br>
+        SKU mới phát sinh P1: Không có.<br>
+        SKU đã hết cảnh báo P1: Không có.<br>
+        Không có hàng hết date trong package; cảnh báo hiện tại là low-date/out-of-stock/low-stock.
+      </div>
+    </div>
+    <h3>Danh sách cảnh báo</h3>
+    <div class="table-wrap "><table><thead><tr><th>Priority</th><th>Loại</th><th>SKU</th><th>Sản phẩm</th><th class="num">Tổng tồn</th><th class="num">HN</th><th class="num">HCM</th><th class="num">Affected qty</th><th class="num">Affected %</th><th>Date gần nhất</th><th>Action gợi ý</th></tr></thead><tbody><tr><td><span class="badge p1">P1</span></td><td>LOW_DATE_UNDER_12M</td><td>3574661506999</td><td>[KOL Huynhdangthong x LPM] Sữa Tắm Và Ngâm Bồn Dạng Kem Le Petit Marseillais Dịu Nhẹ Vớ...</td><td class="num">7,120</td><td class="num">6,267</td><td class="num">853</td><td class="num">853</td><td class="num">11.98%</td><td>2027-03-22</td><td>Sales + Marketing phải lên chương trình đẩy gấp.</td></tr>
+<tr><td><span class="badge p1">P1</span></td><td>LOW_DATE_UNDER_12M</td><td>3574661753379</td><td>Sữa tắm Thiên Nhiên Pháp Le Petit Marseillais Nhiều Mùi Hương Dịu Nhẹ Cho Da Nhạy Cảm 4...</td><td class="num">3,907</td><td class="num">3,330</td><td class="num">577</td><td class="num">577</td><td class="num">14.77%</td><td>2027-04-19</td><td>Sales + Marketing phải lên chương trình đẩy gấp.</td></tr>
+<tr><td><span class="badge p1">P1</span></td><td>LOW_DATE_UNDER_12M</td><td>3574661700809</td><td>Sữa Tắm/Gel Tắm Pháp Le Petit Marseillais Chiết Xuất Thiên Nhiên 650ml - Sữa Tắm Lưu Hư...</td><td class="num">4,703</td><td class="num">4,200</td><td class="num">503</td><td class="num">503</td><td class="num">10.70%</td><td>2027-04-23</td><td>Sales + Marketing phải lên chương trình đẩy gấp.</td></tr>
+<tr><td><span class="badge p1">P1</span></td><td>LOW_DATE_UNDER_12M</td><td>3574661700991</td><td>Sữa Tắm/Gel Tắm Pháp Le Petit Marseillais Chiết Xuất Thiên Nhiên 650ml - Sữa Tắm Lưu Hư...</td><td class="num">1,414</td><td class="num">962</td><td class="num">452</td><td class="num">317</td><td class="num">22.42%</td><td>2027-05-05</td><td>Sales + Marketing phải lên chương trình đẩy gấp.</td></tr>
+<tr><td><span class="badge p1">P1</span></td><td>LOW_DATE_UNDER_12M</td><td>3574661574752</td><td>Dầu Xả Hữu Cơ Dưỡng Ẩm Le Petit Marseillais Dừa Dưỡng Ẩm, Thơm Lâu - Phù Hợp Mọi Loại D...</td><td class="num">1,539</td><td class="num">1,223</td><td class="num">316</td><td class="num">316</td><td class="num">20.53%</td><td>2026-11-10</td><td>Sales + Marketing phải lên chương trình đẩy gấp.</td></tr>
+<tr><td><span class="badge p1">P1</span></td><td>LOW_DATE_UNDER_12M</td><td>3574661778785</td><td>Dầu Xả Hữu Cơ Dưỡng Ẩm Le Petit Marseillais Dừa Dưỡng Ẩm, Thơm Lâu - Phù Hợp Mọi Loại D...</td><td class="num">717</td><td class="num">428</td><td class="num">289</td><td class="num">289</td><td class="num">40.31%</td><td>2027-01-30</td><td>Sales + Marketing phải lên chương trình đẩy gấp.</td></tr>
+<tr><td><span class="badge p1">P1</span></td><td>LOW_DATE_UNDER_12M</td><td>3574661701868</td><td>Sữa Tắm/Gel Tắm Pháp Le Petit Marseillais Chiết Xuất Thiên Nhiên 650ml - Sữa Tắm Lưu Hư...</td><td class="num">825</td><td class="num">614</td><td class="num">211</td><td class="num">211</td><td class="num">25.58%</td><td>2027-04-23</td><td>Sales + Marketing phải lên chương trình đẩy gấp.</td></tr>
+<tr><td><span class="badge p1">P1</span></td><td>LOW_DATE_UNDER_12M</td><td>3574661404660</td><td>Sữa Dưỡng Thể Le Petit Marseillais Dưỡng Ẩm Nuôi Dưỡng Da Nhiều Mùi Hương 250ml - Phù H...</td><td class="num">235</td><td class="num">126</td><td class="num">109</td><td class="num">109</td><td class="num">46.38%</td><td>2027-02-07</td><td>Sales + Marketing phải lên chương trình đẩy gấp.</td></tr>
+<tr><td><span class="badge p1">P1</span></td><td>LOW_DATE_UNDER_12M</td><td>3574661574035</td><td>Dầu Gội Le Petit Marseillais Sạch Gàu Dành Cho Nam Với Chiết Xuất Tinh Dầu Chanh Vàng H...</td><td class="num">3,005</td><td class="num">2,295</td><td class="num">710</td><td class="num">99</td><td class="num">3.29%</td><td>2027-04-19</td><td>Sales + Marketing phải lên chương trình đẩy gấp.</td></tr>
+<tr><td><span class="badge p1">P1</span></td><td>LOW_DATE_UNDER_12M</td><td>3574661753362</td><td>[Deal Live Mua 1 Tặng 1 Full Size] Sữa tắm Thiên Nhiên Pháp Le Petit Marseillais Hương ...</td><td class="num">2</td><td class="num">0</td><td class="num">2</td><td class="num">2</td><td class="num">100.00%</td><td>2026-10-26</td><td>Sales + Marketing phải lên chương trình đẩy gấp.</td></tr>
+<tr><td><span class="badge p1">P1</span></td><td>OUT_OF_STOCK</td><td>3574661700755</td><td>Sữa Tắm/Gel Tắm Pháp Le Petit Marseillais Chiết Xuất Thiên Nhiên 650ml - Sữa Tắm Lưu Hư...</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0.00%</td><td></td><td>Kho + mua hàng xác nhận kế hoạch nhập hoặc xác nhận SKU dừng kinh doanh.</td></tr>
+<tr><td><span class="badge p1">P1</span></td><td>OUT_OF_STOCK</td><td>3574661699493</td><td>Sữa Tắm/Gel Tắm Pháp Le Petit Marseillais Thiên Nhiên 250ml - Sữa Tắm Lưu Hương Lành Tí...</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0.00%</td><td></td><td>Kho + mua hàng xác nhận kế hoạch nhập hoặc xác nhận SKU dừng kinh doanh.</td></tr>
+<tr><td><span class="badge p1">P1</span></td><td>OUT_OF_STOCK</td><td>3574661701318</td><td>Sữa Tắm Dạng Kem Le Petit Marseillais 4 Trong 1 Với Chiết Xuẩt Gỗ Hoàng Đàn Và Khoáng C...</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0.00%</td><td></td><td>Kho + mua hàng xác nhận kế hoạch nhập hoặc xác nhận SKU dừng kinh doanh.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>LOW_DATE_12_TO_18M</td><td>3574661574035</td><td>Dầu Gội Le Petit Marseillais Sạch Gàu Dành Cho Nam Với Chiết Xuất Tinh Dầu Chanh Vàng H...</td><td class="num">3,005</td><td class="num">2,295</td><td class="num">710</td><td class="num">2,687</td><td class="num">89.42%</td><td>2027-04-19</td><td>Đưa vào kế hoạch đẩy tồn và theo dõi trong báo cáo tuần.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>LOW_DATE_12_TO_18M</td><td>3574661601496</td><td>Gel tắm Hữu Cơ Pháp Le Petit Marseillais Nhiều Mùi Hương 250ml, Thơm Lâu - Phù Hợp Mọi ...</td><td class="num">3,477</td><td class="num">2,899</td><td class="num">578</td><td class="num">1,983</td><td class="num">57.03%</td><td>2027-09-17</td><td>Đưa vào kế hoạch đẩy tồn và theo dõi trong báo cáo tuần.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>LOW_DATE_12_TO_18M</td><td>3574661753386</td><td>Sữa tắm Thiên Nhiên Pháp Le Petit Marseillais Nhiều Mùi Hương Dịu Nhẹ Cho Da Nhạy Cảm 4...</td><td class="num">2,501</td><td class="num">2,074</td><td class="num">427</td><td class="num">1,515</td><td class="num">60.58%</td><td>2027-10-21</td><td>Đưa vào kế hoạch đẩy tồn và theo dõi trong báo cáo tuần.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>LOW_DATE_12_TO_18M</td><td>3574661574752</td><td>Dầu Xả Hữu Cơ Dưỡng Ẩm Le Petit Marseillais Dừa Dưỡng Ẩm, Thơm Lâu - Phù Hợp Mọi Loại D...</td><td class="num">1,539</td><td class="num">1,223</td><td class="num">316</td><td class="num">1,223</td><td class="num">79.47%</td><td>2026-11-10</td><td>Đưa vào kế hoạch đẩy tồn và theo dõi trong báo cáo tuần.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>LOW_DATE_12_TO_18M</td><td>3574661192871</td><td>Sữa Tắm/Gel Tắm Pháp Le Petit Marseillais Thiên Nhiên 250ml - Sữa Tắm Lưu Hương Lành Tí...</td><td class="num">1,605</td><td class="num">560</td><td class="num">1,045</td><td class="num">1,045</td><td class="num">65.11%</td><td>2027-12-16</td><td>Đưa vào kế hoạch đẩy tồn và theo dõi trong báo cáo tuần.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>LOW_DATE_12_TO_18M</td><td>3574661608273</td><td>Gel tắm Hữu Cơ Pháp Le Petit Marseillais Nhiều Mùi Hương 250ml, Thơm Lâu - Phù Hợp Mọi ...</td><td class="num">2,981</td><td class="num">1,943</td><td class="num">1,038</td><td class="num">836</td><td class="num">28.04%</td><td>2027-09-30</td><td>Đưa vào kế hoạch đẩy tồn và theo dõi trong báo cáo tuần.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>LOW_DATE_12_TO_18M</td><td>3574661655017</td><td>Gel Tắm Le Petit Marseillais Dưỡng Ẩm, Dịu Nhẹ Cho Da Nhạy Cảm Với Chiết Xuất Hoa Thanh...</td><td class="num">3,420</td><td class="num">2,926</td><td class="num">494</td><td class="num">655</td><td class="num">19.15%</td><td>2027-07-31</td><td>Đưa vào kế hoạch đẩy tồn và theo dõi trong báo cáo tuần.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>LOW_DATE_12_TO_18M</td><td>3574661701868</td><td>Sữa Tắm/Gel Tắm Pháp Le Petit Marseillais Chiết Xuất Thiên Nhiên 650ml - Sữa Tắm Lưu Hư...</td><td class="num">825</td><td class="num">614</td><td class="num">211</td><td class="num">586</td><td class="num">71.03%</td><td>2027-04-23</td><td>Đưa vào kế hoạch đẩy tồn và theo dõi trong báo cáo tuần.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>LOW_DATE_12_TO_18M</td><td>3574661568867</td><td>Gel tắm Hữu Cơ Pháp Le Petit Marseillais Nhiều Mùi Hương 250ml, Thơm Lâu - Phù Hợp Mọi ...</td><td class="num">4,218</td><td class="num">3,662</td><td class="num">556</td><td class="num">483</td><td class="num">11.45%</td><td>2027-10-14</td><td>Đưa vào kế hoạch đẩy tồn và theo dõi trong báo cáo tuần.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>LOW_DATE_12_TO_18M</td><td>3574661319308</td><td>Sữa Tắm/Gel Tắm Pháp Le Petit Marseillais Thiên Nhiên 250ml - Sữa Tắm Lưu Hương Lành Tí...</td><td class="num">3,114</td><td class="num">2,377</td><td class="num">737</td><td class="num">431</td><td class="num">13.84%</td><td>2027-12-13</td><td>Đưa vào kế hoạch đẩy tồn và theo dõi trong báo cáo tuần.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>LOW_DATE_12_TO_18M</td><td>3574661655031</td><td>Sữa tắm Thiên Nhiên Pháp Le Petit Marseillais Nhiều Mùi Hương Dịu Nhẹ Cho Da Nhạy Cảm 4...</td><td class="num">4,336</td><td class="num">3,724</td><td class="num">612</td><td class="num">367</td><td class="num">8.46%</td><td>2027-11-15</td><td>Đưa vào kế hoạch đẩy tồn và theo dõi trong báo cáo tuần.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>LOW_DATE_12_TO_18M</td><td>3574661760650</td><td>Dầu Gội Pháp Le Petit Marseillais Sạch Gàu 2 In 1 Tinh Dầu Bạc Hà Hữu Cơ Dưỡng Ẩm, Thơm...</td><td class="num">1,597</td><td class="num">1,234</td><td class="num">363</td><td class="num">363</td><td class="num">22.73%</td><td>2027-10-08</td><td>Đưa vào kế hoạch đẩy tồn và theo dõi trong báo cáo tuần.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>LOW_DATE_12_TO_18M</td><td>3574661574646</td><td>Dầu gội Le Petit Marseillais Làm Sạch Sâu Cho Tóc Bết Dầu Với Chiết Xuất Cây Tầm Ma Và ...</td><td class="num">1,621</td><td class="num">1,136</td><td class="num">485</td><td class="num">349</td><td class="num">21.53%</td><td>2027-11-11</td><td>Đưa vào kế hoạch đẩy tồn và theo dõi trong báo cáo tuần.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>LOW_DATE_12_TO_18M</td><td>3574661573618</td><td>Gel Rửa Tay Hữu Cơ Le Petit Marseillais Với Chiết Xuất Lá Ô Liu 290ml</td><td class="num">301</td><td class="num">196</td><td class="num">105</td><td class="num">301</td><td class="num">100.00%</td><td>2027-11-28</td><td>Đưa vào kế hoạch đẩy tồn và theo dõi trong báo cáo tuần.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>LOW_DATE_12_TO_18M</td><td>3574661575209</td><td>Mặt Nạ Dưỡng Tóc Le Petit Marseillais 4in1 Chiết Xuất Nước Dừa Hữu Cơ, Dưỡng Ẩm, Thơm L...</td><td class="num">406</td><td class="num">123</td><td class="num">283</td><td class="num">283</td><td class="num">69.70%</td><td>2027-10-21</td><td>Đưa vào kế hoạch đẩy tồn và theo dõi trong báo cáo tuần.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>LOW_DATE_12_TO_18M</td><td>3574661574042</td><td>Dầu Gội Pháp Le Petit Marseillais Sạch Gàu 2 In 1 Tinh Dầu Bạc Hà Hữu Cơ Dưỡng Ẩm, Thơm...</td><td class="num">1,372</td><td class="num">1,121</td><td class="num">251</td><td class="num">251</td><td class="num">18.29%</td><td>2027-10-09</td><td>Đưa vào kế hoạch đẩy tồn và theo dõi trong báo cáo tuần.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>LOW_DATE_12_TO_18M</td><td>3574661573601</td><td>Gel Rửa Tay Hữu Cơ Le Petit Marseillais Thiên Nhiên Dịu Nhẹ Lành Tính Bảo Vệ Da Nhiều M...</td><td class="num">237</td><td class="num">143</td><td class="num">94</td><td class="num">237</td><td class="num">100.00%</td><td>2027-11-28</td><td>Đưa vào kế hoạch đẩy tồn và theo dõi trong báo cáo tuần.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>LOW_DATE_12_TO_18M</td><td>3574661231372</td><td>Dầu Gội Le Petit Marseillais Giúp Tóc Chắc Khỏe Và Bóng Mượt Với Chiết Xuất Táo Và Oliu...</td><td class="num">1,383</td><td class="num">1,152</td><td class="num">231</td><td class="num">231</td><td class="num">16.70%</td><td>2027-10-16</td><td>Đưa vào kế hoạch đẩy tồn và theo dõi trong báo cáo tuần.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>LOW_DATE_12_TO_18M</td><td>3574661601601</td><td>Gel Tắm Hữu Cơ Le Petit Marseillais Tăng Cường Năng Lượng Với Chiết Xuất Chanh Vàng Và ...</td><td class="num">639</td><td class="num">253</td><td class="num">386</td><td class="num">180</td><td class="num">28.17%</td><td>2027-08-23</td><td>Đưa vào kế hoạch đẩy tồn và theo dõi trong báo cáo tuần.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>LOW_DATE_12_TO_18M</td><td>3574661574554</td><td>Dầu Gội Thiên Nhiên Le Petit Marseillais Phục Hồi Tóc Khô &amp; Hư Tổn Mật Ong Và Bơ Hạt Mỡ...</td><td class="num">1,896</td><td class="num">1,628</td><td class="num">268</td><td class="num">150</td><td class="num">7.91%</td><td>2027-11-06</td><td>Đưa vào kế hoạch đẩy tồn và theo dõi trong báo cáo tuần.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>LOW_DATE_12_TO_18M</td><td>3574661801841</td><td>Dầu Gội Le Petit Marseillais Giúp Tóc Mềm Mại &amp; Bóng Mượt Với Chiết Xuất Hạnh Nhân Ngọt...</td><td class="num">1,565</td><td class="num">1,427</td><td class="num">138</td><td class="num">138</td><td class="num">8.82%</td><td>2027-11-06</td><td>Đưa vào kế hoạch đẩy tồn và theo dõi trong báo cáo tuần.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>LOW_DATE_12_TO_18M</td><td>3574661537429</td><td>Dầu Gội Pháp Le Petit Marseillais Sạch Gàu 2 In 1 Tinh Dầu Bạc Hà Hữu Cơ Dưỡng Ẩm, Thơm...</td><td class="num">987</td><td class="num">894</td><td class="num">93</td><td class="num">93</td><td class="num">9.42%</td><td>2027-09-16</td><td>Đưa vào kế hoạch đẩy tồn và theo dõi trong báo cáo tuần.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>LOW_DATE_12_TO_18M</td><td>3574661537450</td><td>Dầu Gội Thiên Nhiên Le Petit Marseillais Nhiều Mùi Hương 250ml Dưỡng Ẩm, Thơm Lâu - Phù...</td><td class="num">92</td><td class="num">38</td><td class="num">54</td><td class="num">92</td><td class="num">100.00%</td><td>2027-12-10</td><td>Đưa vào kế hoạch đẩy tồn và theo dõi trong báo cáo tuần.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>LOW_DATE_12_TO_18M</td><td>3574661700892</td><td>Sữa Tắm/Gel Tắm Pháp Le Petit Marseillais Thiên Nhiên 250ml - Sữa Tắm Lưu Hương Lành Tí...</td><td class="num">3,198</td><td class="num">1,435</td><td class="num">1,763</td><td class="num">86</td><td class="num">2.69%</td><td>2027-11-20</td><td>Đưa vào kế hoạch đẩy tồn và theo dõi trong báo cáo tuần.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>LOW_DATE_12_TO_18M</td><td>3574661184159</td><td>Sữa Dưỡng Thể 24h Le Petit Marseillais Nhiều Mùi Hương 400ml Dưỡng Ẩm, Thơm Lâu - Phù H...</td><td class="num">84</td><td class="num">0</td><td class="num">84</td><td class="num">84</td><td class="num">100.00%</td><td>2027-12-18</td><td>Đưa vào kế hoạch đẩy tồn và theo dõi trong báo cáo tuần.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>LOW_DATE_12_TO_18M</td><td>3574661602684</td><td>Sữa Dưỡng Thể Le Petit Marseillais Với Chiết Xuất Bơ Hạt Mỡ, Hạnh Nhân Ngọt &amp; Dầu Argan...</td><td class="num">80</td><td class="num">6</td><td class="num">74</td><td class="num">74</td><td class="num">92.50%</td><td>2027-10-17</td><td>Đưa vào kế hoạch đẩy tồn và theo dõi trong báo cáo tuần.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>LOW_DATE_12_TO_18M</td><td>3574661777412</td><td>Sữa Dưỡng Thể Le Petit Marseillais Làm Dịu Da, Dịu Nhẹ Cho Da Nhạy Cảm Với Chiết Xuất H...</td><td class="num">665</td><td class="num">598</td><td class="num">67</td><td class="num">67</td><td class="num">10.08%</td><td>2027-07-16</td><td>Đưa vào kế hoạch đẩy tồn và theo dõi trong báo cáo tuần.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>LOW_DATE_12_TO_18M</td><td>3574661254494</td><td>Sữa Tắm/Gel Tắm Pháp Le Petit Marseillais Thiên Nhiên 250ml - Sữa Tắm Lưu Hương Lành Tí...</td><td class="num">1,411</td><td class="num">1,214</td><td class="num">197</td><td class="num">65</td><td class="num">4.61%</td><td>2027-11-20</td><td>Đưa vào kế hoạch đẩy tồn và theo dõi trong báo cáo tuần.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>LOW_DATE_12_TO_18M</td><td>3574661701288</td><td>Sữa Tắm/Gel Tắm Pháp Le Petit Marseillais Chiết Xuất Thiên Nhiên 650ml - Sữa Tắm Lưu Hư...</td><td class="num">1,395</td><td class="num">706</td><td class="num">689</td><td class="num">16</td><td class="num">1.15%</td><td>2027-10-31</td><td>Đưa vào kế hoạch đẩy tồn và theo dõi trong báo cáo tuần.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>LOW_DATE_12_TO_18M</td><td>3574661701240</td><td>Sữa Tắm Pháp Le Petit Marseillais Quả Mâm Xôi &amp; Hoa Mẫu Đơn Hữu Cơ Dưỡng Ẩm, Thơm Lâu -...</td><td class="num">3,570</td><td class="num">3,155</td><td class="num">415</td><td class="num">10</td><td class="num">0.28%</td><td>2027-09-24</td><td>Đưa vào kế hoạch đẩy tồn và theo dõi trong báo cáo tuần.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>LOW_DATE_12_TO_18M</td><td>3574661254463</td><td>Sữa Tắm Pháp Le Petit Marseillais Quả Mâm Xôi &amp; Hoa Mẫu Đơn Hữu Cơ Dưỡng Ẩm, Thơm Lâu -...</td><td class="num">4,043</td><td class="num">3,595</td><td class="num">448</td><td class="num">5</td><td class="num">0.12%</td><td>2027-11-19</td><td>Đưa vào kế hoạch đẩy tồn và theo dõi trong báo cáo tuần.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>LOW_STOCK</td><td>3251241018485</td><td>Kem Dưỡng Da Tay Le Petit Marseillais Với Chiết Xuất Bơ Hạt Mỡ Hạnh Nhân Ngọt Và Dầu Ar...</td><td class="num">180</td><td class="num">75</td><td class="num">105</td><td class="num">0</td><td class="num">0.00%</td><td>2028-10-30</td><td>Đưa vào kế hoạch nhập bổ sung hoặc phân bổ lại tồn.</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>Đơn Mẫu</h2>
+    <div class="grid2">
+      <div class="callout">
+        <strong>Ngày 2026-07-10</strong><br>
+        Số đơn mẫu: 0<br>
+        Qty mẫu: 0<br>
+        Giá vốn mẫu: 0<br>
+        Tỷ lệ trên Net Sales: 0.00%
+      </div>
+      <div class="callout">
+        <strong>MTD 2026-07-01 - 2026-07-10</strong><br>
+        Số đơn mẫu MTD: 2<br>
+        Qty mẫu MTD: 2<br>
+        Giá vốn mẫu MTD: 127,965<br>
+        Dữ liệu hàng mẫu ngày hiện tại = 0; MTD chỉ có TikTok trong block sample_orders.
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Action List Hôm Nay</h2>
+    <div class="table-wrap "><table><thead><tr><th>Priority</th><th>Vấn đề</th><th>Kênh/SKU</th><th>Bằng chứng</th><th>Owner đề xuất</th><th>Deadline</th><th>Hành động cần làm</th></tr></thead><tbody><tr><td><span class="badge p1">P1</span></td><td>NHANH lỗ và Ads/DS vượt ngưỡng Digital</td><td>NHANH</td><td>Profit -1,641,272; Margin -19.93%; Ads/DS 71.3%</td><td>Ecom + Finance</td><td>Hôm nay 15:00</td><td>Tắt/giảm campaign kéo lỗ, khóa trần Ads/DS theo SKU; chỉ giữ SKU có contribution margin dương.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>GT tăng doanh thu nhưng biên lợi nhuận rơi mạnh</td><td>GT</td><td>Net Sales 9,810,000 vs 4,824,000; Profit 400,013 vs 1,584,400</td><td>Sales + Finance</td><td>Hôm nay 17:00</td><td>Rà giá bán, COGS và điều khoản chi phí; không scale đơn GT nếu margin sau chi phí dưới 5%.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>Shopee giảm doanh thu và tỷ lệ hủy tăng</td><td>SHOPEE</td><td>Net Sales giảm 3,601,000; hủy 15.7% vs 10.5%</td><td>Ecom Ops</td><td>Hôm nay 16:00</td><td>Rà nguyên nhân hủy, tồn khả dụng, voucher và listing; giữ Ads/DS dưới 20% khi doanh thu chưa hồi.</td></tr>
+<tr><td><span class="badge p2">P2</span></td><td>TikTok cải thiện mạnh nhưng cần kiểm soát khi scale</td><td>TIKTOK</td><td>Profit 1,555,970 vs -166,071; Ads/DS 17.0%</td><td>Ecom + Trade Marketing</td><td>Hôm nay 18:00</td><td>Nhân creative/SKU đang có profit dương, nhưng đặt ngưỡng dừng nếu Ads/DS vượt 20% hoặc margin dưới 5%.</td></tr>
+<tr><td><span class="badge p1">P1</span></td><td>Tồn date thấp dưới 12 tháng vẫn lớn</td><td>Supply Chain + Sales</td><td>10 SKU; affected qty 3,276</td><td>Supply Chain + Sales</td><td>Hôm nay 16:30</td><td>Chốt danh sách bundle/xả theo kênh, ưu tiên SKU có affected qty cao và còn traction trên Shopee/TikTok.</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>Market Benchmark Và Bối Cảnh Thị Trường</h2>
+    <p class="note">Phần này dùng nguồn công khai để hỗ trợ quyết định; không thay thế số liệu package.</p>
+    <div class="table-wrap "><table><thead><tr><th>Chủ đề</th><th>Nhận xét và hàm ý cho CEO</th></tr></thead><tbody><tr><td>Xu hướng mùa bán sắp tới</td><td>Tháng 7 nằm trong mùa mưa/nóng ẩm ở Việt Nam; nhóm sữa tắm/gel tắm có lý do truyền thông về sạch thoáng, dịu nhẹ, lưu hương, dùng hàng ngày. Đây là giả thuyết thị trường, không phải số nội bộ package.</td></tr>
+<tr><td>Mặt bằng giá</td><td>Nguồn công khai cho thấy Le Petit Marseillais có biên giá rộng: 250ml khoảng 200,000-267,000; 650ml official/promo có thể quanh 139,000-394,000 tùy sàn, shop và khuyến mãi. CEO nên yêu cầu Ecom benchmark lại theo SKU top trước khi tăng voucher.</td></tr>
+<tr><td>Sản phẩm cùng loại đang phát triển</td><td>Thị trường beauty/personal care online tiếp tục tăng; người mua quan tâm natural/organic, dịu nhẹ, premium vừa túi tiền. SKU 92% thiên nhiên, 650ml, nam 4in1 và combo/bundle nên được ưu tiên test creative.</td></tr>
+<tr><td>Khu vực mua tốt</td><td>Nguồn ngoài nêu Hà Nội và TP.HCM là hai thị trường beauty lớn; package hiện tại chỉ có tồn HN/HCM, không có sales theo khu vực, nên không kết luận vùng mua tốt từ số nội bộ.</td></tr>
+<tr><td>Đối thủ/nền tảng đang làm gì</td><td>Shopee và TikTok Shop cạnh tranh sát nhau trong beauty ecommerce. Đối thủ có xu hướng dùng giá promo, freeship/voucher, KOC/live và content ngắn; khuyến nghị là không chạy đua giá toàn bộ mà tách SKU kéo traffic và SKU giữ profit.</td></tr></tbody></table></div>
+    <h3>Nguồn công khai đã tham khảo</h3>
+    <ul><li><a href="https://shopee.vn/list/Le%20Petit%20Marseillais">Shopee Vietnam - Le Petit Marseillais listing/search</a>: Public listing snippets in July 2026 show official Le Petit Marseillais items around 200,000-394,000 VND depending size/promo.</li>
+<li><a href="https://shop.tiktok.com/vn/pdp/le-petit-marseillais-sua-tam-92-huu-co-huong-thom-phap/1731911560940784238">TikTok Shop Vietnam - Le Petit Marseillais 650ml PDP</a>: Public PDP snippet shows a 650ml item listed at 139,000 VND from 198,000 VND with sold count visible.</li>
+<li><a href="https://www.vietdata.vn/post/vietnam-s-beauty-market-2026-nearly-usd-3-billion-in-revenue-concentrated-in-three-major-e-commerce">Vietdata - Vietnam beauty market 2026</a>: TikTok Shop and Shopee are very close in beauty ecommerce share, with TikTok leading Q4 2025 and Shopee close behind.</li>
+<li><a href="https://www.kenresearch.com/industry-reports/vietnam-beauty-products-market">Ken Research - Vietnam Beauty Products Market</a>: Hanoi and Ho Chi Minh City are highlighted as major beauty-product markets due to income, retail infrastructure and global trend exposure.</li>
+<li><a href="https://ecdb.com/resources/sample-data/market/vn/personal-care">ECDB - Vietnam Personal Care ecommerce</a>: Vietnam personal-care ecommerce is projected to keep growing in 2026, supporting online channel focus.</li>
+<li><a href="https://www.tnktravel.com/blogs/best-time-to-visit-vietnam-in-2026/">TNK Travel - Vietnam rainy season 2026</a>: Rainy season generally runs May-November, with humidity and short bursts of rain; useful as seasonal context for bath/body-care demand.</li></ul>
+  </section>
+  <div class="footer">CEO Control Tower HTML</div>
+</div>
+</body>
+</html>

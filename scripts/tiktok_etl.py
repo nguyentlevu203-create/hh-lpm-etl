@@ -1,0 +1,1351 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""TikTok ETL for DuLieu production schema.
+
+Writes only to:
+  tiktok.orders_pnl
+  tiktok.order_items
+  tiktok.ads_costs
+  tiktok.live_costs
+
+Reads COGS only from dim.product_costs.
+"""
+from __future__ import annotations
+
+import os
+import re
+import sys
+import traceback
+from datetime import date
+from pathlib import Path
+from typing import Dict, Iterable, List, Optional, Tuple
+
+import numpy as np
+import pandas as pd
+from psycopg2.extras import execute_values, Json
+
+
+sys.path.append(str(Path(__file__).resolve().parents[1]))
+from etl_common import (
+    assert_production_schema,
+    archive_file,
+    begin_batch,
+    clean_code,
+    connect,
+    find_col,
+    finish_batch,
+    get_input_files,
+    load_cost_map,
+    json_safe,
+    log_import_error,
+    lookup_unit_cost,
+    money_series,
+    parse_date,
+    parse_datetime,
+    read_file,
+    read_smart_table,
+    row_to_json,
+    safe_num,
+    safe_text,
+)
+
+BASE_IN = Path(os.getenv("TIKTOK_BASE_IN", "data/tiktok"))
+BASE_OUT = Path(os.getenv("TIKTOK_BASE_OUT", "processed/tiktok"))
+DIRS = {
+    "orders": "1_orders",
+    "creator": "2_affiliate_creator",
+    "partner": "3_affiliate_partner",
+    "paid": "4_settlement_paid",
+    "unpaid": "5_settlement_unpaid",
+    "ads_prod": "6_ads_product",
+    "ads_live": "7_ads_live",
+    "master": "8_master_data",
+    "live_in_house": "9_live_in_house",
+    "live_teaser": "10_live_teaser",
+}
+
+
+TIKTOK_ADS_COST_HEADERS = ["Chi phí", "Cost"]
+TIKTOK_ADS_VAT_RATE = 0.10
+TIKTOK_SHIPPED_TIME_HEADER = "Shipped Time"
+
+# TikTok platform/fixed fee policy.
+# New rates start AFTER 2026-05-08:
+#   - Orders dated 2026-05-08 and earlier use old rates.
+#   - Orders dated 2026-05-09 and later use new rates.
+#   - LPM:      17.8% instead of 15.8%
+#   - SUA_CHUA: 15.0% instead of 10.31%
+TIKTOK_PLATFORM_FEE_CHANGE_DATE = date(2026, 5, 8)
+TIKTOK_PLATFORM_FEE_OLD = {
+    "LPM": 0.158,
+    "SUA_CHUA": 0.1031,
+}
+TIKTOK_PLATFORM_FEE_NEW = {
+    "LPM": 0.178,
+    "SUA_CHUA": 0.150,
+}
+
+
+def get_tiktok_platform_fee_rate(order_date: object, brand_group: object) -> float:
+    """Return TikTok fixed/platform fee rate by order date and brand.
+
+    The change date is inclusive: orders dated 2026-05-08 and later use
+    the new platform fee rates. Orders before 2026-05-08 use the old rates.
+    Unknown/non-LPM brands are treated as SUA_CHUA, matching existing ETL logic.
+    """
+    brand = brand_group_from_shop_label(brand_group)
+
+    use_new_rate = False
+    if order_date is not None:
+        try:
+            # Handles Python date/datetime, pandas Timestamp, and parseable strings.
+            d = parse_date(order_date)
+            use_new_rate = bool(d and d > TIKTOK_PLATFORM_FEE_CHANGE_DATE)
+        except Exception:
+            use_new_rate = False
+
+    return TIKTOK_PLATFORM_FEE_NEW[brand] if use_new_rate else TIKTOK_PLATFORM_FEE_OLD[brand]
+
+
+def _header_key(value: object) -> str:
+    """Header key for exact matching: trim only, do not fuzzy-match."""
+    return str(value).replace("\ufeff", "").replace("\n", " ").strip()
+
+
+def find_one_exact_header(columns, required_names):
+    """
+    Find exactly one allowed header by exact header text.
+
+    This is strict whitelist matching, not fuzzy matching:
+    - accepts exactly "Chi phí" or exactly "Cost" for TikTok ads cost.
+    - rejects "Chi phí ròng", "Chi phí cho mỗi...", "Net Cost", "Cost per...".
+    """
+    available = [_header_key(c) for c in columns]
+    mapping = {_header_key(c): c for c in columns}
+    for name in required_names:
+        if name in mapping:
+            return mapping[name]
+    raise ValueError(
+        f"Thiếu cột bắt buộc một trong {required_names}. "
+        f"Các cột hiện có: {', '.join(available)}"
+    )
+
+
+def tiktok_money_one(value: object) -> int:
+    """Parse TikTok ads money exactly as exported by TikTok.
+
+    TikTok exports VND values using decimal precision, for example:
+    - 499998.000 -> 499998
+    - 1729.000   -> 1729
+    - 10.000     -> 10
+    - 2.000      -> 2
+
+    Do NOT interpret the dot in these values as a thousands separator.
+    """
+    if value is None:
+        return 0
+    try:
+        if pd.isna(value):
+            return 0
+    except Exception:
+        pass
+
+    if isinstance(value, (int, float, np.integer, np.floating)) and not isinstance(value, bool):
+        try:
+            num = float(value)
+            if np.isnan(num) or np.isinf(num):
+                return 0
+            return int(round(num, 0))
+        except Exception:
+            return 0
+
+    s = str(value).strip()
+    if not s or s.lower() in {"nan", "none", "null", "nat", "-"}:
+        return 0
+    negative = False
+    if s.startswith("(") and s.endswith(")"):
+        negative = True
+        s = s[1:-1]
+    if s.startswith("-"):
+        negative = True
+
+    s = re.sub(r"[^0-9,\.\-]", "", s).replace("-", "")
+    if not s or s in {".", ","}:
+        return 0
+
+    try:
+        if "." in s and "," in s:
+            # 1,234.000 -> 1234.000 ; 1.234,000 -> 1234.000
+            if s.rfind(".") > s.rfind(","):
+                s = s.replace(",", "")
+            else:
+                s = s.replace(".", "").replace(",", ".")
+        elif "," in s:
+            # TikTok decimal comma variant: 499998,000 -> 499998.000
+            s = s.replace(",", ".")
+        # If only dot exists, keep it as decimal. 2.000 must be 2, not 2000.
+        num = float(s)
+        if np.isnan(num) or np.isinf(num):
+            return 0
+        out = int(round(num, 0))
+        return -out if negative else out
+    except Exception:
+        return 0
+
+
+def tiktok_money_series(values: object) -> pd.Series:
+    if values is None:
+        return pd.Series(dtype="int64")
+    if isinstance(values, pd.Series):
+        return values.map(tiktok_money_one).astype("int64")
+    if isinstance(values, (list, tuple)):
+        return pd.Series(values).map(tiktok_money_one).astype("int64")
+    return pd.Series([tiktok_money_one(values)], dtype="int64")
+
+
+def validate_tiktok_ads_file(df: pd.DataFrame, kind: str, path: Path) -> None:
+    """Prevent PRODUCT/LIVE report files from being put in the wrong folder."""
+    cols = {_header_key(c).lower() for c in df.columns}
+    live_markers = {
+        "tên phiên live", "live name", "thời gian ra mắt", "launched time",
+        "số lượt xem phiên live", "live views", "cost per live view",
+        "chi phí cho mỗi lượt xem phiên live",
+    }
+    product_markers = {
+        "id sản phẩm", "product id", "tiêu đề video", "video title",
+        "loại nội dung sáng tạo", "creative content type",
+        "số lượt hiển thị quảng cáo sản phẩm", "product ad impressions",
+    }
+    is_live = any(c in cols for c in live_markers)
+    is_product = any(c in cols for c in product_markers)
+
+    if kind == "ads_prod" and is_live and not is_product:
+        raise ValueError(
+            f"File '{path.name}' là ADS LIVE nhưng đang nằm trong 6_ads_product. "
+            "Hãy chuyển file sang data/tiktok/7_ads_live."
+        )
+    if kind == "ads_live" and is_product and not is_live:
+        raise ValueError(
+            f"File '{path.name}' là ADS PRODUCT nhưng đang nằm trong 7_ads_live. "
+            "Hãy chuyển file sang data/tiktok/6_ads_product."
+        )
+
+
+def _is_blank_cell(value: object) -> bool:
+    if value is None:
+        return True
+    try:
+        if pd.isna(value):
+            return True
+    except Exception:
+        pass
+    s = str(value).strip()
+    return s == "" or s.lower() in {"nan", "none", "null", "nat", "unnamed"}
+
+
+# TIKTOK_CANCEL_SHIPPED_TIME_V4_20
+def find_tiktok_shipped_time_column(columns) -> Optional[object]:
+    """Find only the exact TikTok order export header "Shipped Time".
+
+    This intentionally does not use fuzzy matching or translated headers.
+    Harmless BOM/newline/outer-space cleanup is handled by _header_key().
+    """
+    for col in columns:
+        if _header_key(col) == TIKTOK_SHIPPED_TIME_HEADER:
+            return col
+    return None
+
+
+def has_tiktok_shipped_time(value: object) -> bool:
+    """Return True only when the exact Shipped Time cell has a real value."""
+    return not _is_blank_cell(value)
+
+
+def _read_ads_raw_tables(path: Path) -> List[Tuple[str, pd.DataFrame]]:
+    """Read TikTok ads workbook/CSV as raw headerless tables.
+
+    This avoids read_smart_table missing TikTok reports whose header is not on row 1
+    or whose file contains report title rows before the real header.
+    """
+    suffix = path.suffix.lower()
+    tables: List[Tuple[str, pd.DataFrame]] = []
+
+    if suffix == ".csv":
+        for enc in ("utf-8-sig", "utf-8", "cp1258", "latin1"):
+            try:
+                raw = pd.read_csv(path, header=None, dtype=object, low_memory=False, encoding=enc)
+                if not raw.empty:
+                    tables.append(("csv", raw))
+                    return tables
+            except Exception:
+                continue
+        return tables
+
+    try:
+        sheets = pd.read_excel(path, sheet_name=None, header=None, dtype=object)
+        for sheet_name, raw in sheets.items():
+            if raw is not None and not raw.empty:
+                tables.append((str(sheet_name), raw))
+    except Exception:
+        # Last fallback for old xls / odd workbook structures.
+        try:
+            raw = read_file(path, dtype=object, header=None)
+            if not raw.empty:
+                tables.append(("default", raw))
+        except Exception:
+            pass
+    return tables
+
+
+def read_tiktok_ads_table(path: Path, allowed_cost_headers: List[str]) -> pd.DataFrame:
+    """Load TikTok ads table by finding the real header row exactly.
+
+    Accepts only exact cost headers in allowed_cost_headers, for example:
+    - "Chi phí"
+    - "Cost"
+
+    It does NOT match "Chi phí ròng", "Net Cost", "Cost per order", etc.
+    """
+    diagnostics: List[str] = []
+    for sheet_name, raw in _read_ads_raw_tables(path):
+        max_rows = min(100, len(raw))
+        for row_idx in range(max_rows):
+            row_values = raw.iloc[row_idx].tolist()
+            header_cells = [_header_key(v) for v in row_values]
+            non_blank = [c for c in header_cells if c and c.lower() not in {"nan", "none", "null", "nat"}]
+            has_cost = any(c in allowed_cost_headers for c in header_cells)
+            if not has_cost or len(non_blank) < 2:
+                continue
+
+            keep_indices: List[int] = []
+            columns: List[str] = []
+            seen: Dict[str, int] = {}
+            for i, col in enumerate(header_cells):
+                name = _header_key(col)
+                if not name or name.lower() in {"nan", "none", "null", "nat"}:
+                    continue
+                base = name
+                if base in seen:
+                    seen[base] += 1
+                    name = f"{base}__dup{seen[base]}"
+                else:
+                    seen[base] = 0
+                keep_indices.append(i)
+                columns.append(name)
+
+            if not keep_indices:
+                continue
+
+            df = raw.iloc[row_idx + 1 :, keep_indices].copy()
+            df.columns = columns
+            df = df.dropna(how="all")
+            if not df.empty:
+                mask_nonblank = df.apply(lambda r: any(not _is_blank_cell(v) for v in r.values), axis=1)
+                df = df.loc[mask_nonblank].copy()
+
+            # Strict validation: must contain one approved cost header even when there are no data rows.
+            # Some TikTok daily LIVE exports are valid header-only reports, meaning cost = 0 for that day.
+            # Do NOT fail the whole ETL for those files; return an empty dataframe with the correct columns
+            # so process_ads() can insert/update a 0-cost row for the date/shop/type from the filename.
+            find_one_exact_header(columns, allowed_cost_headers)
+            if df.empty:
+                print(
+                    f"⚠️ TikTok ads {path.name}: sheet={sheet_name}, "
+                    f"header row {row_idx + 1} found but no data rows -> cost=0"
+                )
+                return pd.DataFrame(columns=columns)
+
+            return df
+
+        preview_rows = []
+        for i in range(min(5, len(raw))):
+            vals = [_header_key(v) for v in raw.iloc[i].tolist()]
+            vals = [v for v in vals if v and v.lower() not in {"nan", "none", "null", "nat"}]
+            if vals:
+                preview_rows.append(" | ".join(vals[:8]))
+        diagnostics.append(f"{sheet_name}: no exact cost header found. Preview: {' || '.join(preview_rows)}")
+
+    # Keep compatibility with the generic reader as a last attempt.
+    try:
+        df = read_smart_table(path, allowed_cost_headers)
+        if not df.empty:
+            find_one_exact_header(df.columns, allowed_cost_headers)
+            return df
+    except Exception as e:
+        diagnostics.append(f"read_smart_table failed: {e}")
+
+    detail = " ; ".join(diagnostics) if diagnostics else "không đọc được workbook/csv"
+    raise ValueError(
+        f"File TikTok ads '{path.name}' không đọc được dữ liệu hoặc thiếu cột chi phí đúng tên "
+        f"{allowed_cost_headers}. Chi tiết: {detail}"
+    )
+
+def ensure_dirs() -> None:
+    for d in DIRS.values():
+        (BASE_IN / d).mkdir(parents=True, exist_ok=True)
+        (BASE_OUT / d).mkdir(parents=True, exist_ok=True)
+
+
+def list_files(kind: str) -> List[Path]:
+    return get_input_files(BASE_IN / DIRS[kind])
+
+
+def extract_shop_label(filename: str) -> str:
+    s = filename.upper()
+    if "LPM" in s or "PETIT" in s or "MARSEILLAIS" in s:
+        return "LPM"
+    if "SUA" in s or "CHUA" in s or "BLÉDINA" in s or "BLEDINA" in s:
+        return "SUA_CHUA"
+    # Owner-approved fallback: unknown/unmapped TikTok filenames belong to LPM.
+    return "LPM"
+
+
+def normalize_brand(value: object) -> str:
+    """Normalize free-text shop/brand value with owner-approved fallback.
+
+    Unknown or blank values default to LPM.
+    """
+    return brand_group_from_shop_label(value)
+
+
+def brand_group_from_shop_label(value: object) -> str:
+    """Map filename-derived shop_label/text to TikTok brand_group.
+
+    Rules:
+    - Any Sữa chua / Bledina marker -> SUA_CHUA.
+    - Any LPM / Petit / Marseillais marker -> LPM.
+    - Blank or unknown value -> LPM.
+    """
+    s = safe_text(value).upper()
+    if "SUA" in s or "CHUA" in s or "BLÉDINA" in s or "BLEDINA" in s:
+        return "SUA_CHUA"
+    if "LPM" in s or "PETIT" in s or "MARSEILLAIS" in s:
+        return "LPM"
+    return "LPM"
+
+
+def date_from_filename(path: Path) -> Optional[object]:
+    m = re.search(r"\d{4}[-_]\d{1,2}[-_]\d{1,2}|\d{1,2}[-_]\d{1,2}[-_]\d{4}", path.name)
+    return parse_date(m.group().replace("_", "-")) if m else None
+
+
+def split_combo_sku(raw_sku: object) -> List[str]:
+    """Split a TikTok seller SKU combo into exact component codes.
+
+    Production rule:
+    - Split ONLY by the literal plus sign "+".
+    - Trim leading/trailing spaces of each component.
+    - Keep Vietnamese accents, spaces, hyphens, and every other character intact.
+
+    Example:
+        DG37429+DX74752+1 BÁNH-XP+TUICOGAI-63
+    becomes:
+        ["DG37429", "DX74752", "1 BÁNH-XP", "TUICOGAI-63"]
+    """
+    s = safe_text(raw_sku).strip()
+    if not s or s.lower() in {"nan", "none", "null", "nat", "-"}:
+        return []
+    return [part.strip() for part in s.split("+") if part and part.strip()]
+
+
+def missing_combo_cost_parts(raw_sku: object, costs: Dict[str, float]) -> List[str]:
+    """Return missing COGS component codes for combo SKUs only.
+
+    Single SKUs keep the existing lookup behavior. Combo SKUs must be exact:
+    every component after splitting by "+" must exist in dim.product_costs,
+    otherwise ETL stops instead of silently using 0 cost.
+    """
+    parts = split_combo_sku(raw_sku)
+    if len(parts) <= 1:
+        return []
+
+    missing: List[str] = []
+    for part in parts:
+        key = clean_code(part)
+        if key not in costs:
+            missing.append(part)
+    return missing
+
+
+def combo_unit_cogs(raw_sku: object, costs: Dict[str, float]) -> float:
+    """Return unit COGS for normal or combo TikTok seller SKUs.
+
+    - Normal SKU: use the existing lookup_unit_cost() behavior.
+    - Combo SKU A+B+C: unit cost = cost(A) + cost(B) + cost(C).
+
+    This function intentionally does not remove accents or hyphens from
+    component text before passing it into lookup_unit_cost(). lookup_unit_cost()
+    and dim.product_costs normalization remain the single source of truth.
+    """
+    parts = split_combo_sku(raw_sku)
+    if not parts:
+        return 0.0
+    if len(parts) == 1:
+        return safe_num(lookup_unit_cost(parts[0], costs))
+    return float(sum(safe_num(lookup_unit_cost(part, costs)) for part in parts))
+
+
+def read_master_maps() -> Tuple[Dict[str, str], Dict[str, float]]:
+    cat_map: Dict[str, str] = {}
+    book_map: Dict[str, float] = {}
+    for path in list_files("master"):
+        try:
+            df = read_file(path, dtype=object, header=0)
+            df.columns = [safe_text(c) for c in df.columns]
+        except Exception:
+            continue
+        fname = path.name.lower()
+        if "nhóm hàng" in fname or "nhom hang" in fname or "category" in fname:
+            if len(df.columns) >= 2:
+                c_label = find_col(df.columns, ["row labels", "nhóm hàng", "nhom hang", "category"]) or df.columns[0]
+                c_group = find_col(df.columns, ["nhóm", "nhom", "brand", "shop"]) or df.columns[1]
+                for _, row in df.iterrows():
+                    key = safe_text(row.get(c_label)).strip().lower()
+                    if key:
+                        cat_map[key] = safe_text(row.get(c_group))
+        elif "phí book" in fname or "phi book" in fname:
+            if len(df.columns) >= 2:
+                c_acc = find_col(df.columns, ["tài khoản", "tai khoan", "account", "creator"]) or df.columns[0]
+                c_rate = find_col(df.columns, ["hoa hồng", "hoa hong", "commission", "rate"]) or df.columns[1]
+                for _, row in df.iterrows():
+                    key = safe_text(row.get(c_acc)).strip().lower()
+                    if key:
+                        book_map[key] = safe_num(row.get(c_rate))
+    return cat_map, book_map
+
+
+def process_live_costs() -> Tuple[Dict[Tuple[object, str], Dict[str, Optional[float]]], List[Tuple[Path, str]]]:
+    """Load folder 9/10 TikTok live operation costs.
+
+    Aligned with the approved legacy behavior:
+    - 9_live_in_house: read date/cost/shop from the file; do NOT add VAT in code.
+    - 10_live_teaser: read date/cost/shop from the file; add VAT 10% in code.
+    - Use TikTok decimal money parser so 2.000 means 2, not 2,000.
+    """
+    live_costs: Dict[Tuple[object, str], Dict[str, Optional[float]]] = {}
+    processed: List[Tuple[Path, str]] = []
+
+    rules = [
+        ("live_in_house", "in_house", 0.00),
+        ("live_teaser", "teaser", TIKTOK_ADS_VAT_RATE),
+    ]
+
+    for kind, target_col, vat_rate in rules:
+        for path in list_files(kind):
+            try:
+                df = read_smart_table(path, ["ngày", "date", "phí", "cost", "shop", "kênh"])
+            except Exception as e:
+                print(f"⚠️ Không đọc được live cost {path.name}: {e}")
+                continue
+
+            c_date = find_col(df.columns, ["ngày", "ngay", "date", "ngày live"])
+            c_cost = find_col(df.columns, ["phí", "phi", "cost", "amount"])
+            c_shop = find_col(df.columns, ["kênh", "kenh", "brand", "shop", "cửa hàng"])
+            if not c_date or not c_cost:
+                print(f"⚠️ Bỏ qua live cost {path.name}: thiếu ngày hoặc chi phí")
+                continue
+
+            loaded_rows = 0
+            loaded_cost = 0
+            for _, row in df.iterrows():
+                d = parse_date(row.get(c_date))
+                if not d:
+                    continue
+                shop = normalize_brand(row.get(c_shop)) if c_shop else extract_shop_label(path.name)
+                raw_cost = tiktok_money_one(row.get(c_cost))
+                cost = int(round(raw_cost * (1 + vat_rate), 0))
+                if cost < 0:
+                    continue
+                key = (d, shop)
+                live_costs.setdefault(key, {"in_house": None, "teaser": None})
+                live_costs[key][target_col] = (live_costs[key][target_col] or 0.0) + cost
+                loaded_rows += 1
+                loaded_cost += cost
+
+            processed.append((path, kind))
+            vat_text = "no_vat" if vat_rate == 0 else f"x{1 + vat_rate:.2f}"
+            print(f"✅ TikTok {kind} {path.name}: rows={loaded_rows}, cost={loaded_cost:,}, rule={vat_text}")
+
+    return live_costs, processed
+
+
+def process_orders(costs: Dict[str, float], cat_map: Dict[str, str]) -> Tuple[pd.DataFrame, pd.DataFrame, List[Tuple[Path, str]]]:
+    processed: List[Tuple[Path, str]] = []
+    files = list_files("orders")
+    if not files:
+        return pd.DataFrame(), pd.DataFrame(), processed
+
+    all_lines: List[pd.DataFrame] = []
+    for path in files:
+        df = read_smart_table(path, ["order id", "mã đơn", "sku", "quantity", "số lượng", "trạng thái", "created time"])
+        if df.empty:
+            continue
+        df["__source_file"] = path.name
+        df["__shop_label"] = extract_shop_label(path.name)
+        all_lines.append(df)
+        processed.append((path, "orders"))
+        print(f"✅ TikTok orders {path.name}: {len(df)} dòng")
+
+    if not all_lines:
+        return pd.DataFrame(), pd.DataFrame(), processed
+
+    df_o = pd.concat(all_lines, ignore_index=True)
+    co = {
+        "id": find_col(df_o.columns, ["order id", "mã đơn hàng", "id đơn hàng", "mã đơn"]),
+        "sku": find_col(df_o.columns, ["seller sku", "sku người bán", "sku", "mã sku"]),
+        "status": find_col(df_o.columns, ["order status", "trạng thái", "tình trạng"]),
+        "time": find_col(df_o.columns, ["created time", "thời gian tạo", "thời gian đặt hàng", "ngày tạo", "order date"]),
+        "qty": find_col(df_o.columns, ["quantity", "số lượng", "number of items", "số mặt hàng", "sl"]),
+        "price": find_col(df_o.columns, ["original price", "giá gốc", "sku unit original price", "giá bán lẻ"]),
+        "discount": find_col(df_o.columns, ["seller discount", "chiết khấu từ người bán", "chiết khấu", "giảm giá"]),
+        "gmv": find_col(df_o.columns, ["subtotal after discount", "sau chiết khấu", "tổng cộng", "doanh thu"]),
+        "category": find_col(df_o.columns, ["sku's product category", "product category", "hạng mục sản phẩm", "ngành hàng", "category"]),
+        "name": find_col(df_o.columns, ["product name", "tên sản phẩm", "ten san pham"]),
+        "shipped_time": find_tiktok_shipped_time_column(df_o.columns),
+    }
+    if not co["id"]:
+        raise ValueError("File đơn TikTok thiếu cột Order ID / Mã đơn hàng")
+
+    df_o["order_id"] = df_o[co["id"]].map(clean_code)
+    df_o = df_o[df_o["order_id"] != ""].copy()
+    df_o["seller_sku"] = df_o[co["sku"]].map(clean_code) if co["sku"] else ""
+    df_o["qty_num"] = money_series(df_o[co["qty"]]).astype(int) if co["qty"] else 1
+    df_o.loc[df_o["qty_num"] < 0, "qty_num"] = 0
+    df_o["price_num"] = money_series(df_o[co["price"]]) if co["price"] else 0.0
+    df_o["disc_num"] = money_series(df_o[co["discount"]]).abs() if co["discount"] else 0.0
+    df_o["gmv_item"] = money_series(df_o[co["gmv"]]) if co["gmv"] else (df_o["price_num"] * df_o["qty_num"] - df_o["disc_num"])
+    df_o["fee_base_item"] = (df_o["price_num"] * df_o["qty_num"]) - df_o["disc_num"]
+    df_o["cat_clean"] = df_o[co["category"]].map(lambda x: safe_text(x).lower()) if co["category"] else ""
+    # Owner-approved rule: brand_group follows shop_label, and shop_label is derived from filename.
+    # Unknown/unmapped filenames default to LPM via extract_shop_label().
+    df_o["brand_group"] = df_o["__shop_label"].map(brand_group_from_shop_label)
+    df_o["order_status"] = df_o[co["status"]].map(lambda x: safe_text(x, 200)) if co["status"] else "Unknown"
+    df_o["is_cancelled"] = df_o["order_status"].str.contains("hủy|huỷ|cancel", case=False, na=False)
+    if co["shipped_time"]:
+        df_o["has_shipped_time"] = df_o[co["shipped_time"]].map(has_tiktok_shipped_time)
+        df_o["shipped_time_source_column"] = str(co["shipped_time"])
+    else:
+        df_o["has_shipped_time"] = False
+        df_o["shipped_time_source_column"] = ""
+    df_o["order_time"] = df_o[co["time"]].map(parse_datetime) if co["time"] else None
+    df_o["order_date"] = df_o["order_time"].map(lambda x: x.date() if x else None)
+    # Exact combo SKU COGS handling.
+    # Example: DG37429+DX74752+1 BÁNH-XP+TUICOGAI-63
+    # unit_cogs = cost(DG37429) + cost(DX74752) + cost(1 BÁNH-XP) + cost(TUICOGAI-63).
+    # If any combo component is missing in dim.product_costs, stop the ETL to avoid silent wrong COGS.
+    df_o["__combo_parts"] = df_o["seller_sku"].map(split_combo_sku)
+    df_o["__combo_parts_text"] = df_o["__combo_parts"].map(lambda parts: " + ".join(parts))
+    df_o["__missing_combo_cost_parts"] = df_o["seller_sku"].map(lambda sku: missing_combo_cost_parts(sku, costs))
+    missing_combo = df_o[df_o["__missing_combo_cost_parts"].map(lambda parts: len(parts) > 0)].copy()
+    if not missing_combo.empty:
+        details = []
+        for _, bad in missing_combo.head(30).iterrows():
+            details.append(
+                f"file={bad.get('__source_file')}, order={bad.get('order_id')}, "
+                f"sku={bad.get('seller_sku')}, missing={bad.get('__missing_combo_cost_parts')}"
+            )
+        more = "" if len(missing_combo) <= 30 else f"; ... còn {len(missing_combo) - 30} dòng khác"
+        raise ValueError(
+            "Thiếu giá vốn mã con trong SKU ghép TikTok. "
+            "Hãy bổ sung đầy đủ từng mã con vào dim.product_costs trước khi chạy lại. "
+            + " | ".join(details)
+            + more
+        )
+
+    df_o["line_unit_cogs"] = df_o["seller_sku"].map(lambda sku: combo_unit_cogs(sku, costs))
+    df_o["line_cogs"] = df_o["line_unit_cogs"] * df_o["qty_num"]
+    df_o["product_name"] = df_o[co["name"]].map(lambda x: safe_text(x, 500)) if co["name"] else ""
+
+    agg = df_o.groupby(["order_id", "__shop_label"], as_index=False).agg({
+        "order_date": "first",
+        "order_status": "first",
+        "is_cancelled": "max",
+        "has_shipped_time": "max",
+        "shipped_time_source_column": "first",
+        "brand_group": "first",
+        "qty_num": "sum",
+        "fee_base_item": "sum",
+        "gmv_item": "sum",
+        "line_cogs": "sum",
+        "__source_file": "first",
+    })
+    return agg, df_o, processed
+
+
+def add_creator_commission(fact_df: pd.DataFrame, book_map: Dict[str, float]) -> Tuple[pd.DataFrame, List[Tuple[Path, str]]]:
+    """Load TikTok creator commission and booking rate.
+
+    Owner-approved production rule v4.21.1 for booking fee:
+    - Creator commission is still summed by order_id from folder 2_affiliate_creator.
+    - Booking rate is read from master phi book in folder 8_master_data.
+    - Booking maps ONLY by the exact creator column header:
+        "Tên người dùng nhà sáng tạo"
+    - Booking is eligible ONLY when the exact content type column header:
+        "Loại nội dung"
+      has value:
+        "Phát trực tiếp"
+      after harmless whitespace/case cleanup.
+    - If exactly one eligible mapped live creator exists in an order, use that
+      creator's book_rate.
+    - If no creator maps, content is not live, or more than one mapped live
+      creator exists in the same order, book_rate = 0 and booking_fee = 0.
+    """
+    processed = []
+    fact_df["comm_creator"] = 0.0
+    fact_df["book_rate"] = 0.0
+    fact_df["booking_creator_count"] = 0
+    fact_df["booking_rule"] = "no_creator_file_or_no_booking_match_0"
+
+    EXACT_CREATOR_HEADER = "Tên người dùng nhà sáng tạo"
+    EXACT_CONTENT_TYPE_HEADER = "Loại nội dung"
+    LIVE_CONTENT_VALUE = "Phát trực tiếp"
+
+    def _norm_exact_header(value: object) -> str:
+        return " ".join(str(value).replace("\ufeff", " ").replace("\n", " ").split()).strip()
+
+    def _find_exact_header_optional(columns, required_name: str):
+        target = _norm_exact_header(required_name)
+        for col in columns:
+            if _norm_exact_header(col) == target:
+                return col
+        return None
+
+    def _norm_creator_key(value: object) -> str:
+        return safe_text(value).strip().lower()
+
+    def _norm_value_for_compare(value: object) -> str:
+        return " ".join(safe_text(value).replace("\ufeff", " ").replace("\n", " ").split()).strip().casefold()
+
+    frames = []
+
+    for path in list_files("creator"):
+        df = read_smart_table(
+            path,
+            [
+                "order id",
+                "mã đơn",
+                "hoa hồng",
+                "commission",
+                "creator",
+                EXACT_CREATOR_HEADER,
+                EXACT_CONTENT_TYPE_HEADER,
+            ],
+        )
+        if df.empty:
+            continue
+
+        cid = find_col(df.columns, ["order id", "id đơn hàng", "mã đơn hàng", "mã đơn"])
+        c_status = find_col(df.columns, ["status", "trạng thái"])
+        c_est_std = find_col(df.columns, ["thanh toán hoa hồng tiêu chuẩn ước tính", "ước tính", "estimated standard"])
+        c_est_ads = find_col(df.columns, ["thanh toán hoa hồng quảng cáo cửa hàng ước tính", "quảng cáo", "estimated ads"])
+
+        # Booking-specific columns are exact-header only. Do not fuzzy-match here.
+        c_acc_exact = _find_exact_header_optional(df.columns, EXACT_CREATOR_HEADER)
+        c_content_exact = _find_exact_header_optional(df.columns, EXACT_CONTENT_TYPE_HEADER)
+
+        if not cid:
+            continue
+
+        df = df.copy()
+        df["order_id"] = df[cid].map(clean_code)
+        df = df[df["order_id"] != ""].copy()
+        if df.empty:
+            processed.append((path, "creator"))
+            print(f"⚠️ TikTok creator {path.name}: không có mã đơn hợp lệ")
+            continue
+
+        std = money_series(df[c_est_std]) if c_est_std else pd.Series(0, index=df.index)
+        ads = money_series(df[c_est_ads]) if c_est_ads else pd.Series(0, index=df.index)
+        val = np.where(std > 0, std, ads)
+        if c_status:
+            val = np.where(
+                df[c_status].astype(str).str.contains("Không đủ điều kiện|khong du dieu kien", case=False, na=False),
+                0,
+                val,
+            )
+        df["creator_commission"] = val
+
+        if c_acc_exact and c_content_exact:
+            df["creator_account_norm"] = df[c_acc_exact].map(_norm_creator_key)
+            df["content_type_norm"] = df[c_content_exact].map(_norm_value_for_compare)
+            df["is_live_content"] = df["content_type_norm"] == _norm_value_for_compare(LIVE_CONTENT_VALUE)
+            df["book_rate_raw"] = df["creator_account_norm"].map(lambda x: safe_num(book_map.get(x, 0.0)))
+        else:
+            df["creator_account_norm"] = ""
+            df["is_live_content"] = False
+            df["book_rate_raw"] = 0.0
+
+        frames.append(
+            df[[
+                "order_id",
+                "creator_commission",
+                "creator_account_norm",
+                "is_live_content",
+                "book_rate_raw",
+            ]].copy()
+        )
+        processed.append((path, "creator"))
+        print(
+            f"✅ TikTok creator {path.name}: rows={len(df)}, "
+            f"exact_creator_col={bool(c_acc_exact)}, exact_content_col={bool(c_content_exact)}"
+        )
+
+    if not frames:
+        return fact_df, processed
+
+    creator_df = pd.concat(frames, ignore_index=True)
+
+    commission_grouped = (
+        creator_df.groupby("order_id", as_index=False)["creator_commission"]
+        .sum()
+    )
+
+    eligible = creator_df[
+        (creator_df["creator_account_norm"] != "")
+        & (creator_df["is_live_content"])
+        & (creator_df["book_rate_raw"] > 0)
+    ].copy()
+
+    if eligible.empty:
+        booking_grouped = pd.DataFrame({
+            "order_id": commission_grouped["order_id"],
+            "book_rate": 0.0,
+            "booking_creator_count": 0,
+            "booking_rule": "no_mapped_live_creator_0",
+        })
+    else:
+        creator_count = (
+            eligible.groupby("order_id")["creator_account_norm"]
+            .nunique()
+            .reset_index()
+            .rename(columns={"creator_account_norm": "booking_creator_count"})
+        )
+        rate_candidate = (
+            eligible.groupby("order_id")["book_rate_raw"]
+            .max()
+            .reset_index()
+            .rename(columns={"book_rate_raw": "book_rate_candidate"})
+        )
+        booking_grouped = commission_grouped[["order_id"]].merge(creator_count, on="order_id", how="left")
+        booking_grouped = booking_grouped.merge(rate_candidate, on="order_id", how="left")
+        booking_grouped["booking_creator_count"] = booking_grouped["booking_creator_count"].fillna(0).astype(int)
+        booking_grouped["book_rate_candidate"] = booking_grouped["book_rate_candidate"].fillna(0.0)
+        booking_grouped["book_rate"] = np.where(
+            booking_grouped["booking_creator_count"] == 1,
+            booking_grouped["book_rate_candidate"],
+            0.0,
+        )
+        booking_grouped["booking_rule"] = np.where(
+            booking_grouped["booking_creator_count"] == 1,
+            "single_exact_creator_live_mapped",
+            np.where(
+                booking_grouped["booking_creator_count"] > 1,
+                "multiple_exact_creator_live_mapped_0",
+                "no_mapped_live_creator_0",
+            ),
+        )
+        booking_grouped.drop(columns=["book_rate_candidate"], inplace=True)
+
+    grouped = commission_grouped.merge(booking_grouped, on="order_id", how="left")
+    grouped["book_rate"] = grouped["book_rate"].fillna(0.0)
+    grouped["booking_creator_count"] = grouped["booking_creator_count"].fillna(0).astype(int)
+    grouped["booking_rule"] = grouped["booking_rule"].fillna("no_mapped_live_creator_0")
+
+    fact_df = fact_df.merge(grouped, on="order_id", how="left")
+    fact_df["comm_creator"] = fact_df["comm_creator"] + fact_df["creator_commission"].fillna(0)
+    fact_df["book_rate"] = np.where(fact_df["book_rate_y"].fillna(0) > 0, fact_df["book_rate_y"], fact_df["book_rate_x"])
+    fact_df["booking_creator_count"] = fact_df["booking_creator_count_y"].fillna(fact_df["booking_creator_count_x"]).fillna(0).astype(int)
+    fact_df["booking_rule"] = fact_df["booking_rule_y"].fillna(fact_df["booking_rule_x"]).fillna("no_creator_file_or_no_booking_match_0")
+    fact_df.drop(
+        columns=[
+            "creator_commission",
+            "book_rate_x",
+            "book_rate_y",
+            "booking_creator_count_x",
+            "booking_creator_count_y",
+            "booking_rule_x",
+            "booking_rule_y",
+        ],
+        inplace=True,
+    )
+
+    print(f"✅ TikTok creator booking v4.21.1: {len(grouped)} đơn")
+    return fact_df, processed
+
+def add_partner_commission(fact_df: pd.DataFrame) -> Tuple[pd.DataFrame, List[Tuple[Path, str]]]:
+    """Load TikTok Partner affiliate commission from folder 3_affiliate_partner.
+
+    Owner-approved production rule:
+    - Order id column must be exactly one of:
+        "Order ID", "Mã đơn hàng", "Mã đơn", "ID đơn hàng"
+      after harmless whitespace/BOM cleanup.
+    - Commission amount is the SUM of all existing approved amount columns:
+        "Thanh toán hoa hồng ước tính"
+        "Thanh toán hoa hồng Quảng cáo cửa hàng ước tính"
+        "Hoa hồng ước tính cho Đối tác liên kết"
+        "commission"
+    - Do not use fuzzy columns such as "hoa hồng thực tế" unless the header is
+      exactly one of the approved names above.
+    """
+    processed = []
+    fact_df["comm_partner"] = 0.0
+
+    order_id_headers = [
+        "Order ID",
+        "Mã đơn hàng",
+        "Mã đơn",
+        "ID đơn hàng",
+    ]
+    commission_headers = [
+        "Thanh toán hoa hồng ước tính",
+        "Thanh toán hoa hồng Quảng cáo cửa hàng ước tính",
+        "Hoa hồng ước tính cho Đối tác liên kết",
+        "commission",
+    ]
+
+    def _norm_header(value: object) -> str:
+        return " ".join(str(value).replace("\ufeff", " ").replace("\n", " ").split()).strip().casefold()
+
+    def _find_exact_one(columns, allowed_names: List[str], label: str, path: Path):
+        mapping = {_norm_header(c): c for c in columns}
+        for name in allowed_names:
+            key = _norm_header(name)
+            if key in mapping:
+                return mapping[key]
+        available = ", ".join(str(c) for c in columns)
+        raise ValueError(
+            f"File TikTok partner '{path.name}' thiếu cột {label}. "
+            f"Chỉ chấp nhận đúng một trong {allowed_names}. Các cột hiện có: {available}"
+        )
+
+    def _find_exact_many(columns, allowed_names: List[str]) -> List[object]:
+        wanted = {_norm_header(x) for x in allowed_names}
+        found = []
+        seen = set()
+        for col in columns:
+            key = _norm_header(col)
+            if key in wanted and key not in seen:
+                found.append(col)
+                seen.add(key)
+        return found
+
+    for path in list_files("partner"):
+        df = read_smart_table(
+            path,
+            [
+                "Order ID",
+                "Mã đơn hàng",
+                "Mã đơn",
+                "Thanh toán hoa hồng ước tính",
+                "Thanh toán hoa hồng Quảng cáo cửa hàng ước tính",
+                "Hoa hồng ước tính cho Đối tác liên kết",
+                "commission",
+            ],
+        )
+        if df.empty:
+            continue
+
+        pid = _find_exact_one(df.columns, order_id_headers, "mã đơn", path)
+        commission_cols = _find_exact_many(df.columns, commission_headers)
+        if not commission_cols:
+            available = ", ".join(str(c) for c in df.columns)
+            raise ValueError(
+                f"File TikTok partner '{path.name}' thiếu cột hoa hồng partner hợp lệ. "
+                f"Chỉ chấp nhận đúng các cột {commission_headers}. Các cột hiện có: {available}"
+            )
+
+        df["order_id"] = df[pid].map(clean_code)
+        df = df[df["order_id"] != ""].copy()
+        if df.empty:
+            processed.append((path, "partner"))
+            print(f"⚠️ TikTok partner {path.name}: không có mã đơn hợp lệ")
+            continue
+
+        total_commission = pd.Series(0.0, index=df.index)
+        for col in commission_cols:
+            total_commission = total_commission.add(money_series(df[col]).astype(float), fill_value=0)
+
+        df["partner_commission"] = total_commission
+        grouped = df.groupby("order_id", as_index=False)["partner_commission"].sum()
+
+        fact_df = fact_df.merge(grouped, on="order_id", how="left")
+        fact_df["comm_partner"] = fact_df["comm_partner"] + fact_df["partner_commission"].fillna(0)
+        fact_df.drop(columns=["partner_commission"], inplace=True)
+
+        processed.append((path, "partner"))
+        print(
+            f"✅ TikTok partner {path.name}: {len(grouped)} đơn, "
+            f"columns={'; '.join(str(c) for c in commission_cols)}"
+        )
+    return fact_df, processed
+
+
+def add_settlement(fact_df: pd.DataFrame, kind: str, col_name: str) -> Tuple[pd.DataFrame, List[Tuple[Path, str]]]:
+    processed = []
+    fact_df[col_name] = 0.0
+    for path in list_files(kind):
+        df = read_smart_table(path, ["order", "mã đơn", "settlement", "thanh toán", "ước tính"])
+        if df.empty:
+            continue
+        c_id = find_col(df.columns, ["order/adjustment id", "mã đơn hàng/điều chỉnh", "order id", "mã đơn hàng", "mã đơn"])
+        c_rel = find_col(df.columns, ["related order id", "id đơn hàng liên quan"])
+        if kind == "paid":
+            c_val = find_col(df.columns, ["total settlement amount", "tổng số tiền thanh toán", "settlement amount", "số tiền quyết toán"])
+        else:
+            c_val = find_col(df.columns, ["total estimated settlement amount", "est. settlement amount", "estimated settlement amount", "tổng số tiền dự kiến", "số tiền quyết toán dự kiến", "ước tính"])
+        if not c_val or (not c_id and not c_rel):
+            continue
+        if c_rel and c_id:
+            df["final_id"] = np.where(df[c_rel].notna() & (df[c_rel].astype(str).str.strip() != ""), df[c_rel], df[c_id])
+        elif c_rel:
+            df["final_id"] = df[c_rel]
+        else:
+            df["final_id"] = df[c_id]
+        df["order_id"] = df["final_id"].map(clean_code)
+        grouped = df.groupby("order_id")[c_val].apply(lambda x: money_series(x).sum()).reset_index().rename(columns={c_val: col_name})
+        fact_df = fact_df.merge(grouped, on="order_id", how="left")
+        fact_df[col_name] = fact_df[f"{col_name}_x"].fillna(0) + fact_df[f"{col_name}_y"].fillna(0)
+        fact_df.drop(columns=[f"{col_name}_x", f"{col_name}_y"], inplace=True)
+        processed.append((path, kind))
+        print(f"✅ TikTok {kind} {path.name}: {len(grouped)} đơn")
+    return fact_df, processed
+
+
+def calculate_fees(fact_df: pd.DataFrame) -> pd.DataFrame:
+    if fact_df.empty:
+        return fact_df
+    fact_df["comm_amt"] = fact_df.get("comm_creator", 0) + fact_df.get("comm_partner", 0)
+
+    def calc(row):
+        is_lpm = row["brand_group"] == "LPM"
+        rate_fixed = get_tiktok_platform_fee_rate(row.get("order_date"), row.get("brand_group"))
+        # Owner-approved rule: TikTok packaging fee is 2,000 VND per product for all brands.
+        pack_per_item = 2000
+        f_book = round(safe_num(row["fee_base_item"]) * safe_num(row.get("book_rate", 0)), 0)
+        f_fix = round(safe_num(row["fee_base_item"]) * rate_fixed, 0)
+        f_pay = round(safe_num(row["fee_base_item"]) * 0.06, 0)
+        f_vxp = round(safe_num(row["fee_base_item"]) * 0.04, 0)
+        f_infra = 3000
+        f_pack = round(safe_num(row["qty_num"]) * pack_per_item, 0)
+        f_cogs = safe_num(row["line_cogs"])
+        estimated = safe_num(row["fee_base_item"]) - (f_fix + f_pay + f_vxp + f_infra + safe_num(row["comm_amt"]))
+        if bool(row["is_cancelled"]):
+            return_fee = 30000 if bool(row.get("has_shipped_time", False)) else 0
+            return pd.Series([0, 0, 0, 0, return_fee, f_pack, 0, 0, f_book, 0])
+        received = safe_num(row.get("set_paid", 0)) or safe_num(row.get("set_unpaid", 0)) or estimated
+        bo = 0 if received <= 0 else round(received * 0.15, 0)
+        return pd.Series([f_fix, f_pay, f_vxp, f_infra, 0, f_pack, f_cogs, bo, f_book, estimated])
+
+    fact_df["return_fee_rule"] = fact_df.apply(
+        lambda row: (
+            "cancelled_with_shipped_time_30000"
+            if bool(row.get("is_cancelled", False)) and bool(row.get("has_shipped_time", False))
+            else "cancelled_without_shipped_time_0"
+            if bool(row.get("is_cancelled", False))
+            else "not_cancelled_0"
+        ),
+        axis=1,
+    )
+    fact_df[["fixed_fee", "payment_fee", "vxp_fee", "infra_fee", "return_fee", "pack_cost", "cogs_amount", "bo_cost", "booking_fee", "estimated_payout"]] = fact_df.apply(calc, axis=1)
+    return fact_df
+
+
+def process_ads() -> Tuple[List[dict], List[Tuple[Path, str]]]:
+    """Load TikTok ads product/live with strict production rules.
+
+    Rules:
+    - ads_date is taken ONLY from filename, e.g. LPM_2026-05-09.xlsx -> 2026-05-09.
+    - shop_label is taken ONLY from filename.
+    - PRODUCT files must stay in 6_ads_product; LIVE files must stay in 7_ads_live.
+    - cost column must be exactly "Chi phí" or exactly "Cost".
+    - never read "Chi phí ròng", "Net Cost", "Cost per...", "Chi phí cho mỗi...".
+    - parse TikTok decimals correctly: 499998.000 -> 499998; 2.000 -> 2.
+    - store cost_vnd BEFORE VAT because DDL generates cost_vnd_vat using vat_rate=10%.
+      The old ETL stored after-VAT cost directly; the new DB stores before VAT and reports
+      after VAT from the generated cost_vnd_vat column, preventing double VAT.
+    """
+    allowed_cost_headers = TIKTOK_ADS_COST_HEADERS
+    ads: Dict[Tuple[object, str, str], Dict[str, object]] = {}
+    processed: List[Tuple[Path, str]] = []
+
+    for kind, ads_type in [("ads_prod", "PRODUCT"), ("ads_live", "LIVE")]:
+        for path in list_files(kind):
+            d = date_from_filename(path)
+            if not d:
+                raise ValueError(
+                    f"File TikTok {kind} '{path.name}' thiếu ngày trên tên file. "
+                    "Tên file phải có dạng ..._YYYY-MM-DD hoặc ..._YYYY_MM_DD."
+                )
+
+            print(f"🔎 TikTok {kind} reading {path.name}")
+            df = read_tiktok_ads_table(path, allowed_cost_headers)
+
+            validate_tiktok_ads_file(df, kind, path)
+            c_cost = find_one_exact_header(df.columns, allowed_cost_headers)
+            shop = extract_shop_label(path.name)
+
+            raw_cost = int(tiktok_money_series(df[c_cost]).sum())
+            cost_before_vat = max(raw_cost, 0)
+            cost_after_vat = int(round(cost_before_vat * (1 + TIKTOK_ADS_VAT_RATE), 0))
+
+            key = (d, shop, ads_type)
+            if key not in ads:
+                ads[key] = {
+                    "cost_vnd": 0,
+                    "raw_cost_vnd": 0,
+                    "source_files": [],
+                    "cost_columns": [],
+                }
+            ads[key]["cost_vnd"] = int(ads[key]["cost_vnd"]) + cost_before_vat
+            ads[key]["raw_cost_vnd"] = int(ads[key]["raw_cost_vnd"]) + raw_cost
+            ads[key]["source_files"].append(path.name)
+            if str(c_cost) not in ads[key]["cost_columns"]:
+                ads[key]["cost_columns"].append(str(c_cost))
+
+            processed.append((path, kind))
+            print(
+                f"✅ TikTok {kind} {path.name}: date={d}, shop={shop}, "
+                f"type={ads_type}, column='{c_cost}', raw_cost={raw_cost:,}, "
+                f"cost_before_vat={cost_before_vat:,}, cost_after_vat={cost_after_vat:,}"
+            )
+
+    rows: List[dict] = []
+    for (d, shop, typ), payload in ads.items():
+        cost_before_vat = int(payload["cost_vnd"])
+        rows.append({
+            "ads_date": d,
+            "shop_label": shop,
+            "ads_type": typ,
+            "cost_vnd": cost_before_vat,
+            "vat_rate": TIKTOK_ADS_VAT_RATE,
+            "cost_vnd_after_vat": int(round(cost_before_vat * (1 + TIKTOK_ADS_VAT_RATE), 0)),
+            "raw_cost_vnd": int(payload["raw_cost_vnd"]),
+            "source_file": ";".join(payload["source_files"]),
+            "cost_column": ";".join(payload["cost_columns"]),
+            "source_rule": "filename_shop_date_exact_column_Chi_phi_or_Cost_tiktok_decimal_before_vat",
+        })
+
+    return rows, processed
+
+
+def load_to_db(fact_df: pd.DataFrame, item_df: pd.DataFrame, ads_rows: List[dict], live_costs: Dict[Tuple[object, str], Dict[str, Optional[float]]]) -> int:
+    conn = connect()
+    cur = conn.cursor()
+    batch_id = None
+    rows_error = 0
+    try:
+        batch_id = begin_batch(cur, "TIKTOK", "tiktok_etl", "multiple_files", None)
+
+        valid_fact = []
+        if not fact_df.empty:
+            for idx, r in fact_df.iterrows():
+                if not r.get("order_id"):
+                    rows_error += 1
+                    log_import_error(cur, batch_id, "TIKTOK", "tiktok.orders_pnl", r.get("__source_file"), int(idx) + 2, "MISSING_ORDER_ID", "Thiếu mã đơn hàng.", row_to_json(r))
+                    continue
+                if r.get("order_date") is None:
+                    rows_error += 1
+                    log_import_error(cur, batch_id, "TIKTOK", "tiktok.orders_pnl", r.get("__source_file"), int(idx) + 2, "MISSING_ORDER_DATE", "Thiếu ngày đơn hàng.", row_to_json(r))
+                    continue
+                valid_fact.append(r)
+
+        if valid_fact:
+            vals = []
+            for r in valid_fact:
+                vals.append((
+                    r["order_id"], r["__shop_label"], r["order_date"], safe_text(r["order_status"], 200), bool(r["is_cancelled"]), safe_text(r["brand_group"], 100),
+                    int(safe_num(r["qty_num"])), safe_num(r["fee_base_item"]), safe_num(r["gmv_item"]),
+                    safe_num(r["fixed_fee"]), safe_num(r["payment_fee"]), safe_num(r["vxp_fee"]), safe_num(r["infra_fee"]),
+                    safe_num(r.get("comm_amt", 0)), safe_num(r.get("booking_fee", 0)), safe_num(r.get("return_fee", 0)),
+                    safe_num(r.get("pack_cost", 0)), safe_num(r.get("bo_cost", 0)), max(safe_num(r.get("cogs_amount", 0)), 0),
+                    safe_num(r.get("set_paid", 0)), safe_num(r.get("set_unpaid", 0)), safe_num(r.get("estimated_payout", 0)),
+                    batch_id, r.get("__source_file"), Json(json_safe(row_to_json(r))),
+                ))
+            execute_values(
+                cur,
+                """
+                INSERT INTO tiktok.orders_pnl(
+                    external_order_id, shop_label, order_date, order_status, is_cancelled, brand_group,
+                    total_sku_qty, fee_base_revenue, gmv_before_cancel,
+                    fixed_fee, payment_fee, vxp_fee, infrastructure_fee, commission_amount, booking_fee,
+                    return_shipping_fee, packaging_cost, backoffice_cost, cogs_amount,
+                    settlement_paid, settlement_unpaid, estimated_payout,
+                    batch_id, source_file, raw_payload
+                ) VALUES %s
+                ON CONFLICT (external_order_id, shop_label) DO UPDATE SET
+                    order_date = EXCLUDED.order_date,
+                    order_status = EXCLUDED.order_status,
+                    is_cancelled = EXCLUDED.is_cancelled,
+                    brand_group = EXCLUDED.brand_group,
+                    total_sku_qty = EXCLUDED.total_sku_qty,
+                    fee_base_revenue = EXCLUDED.fee_base_revenue,
+                    gmv_before_cancel = EXCLUDED.gmv_before_cancel,
+                    fixed_fee = EXCLUDED.fixed_fee,
+                    payment_fee = EXCLUDED.payment_fee,
+                    vxp_fee = EXCLUDED.vxp_fee,
+                    infrastructure_fee = EXCLUDED.infrastructure_fee,
+                    commission_amount = EXCLUDED.commission_amount,
+                    booking_fee = EXCLUDED.booking_fee,
+                    return_shipping_fee = EXCLUDED.return_shipping_fee,
+                    packaging_cost = EXCLUDED.packaging_cost,
+                    backoffice_cost = EXCLUDED.backoffice_cost,
+                    cogs_amount = EXCLUDED.cogs_amount,
+                    settlement_paid = EXCLUDED.settlement_paid,
+                    settlement_unpaid = EXCLUDED.settlement_unpaid,
+                    estimated_payout = EXCLUDED.estimated_payout,
+                    batch_id = EXCLUDED.batch_id,
+                    source_file = EXCLUDED.source_file,
+                    raw_payload = EXCLUDED.raw_payload,
+                    updated_at = now()
+                """,
+                vals,
+                page_size=1000,
+            )
+
+            keys = [(r["order_id"], r["__shop_label"]) for r in valid_fact]
+            for oid, shop in keys:
+                cur.execute("DELETE FROM tiktok.order_items WHERE external_order_id = %s AND shop_label = %s", (oid, shop))
+
+            valid_keys = set(keys)
+            item_values = []
+            line_counter: Dict[Tuple[str, str], int] = {}
+            if not item_df.empty:
+                for _, row in item_df.iterrows():
+                    key = (row.get("order_id"), row.get("__shop_label"))
+                    if key not in valid_keys:
+                        continue
+                    line_counter[key] = line_counter.get(key, 0) + 1
+                    sku = row.get("seller_sku", "")
+                    item_values.append((
+                        key[0], key[1], line_counter[key], safe_text(row.get("product_name", ""), 500), sku or None, None,
+                        int(safe_num(row.get("qty_num", 0))), safe_num(row.get("price_num", 0)), max(safe_num(row.get("line_unit_cogs", 0)), 0),
+                        batch_id, row.get("__source_file"), Json(json_safe(row_to_json(row))),
+                    ))
+            if item_values:
+                execute_values(
+                    cur,
+                    """
+                    INSERT INTO tiktok.order_items(
+                        external_order_id, shop_label, line_no, product_name, seller_sku, barcode,
+                        quantity, price, unit_cogs, batch_id, source_file, raw_payload
+                    ) VALUES %s
+                    """,
+                    item_values,
+                    page_size=1000,
+                )
+
+        if ads_rows:
+            ads_values = [
+                (
+                    r["ads_date"],
+                    r["shop_label"],
+                    r["ads_type"],
+                    safe_num(r["cost_vnd"]),
+                    safe_num(r.get("vat_rate", TIKTOK_ADS_VAT_RATE)),
+                    batch_id,
+                    r.get("source_file"),
+                    Json(json_safe(r)),
+                )
+                for r in ads_rows
+                if r.get("ads_date")
+            ]
+            if ads_values:
+                execute_values(
+                    cur,
+                    """
+                    INSERT INTO tiktok.ads_costs(ads_date, shop_label, ads_type, cost_vnd, vat_rate, batch_id, source_file, raw_payload)
+                    VALUES %s
+                    ON CONFLICT (ads_date, shop_label, ads_type) DO UPDATE SET
+                        cost_vnd = EXCLUDED.cost_vnd,
+                        vat_rate = EXCLUDED.vat_rate,
+                        batch_id = EXCLUDED.batch_id,
+                        source_file = EXCLUDED.source_file,
+                        raw_payload = EXCLUDED.raw_payload,
+                        updated_at = now()
+                    """,
+                    ads_values,
+                    page_size=1000,
+                )
+
+        if live_costs:
+            live_values = [
+                (d, shop, safe_num(v.get("in_house") or 0), safe_num(v.get("teaser") or 0), batch_id, Json(json_safe({"live_date": str(d), "shop_label": shop, **v})))
+                for (d, shop), v in live_costs.items()
+            ]
+            if live_values:
+                execute_values(
+                    cur,
+                    """
+                    INSERT INTO tiktok.live_costs(live_date, shop_label, in_house_cost, teaser_cost, batch_id, raw_payload)
+                    VALUES %s
+                    ON CONFLICT (live_date, shop_label) DO UPDATE SET
+                        in_house_cost = EXCLUDED.in_house_cost,
+                        teaser_cost = EXCLUDED.teaser_cost,
+                        batch_id = EXCLUDED.batch_id,
+                        raw_payload = EXCLUDED.raw_payload,
+                        updated_at = now()
+                    """,
+                    live_values,
+                    page_size=1000,
+                )
+
+        rows_loaded = len(valid_fact) + len(ads_rows) + len(live_costs)
+        finish_batch(cur, batch_id, "success", rows_read=(0 if fact_df.empty else len(fact_df)) + len(ads_rows) + len(live_costs), rows_loaded=rows_loaded, rows_error=rows_error)
+        conn.commit()
+        print(f"✅ TikTok DB load: orders={len(valid_fact)}, ads={len(ads_rows)}, live={len(live_costs)}, errors={rows_error}, batch_id={batch_id}")
+        return 0
+    except Exception as e:
+        conn.rollback()
+        if batch_id:
+            try:
+                cur = conn.cursor()
+                finish_batch(cur, batch_id, "failed", rows_read=(0 if fact_df.empty else len(fact_df)), rows_loaded=0, rows_error=rows_error, error_message=str(e)[:2000])
+                conn.commit()
+            except Exception:
+                conn.rollback()
+        traceback.print_exc()
+        return 1
+    finally:
+        cur.close()
+        conn.close()
+
+
+def move_processed(processed: List[Tuple[Path, str]]) -> None:
+    for path, kind in processed:
+        archive_file(path, BASE_OUT / DIRS[kind])
+
+
+def main() -> int:
+    assert_production_schema()
+    ensure_dirs()
+    processed: List[Tuple[Path, str]] = []
+    try:
+        cat_map, book_map = read_master_maps()
+        with connect() as conn:
+            with conn.cursor() as cur:
+                costs = load_cost_map(cur)
+        live_costs, live_files = process_live_costs()
+        fact_df, item_df, order_files = process_orders(costs, cat_map)
+        if not fact_df.empty:
+            fact_df, creator_files = add_creator_commission(fact_df, book_map)
+            fact_df, partner_files = add_partner_commission(fact_df)
+            fact_df, paid_files = add_settlement(fact_df, "paid", "set_paid")
+            fact_df, unpaid_files = add_settlement(fact_df, "unpaid", "set_unpaid")
+            fact_df = calculate_fees(fact_df)
+        else:
+            creator_files = partner_files = paid_files = unpaid_files = []
+        ads_rows, ads_files = process_ads()
+        processed.extend(live_files + order_files + creator_files + partner_files + paid_files + unpaid_files + ads_files)
+        rc = load_to_db(fact_df, item_df, ads_rows, live_costs)
+        if rc == 0:
+            move_processed(processed)
+            print("✅ DONE TikTok ETL production")
+        return rc
+    except Exception:
+        print("❌ TikTok ETL failed. Files were NOT moved.")
+        traceback.print_exc()
+        return 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

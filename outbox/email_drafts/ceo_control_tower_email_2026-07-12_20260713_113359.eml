@@ -1,0 +1,1740 @@
+From: nguyenthienlevu@gmail.com
+To: manhvmv@gmail.com
+Cc: nguyenthienlevu@gmail.com
+Subject: =?utf-8?b?QsOhbyBjw6FvIGNoaSB0aeG6v3QgQ0VPIG5nw6B5?= 12/07/2026
+Message-ID: <178391723969.44248.15140379344078102089@hhdistribution.vn>
+X-HH-Report-Type: CEO_DAILY_CONTROL_TOWER
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============3009998217074175803=="
+
+--===============3009998217074175803==
+Content-Type: multipart/alternative;
+ boundary="===============5271943020662092522=="
+
+--===============5271943020662092522==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+
+Báo cáo chi tiết CEO ngày 12/07/2026
+
+Bao cao CEO Control Tower ngay 2026-07-12 duoc gui duoi dang HTML.
+Neu email client khong hien thi dung, vui long mo file HTML dinh kem.
+
+--===============5271943020662092522==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+<!doctype html>
+<html lang=3D"vi">
+<head>
+  <meta charset=3D"utf-8">
+  <meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D1">
+  <title>CEO Control Tower - S=E1=BB=AFa t=E1=BA=AFm - 2026-07-12</title>
+  <style>
+    :root {
+      --ink:#18201f; --muted:#66716f; --line:#dfe7e3; --soft:#f6f8f5;
+      --cur:#0f8b6d; --prev:#8f9b96; --amber:#b9770e; --red:#b42318; --green:=
+#147d48;
+      --panel:#ffffff; --wash:#eef6f1; --dark:#22312d;
+    }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Arial, Helvetica, sans-serif; color:var(--in=
+k); background:#f7f6f1; line-height:1.45; }
+    .page { max-width:1180px; margin:0 auto; padding:22px; }
+    .hero { background:linear-gradient(135deg,#16352e,#236b59 60%,#b9893c); c=
+olor:white; border-radius:6px; padding:28px; box-shadow:0 18px 45px rgba(20,4=
+3,38,.16); }
+    .hero h1 { margin:0 0 8px; font-size:30px; line-height:1.12; letter-spaci=
+ng:0; }
+    .hero p { margin:6px 0; color:#eaf4ef; max-width:900px; }
+    .meta { display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+    .pill { border:1px solid rgba(255,255,255,.25); background:rgba(255,255,2=
+55,.12); padding:6px 10px; border-radius:999px; font-size:12px; }
+    .kpis { display:grid; grid-template-columns:repeat(6,1fr); gap:12px; marg=
+in:18px 0; }
+    .kpi { background:var(--panel); border:1px solid var(--line); border-radi=
+us:6px; padding:14px; min-height:104px; }
+    .kpi .label { color:var(--muted); font-size:12px; text-transform:uppercas=
+e; font-weight:700; }
+    .kpi .value { font-size:24px; font-weight:800; margin:8px 0 4px; }
+    .kpi .sub { color:var(--muted); font-size:12px; }
+    .kpi.good { border-top:4px solid var(--green); } .kpi.warn { border-top:4=
+px solid var(--amber); } .kpi.bad { border-top:4px solid var(--red); } .kpi.n=
+eutral { border-top:4px solid var(--prev); }
+    section { background:var(--panel); border:1px solid var(--line); border-r=
+adius:6px; padding:20px; margin:14px 0; }
+    section.critical { border-left:5px solid var(--red); } section.focus { bo=
+rder-left:5px solid var(--cur); }
+    h2 { margin:0 0 12px; font-size:20px; letter-spacing:0; } h3 { margin:16p=
+x 0 8px; font-size:15px; }
+    ul { margin:8px 0 0 18px; padding:0; } li { margin:7px 0; }
+    .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .callout { background:var(--wash); border:1px solid #cce4da; padding:14px=
+; border-radius:6px; }
+    .muted { color:var(--muted); } .insight { background:#fff8e8; border-left=
+:4px solid var(--amber); padding:10px 12px; margin:12px 0 0; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radiu=
+s:6px; }
+    table { border-collapse:collapse; width:100%; min-width:920px; background=
+:white; }
+    th, td { border-bottom:1px solid var(--line); padding:9px 10px; vertical-=
+align:top; font-size:13px; }
+    th { background:#edf4ef; text-align:left; color:#263a35; position:sticky;=
+ top:0; z-index:1; }
+    td.num, th.num { text-align:right; white-space:nowrap; font-variant-numer=
+ic:tabular-nums; }
+    .small th, .small td { font-size:12px; padding:7px 8px; }
+    .badge { display:inline-block; padding:4px 8px; border-radius:999px; font=
+-weight:700; font-size:12px; white-space:nowrap; }
+    .p1 { background:#ffe5e2; color:var(--red); } .p2 { background:#fff0d2; c=
+olor:#8a5700; } .p3 { background:#eaf1ff; color:#2554a4; } .watch { backgroun=
+d:#eef1ef; color:#51615d; }
+    .good { color:var(--green); } .bad { color:var(--red); } .neutral { color=
+:var(--muted); }
+    .legend { display:flex; gap:16px; margin-bottom:10px; color:var(--muted);=
+ font-size:13px; }
+    .dot { display:inline-block; width:10px; height:10px; border-radius:50%; =
+margin-right:5px; } .cur-dot { background:var(--cur); } .prev-dot { backgroun=
+d:var(--prev); }
+    .chart-grid { display:grid; gap:10px; }
+    .bar-row { display:grid; grid-template-columns:130px 1fr 115px 1fr 115px;=
+ gap:8px; align-items:center; }
+    .bar-label { font-weight:700; }
+    .bar-box { height:18px; background:#eef1ee; border-radius:999px; overflow=
+:hidden; }
+    .bar { display:block; height:100%; border-radius:999px; } .bar.cur { back=
+ground:var(--cur); } .bar.prev { background:var(--prev); } .bar.neg { backgro=
+und:var(--red); }
+    .bar-value { text-align:right; font-variant-numeric:tabular-nums; font-si=
+ze:12px; }
+    .source-list a { color:#0a6b54; text-decoration:none; } .source-list a:ho=
+ver { text-decoration:underline; }
+    footer { color:var(--muted); font-size:12px; padding:18px 4px 30px; text-=
+align:center; }
+    @media (max-width:900px) { .page { padding:12px; } .kpis { grid-template-=
+columns:repeat(2,1fr); } .grid-2 { grid-template-columns:1fr; } .bar-row { gr=
+id-template-columns:1fr; gap:5px; } .bar-value { text-align:left; } .hero h1 =
+{ font-size:24px; } }
+  </style>
+</head>
+<body>
+<main class=3D"page">
+  <header class=3D"hero">
+    <h1>CEO Control Tower - Hi=E1=BB=87u qu=E1=BA=A3 b=C3=A1n s=E1=BB=AFa t=
+=E1=BA=AFm</h1>
+    <p><strong>K=E1=BB=B3 b=C3=A1o c=C3=A1o:</strong> ng=C3=A0y 2026-07-12 | =
+<strong>So s=C3=A1nh:</strong> ng=C3=A0y 2026-07-11 | <strong>Data Quality:</=
+strong> PASS - C=C3=B3 th=E1=BB=83 g=E1=BB=ADi</p>
+=20
+  </header>
+
+  <div class=3D"kpis">
+    <div class=3D'kpi good'><div class=3D'label'>Net Sales</div><div class=3D=
+'value'>53,590,000</div><div class=3D'sub'>13,371,000 / 33.25% vs 11/07</div>=
+</div><div class=3D'kpi good'><div class=3D'label'>Profit</div><div class=3D'=
+value'>2,528,877</div><div class=3D'sub'>3,761,310; t=E1=BB=AB =C3=A2m sang d=
+=C6=B0=C6=A1ng</div></div><div class=3D'kpi warn'><div class=3D'label'>Profit=
+ Margin</div><div class=3D'value'>4.72%</div><div class=3D'sub'>+7.78 =C4=91i=
+=E1=BB=83m %</div></div><div class=3D'kpi warn'><div class=3D'label'>Ads/DS</=
+div><div class=3D'value'>28.08%</div><div class=3D'sub'>-3.85 =C4=91i=E1=BB=
+=83m %</div></div><div class=3D'kpi neutral'><div class=3D'label'>Orders</div=
+><div class=3D'value'>164</div><div class=3D'sub'>Success 142; Cancel 13.41%<=
+/div></div><div class=3D'kpi bad'><div class=3D'label'>Inventory P1/P2</div><=
+div class=3D'value'>13 / 37</div><div class=3D'sub'>Previous 13 / 37</div></d=
+iv>
+  </div>
+
+  <section class=3D"focus">
+    <h2>Executive Summary</h2>
+    <ul><li>To=C3=A0n c=C3=B4ng ty =C4=91=E1=BA=A3o chi=E1=BB=81u l=E1=BB=A3i=
+ nhu=E1=BA=ADn: Net Sales 53,590,000 so v=E1=BB=9Bi 40,219,000, t=C4=83ng 13,=
+371,000 (33.25%); Profit 2,528,877 so v=E1=BB=9Bi -1,232,433, t=C4=83ng 3,761=
+,310 v=C3=A0 chuy=E1=BB=83n t=E1=BB=AB =C3=A2m sang d=C6=B0=C6=A1ng.</li><li>=
+Profit Margin =C4=91=E1=BA=A1t 4.72%, c=E1=BA=A3i thi=E1=BB=87n +7.78 =C4=91i=
+=E1=BB=83m % nh=C6=B0ng v=E1=BA=ABn d=C6=B0=E1=BB=9Bi ng=C6=B0=E1=BB=A1ng 5%,=
+ c=E1=BA=A7n gi=E1=BB=AF k=E1=BB=B7 lu=E1=BA=ADt chi ph=C3=AD.</li><li>Shopee=
+ l=C3=A0 driver ch=C3=ADnh: Net Sales 40,990,000, t=C4=83ng 20,523,000; Profi=
+t 5,639,629, Ads/DS 16.86%.</li><li>TikTok gi=E1=BA=A3m doanh thu c=C3=B2n 9,=
+416,000 nh=C6=B0ng profit ph=E1=BB=A5c h=E1=BB=93i l=C3=AAn 1,011,683; Ads/DS=
+ h=E1=BA=A1 t=E1=BB=AB 29.88% xu=E1=BB=91ng 19.33%.</li><li>NHANH ti=E1=BA=BF=
+p t=E1=BB=A5c l=C3=A0 P1: Net Sales 3,184,000 nh=C6=B0ng Ads 6,318,316, Ads/D=
+S 198.44%, Profit -4,616,280.</li><li>T=E1=BB=93n kho kh=C3=B4ng =C4=91=E1=BB=
+=95i so v=E1=BB=9Bi ng=C3=A0y tr=C6=B0=E1=BB=9Bc: t=E1=BB=95ng t=E1=BB=93n 14=
+5,114, HN 114,692, HCM 30,422; P1 13, P2 37.</li><li>Top SKU s=E1=BB=91 1 l=
+=C3=A0 ST01172 v=E1=BB=9Bi 24 s=E1=BA=A3n ph=E1=BA=A9m v=C3=A0 Net Sales 6,03=
+0,200, =C4=91=C3=B3ng g=C3=B3p =E1=BB=9F SHOPEE v=C3=A0 TIKTOK.</li></ul>
+  </section>
+
+  <section class=3D"critical">
+    <h2>Decision Brief Cho CEO</h2>
+    <p><strong>To=C3=A0n c=E1=BA=A3nh:</strong> Ng=C3=A0y 12/07 =C4=91=C3=A3 =
+ph=E1=BB=A5c h=E1=BB=93i doanh thu v=C3=A0 chuy=E1=BB=83n l=C3=A3i, nh=C6=B0n=
+g ch=C6=B0a =C4=91=E1=BB=A7 an to=C3=A0n v=C3=AC margin th=E1=BA=A5p v=C3=A0 =
+m=E1=BB=99t k=C3=AAnh =C4=91ang =C4=91=E1=BB=91t ads qu=C3=A1 m=E1=BA=A1nh.</=
+p>
+    <ul><li>=C4=90i=E1=BB=81u =C4=91ang x=E1=BA=A3y ra: ng=C3=A0y 12/07 t=C4=
+=83ng tr=C6=B0=E1=BB=9Fng tr=E1=BB=9F l=E1=BA=A1i v=C3=A0 c=C3=B3 l=C3=A3i, n=
+h=C6=B0ng ch=E1=BA=A5t l=C6=B0=E1=BB=A3ng l=E1=BB=A3i nhu=E1=BA=ADn c=C3=B2n =
+m=E1=BB=8Fng v=C3=AC margin ch=E1=BB=89 4.72%.</li><li>V=C3=AC sao =C4=91=C3=
+=A1ng ch=C3=BA =C3=BD: Shopee k=C3=A9o t=C4=83ng tr=C6=B0=E1=BB=9Fng, TikTok =
+c=E1=BA=A3i thi=E1=BB=87n nh=E1=BB=9D gi=E1=BA=A3m ads, c=C3=B2n NHANH =C4=91=
+=E1=BB=91t ads v=C6=B0=E1=BB=A3t xa doanh thu v=C3=A0 l=C3=A0m =C3=A2m 4,616,=
+280.</li><li>CEO n=C3=AAn quy=E1=BA=BFt h=C3=B4m nay: kh=C3=B3a ng=C3=A2n s=
+=C3=A1ch NHANH theo SKU/campaign c=C3=B3 contribution margin d=C6=B0=C6=A1ng,=
+ gi=E1=BB=AF Shopee scale c=C3=B3 tr=E1=BA=A7n Ads/DS, v=C3=A0 d=C3=B9ng TikT=
+ok theo ng=C6=B0=E1=BB=A1ng d=E1=BB=ABng r=C3=B5.</li><li>Supply Chain c=E1=
+=BA=A7n x=E1=BB=AD l=C3=BD P1 t=E1=BB=93n kho ngay: 13 c=E1=BA=A3nh b=C3=A1o =
+P1, g=E1=BB=93m low-date d=C6=B0=E1=BB=9Bi 12 th=C3=A1ng v=C3=A0 out-of-stock=
+.</li><li>Ecom/Trade Marketing n=C3=AAn =C6=B0u ti=C3=AAn bundle s=E1=BB=AFa =
+t=E1=BA=AFm top SKU v=E1=BB=9Bi h=C3=A0ng low-date ph=C3=B9 h=E1=BB=A3p, kh=
+=C3=B4ng gi=E1=BA=A3m gi=C3=A1 tr=C3=A0n lan l=C3=A0m m=E1=BA=A5t margin v=E1=
+=BB=ABa ph=E1=BB=A5c h=E1=BB=93i.</li></ul>
+    <h3>V=E1=BA=A5n =C4=91=E1=BB=81 t=C3=A1i di=E1=BB=85n t=E1=BB=AB Memory</=
+h3><ul><li>NHANH l=E1=BA=B7p l=E1=BA=A1i nhi=E1=BB=81u k=E1=BB=B3 l=C3=A0 =C4=
+=91i=E1=BB=83m P1 v=E1=BB=81 margin/Ads; ng=C3=A0y 12/07 v=E1=BA=ABn =C3=A2m =
+profit -4,616,280 v=E1=BB=9Bi Ads/DS 198.44%.</li><li>T=E1=BB=93n date th=E1=
+=BA=A5p/out-of-stock ti=E1=BA=BFp t=E1=BB=A5c l=C3=A0 v=E1=BA=A5n =C4=91=E1=
+=BB=81 t=C3=A1i di=E1=BB=85n; current c=C3=B3 P1=3D13 v=C3=A0 P2=3D37 c=E1=BA=
+=A3nh b=C3=A1o t=E1=BB=93n kho.</li></ul>
+  </section>
+
+  <section>
+    <h2>Ch=E1=BB=89 S=E1=BB=91 =C4=90i=E1=BB=81u H=C3=A0nh Ch=C3=ADnh</h2>
+    <div class=3D'table-wrap'><table class=3D'table'><thead><tr><th>Ch=E1=BB=
+=89 s=E1=BB=91</th><th>Current 12/07</th><th>Previous 11/07</th><th>Delta</th=
+><th>Delta %</th></tr></thead><tbody><tr><td class=3D''>Gross Sales</td><td c=
+lass=3D'num'>71,163,000</td><td class=3D'num'>50,607,778</td><td class=3D'num=
+'>20,555,222</td><td class=3D'num'>40.62%</td></tr><tr><td class=3D''>Net Sal=
+es</td><td class=3D'num'>53,590,000</td><td class=3D'num'>40,219,000</td><td =
+class=3D'num'>13,371,000</td><td class=3D'num'>33.25%</td></tr><tr><td class=
+=3D''>COGS</td><td class=3D'num'>12,638,701</td><td class=3D'num'>12,912,573<=
+/td><td class=3D'num'>-273,872</td><td class=3D'num'>-2.12%</td></tr><tr><td =
+class=3D''>Profit</td><td class=3D'num'>2,528,877</td><td class=3D'num'>-1,23=
+2,433</td><td class=3D'num'>3,761,310</td><td class=3D'num'>-305.19%</td></tr=
+><tr><td class=3D''>Profit Margin</td><td class=3D'num'>4.72%</td><td class=
+=3D'num'>-3.06%</td><td class=3D'num'>+7.78 =C4=91i=E1=BB=83m %</td><td class=
+=3D'num'></td></tr><tr><td class=3D''>Ads/DS</td><td class=3D'num'>28.08%</td=
+><td class=3D'num'>31.93%</td><td class=3D'num'>-3.85 =C4=91i=E1=BB=83m %</td=
+><td class=3D'num'></td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>Bi=E1=BB=83u =C4=90=E1=BB=93 So S=C3=A1nh K=E1=BB=B3</h2>
+   =20
+<div class=3D"legend"><span><i class=3D"dot prev-dot"></i> 11/07</span><span>=
+<i class=3D"dot cur-dot"></i> 12/07</span></div>
+<div class=3D"chart-grid">
+ =20
+    <div class=3D"bar-row">
+      <div class=3D"bar-label">Net Sales</div>
+      <div class=3D"bar-box"><span class=3D"bar prev" style=3D"width:75.05%">=
+</span></div>
+      <div class=3D"bar-value neutral">40,219,000</div>
+      <div class=3D"bar-box"><span class=3D"bar cur " style=3D"width:100.00%"=
+></span></div>
+      <div class=3D"bar-value">53,590,000</div>
+    </div>
+   =20
+ =20
+    <div class=3D"bar-row">
+      <div class=3D"bar-label">Profit</div>
+      <div class=3D"bar-box"><span class=3D"bar prev" style=3D"width:48.73%">=
+</span></div>
+      <div class=3D"bar-value neutral">-1,232,433</div>
+      <div class=3D"bar-box"><span class=3D"bar cur " style=3D"width:100.00%"=
+></span></div>
+      <div class=3D"bar-value">2,528,877</div>
+    </div>
+   =20
+ =20
+    <div class=3D"bar-row">
+      <div class=3D"bar-label">Ads</div>
+      <div class=3D"bar-box"><span class=3D"bar prev" style=3D"width:85.33%">=
+</span></div>
+      <div class=3D"bar-value neutral">12,840,224</div>
+      <div class=3D"bar-box"><span class=3D"bar cur " style=3D"width:100.00%"=
+></span></div>
+      <div class=3D"bar-value">15,048,019</div>
+    </div>
+   =20
+ =20
+    <div class=3D"bar-row">
+      <div class=3D"bar-label">Profit Margin</div>
+      <div class=3D"bar-box"><span class=3D"bar prev" style=3D"width:64.83%">=
+</span></div>
+      <div class=3D"bar-value neutral">-3.06%</div>
+      <div class=3D"bar-box"><span class=3D"bar cur " style=3D"width:100.00%"=
+></span></div>
+      <div class=3D"bar-value">4.72%</div>
+    </div>
+   =20
+ =20
+    <div class=3D"bar-row">
+      <div class=3D"bar-label">Ads/DS</div>
+      <div class=3D"bar-box"><span class=3D"bar prev" style=3D"width:100.00%"=
+></span></div>
+      <div class=3D"bar-value neutral">31.93%</div>
+      <div class=3D"bar-box"><span class=3D"bar cur " style=3D"width:87.95%">=
+</span></div>
+      <div class=3D"bar-value">28.08%</div>
+    </div>
+   =20
+</div>
+<p class=3D"insight">H=C3=A0m =C3=BD: t=C4=83ng tr=C6=B0=E1=BB=9Fng ng=C3=A0y=
+ 12/07 =C4=91=E1=BA=BFn ch=E1=BB=A7 y=E1=BA=BFu t=E1=BB=AB Shopee, trong khi =
+Ads/DS to=C3=A0n c=C3=B4ng ty gi=E1=BA=A3m nh=C6=B0ng v=E1=BA=ABn cao 28.08%;=
+ =C6=B0u ti=C3=AAn CEO l=C3=A0 gi=E1=BB=AF scale =E1=BB=9F k=C3=AAnh c=C3=B3 =
+l=C3=A3i v=C3=A0 c=E1=BA=AFt l=E1=BB=97 NHANH trong ng=C3=A0y.</p>
+
+  </section>
+
+  <section>
+    <h2>CEO Email Scorecard Form</h2>
+   <div class=3D'table-wrap'><table class=3D'table small'><thead><tr><th>STT<=
+/th><th>K=C3=AAnh</th><th>Ch=E1=BB=89 ti=C3=AAu th=C3=A1ng</th><th>T=E1=BB=95=
+ng th=E1=BB=B1c hi=E1=BB=87n t=E1=BB=9Bi ng=C3=A0y</th><th>Doanh s=E1=BB=91 n=
+g=C3=A0y</th><th>Chi ph=C3=AD qu=E1=BA=A3ng c=C3=A1o</th><th>Gi=C3=A1 v=E1=BB=
+=91n</th><th>VC/ho=C3=A0n</th><th>Backoffice</th><th>Live</th><th>Booking</th=
+><th>Qu=E1=BA=A3ng c=C3=A1o l=C5=A9y k=E1=BA=BF</th><th>Bao b=C3=AC</th><th>T=
+i=E1=BB=81n thu</th><th>LN c=C3=B2n l=E1=BA=A1i</th><th>% th=E1=BB=B1c hi=E1=
+=BB=87n</th><th>% QC ng=C3=A0y</th><th>% QC l=C5=A9y k=E1=BA=BF</th></tr></th=
+ead><tbody><tr><td class=3D''>1</td><td class=3D''>MT</td><td class=3D'num'>6=
+00,000,000</td><td class=3D'num'>116,054,912</td><td class=3D'num'>0</td><td =
+class=3D'num'>0</td><td class=3D'num'>41,932,794</td><td class=3D'num'>2,321,=
+098</td><td class=3D'num'>17,408,237</td><td class=3D'num'>0</td><td class=3D=
+'num'>0</td><td class=3D'num'>0</td><td class=3D'num'>0</td><td class=3D'num'=
+>116,054,912</td><td class=3D'num'>54,392,783</td><td class=3D'num'>19.3%</td=
+><td class=3D'num'>0</td><td class=3D'num'>0.0%</td></tr><tr><td class=3D''>2=
+</td><td class=3D''>GT</td><td class=3D'num'>350,000,000</td><td class=3D'num=
+'>114,446,880</td><td class=3D'num'>0</td><td class=3D'num'>282,108</td><td c=
+lass=3D'num'>60,857,531</td><td class=3D'num'>2,288,938</td><td class=3D'num'=
+>17,167,032</td><td class=3D'num'>0</td><td class=3D'num'>0</td><td class=3D'=
+num'>2,986,317</td><td class=3D'num'>0</td><td class=3D'num'>114,446,880</td>=
+<td class=3D'num'>31,147,062</td><td class=3D'num'>32.7%</td><td class=3D'num=
+'>100.0%</td><td class=3D'num'>2.6%</td></tr><tr><td class=3D''>3</td><td cla=
+ss=3D''>Digital</td><td class=3D'num'>400,000,000</td><td class=3D'num'>71,32=
+8,000</td><td class=3D'num'>3,184,000</td><td class=3D'num'>6,318,316</td><td=
+ class=3D'num'>21,397,422</td><td class=3D'num'>684,782</td><td class=3D'num'=
+>10,579,800</td><td class=3D'num'>0</td><td class=3D'num'>0</td><td class=3D'=
+num'>46,779,729</td><td class=3D'num'>1,050,000</td><td class=3D'num'>71,328,=
+000</td><td class=3D'num'>-9,163,733</td><td class=3D'num'>17.8%</td><td clas=
+s=3D'num'>198.4%</td><td class=3D'num'>65.6%</td></tr><tr><td class=3D''>4</t=
+d><td class=3D''>Ecom</td><td class=3D'num'>2,300,000,000</td><td class=3D'nu=
+m'>662,577,634</td><td class=3D'num'>50,406,000</td><td class=3D'num'>8,729,7=
+03</td><td class=3D'num'>163,126,110</td><td class=3D'num'>990,000</td><td cl=
+ass=3D'num'>65,999,939</td><td class=3D'num'>2,722,500</td><td class=3D'num'>=
+111,888</td><td class=3D'num'>126,422,829</td><td class=3D'num'>7,668,000</td=
+><td class=3D'num'>439,784,073</td><td class=3D'num'>72,742,807</td><td class=
+=3D'num'>28.8%</td><td class=3D'num'>17.3%</td><td class=3D'num'>19.1%</td></=
+tr><tr><td class=3D''>5</td><td class=3D''>Shopee</td><td class=3D'num'>1,500=
+,000,000</td><td class=3D'num'>534,034,024</td><td class=3D'num'>40,990,000</=
+td><td class=3D'num'>6,909,313</td><td class=3D'num'>131,267,835</td><td clas=
+s=3D'num'>810,000</td><td class=3D'num'>52,025,752</td><td class=3D'num'>0</t=
+d><td class=3D'num'>0</td><td class=3D'num'>93,518,835</td><td class=3D'num'>=
+5,686,000</td><td class=3D'num'>346,838,347</td><td class=3D'num'>63,529,925<=
+/td><td class=3D'num'>35.6%</td><td class=3D'num'>16.9%</td><td class=3D'num'=
+>17.5%</td></tr><tr><td class=3D''>6</td><td class=3D''>Tiktok</td><td class=
+=3D'num'>800,000,000</td><td class=3D'num'>128,543,610</td><td class=3D'num'>=
+9,416,000</td><td class=3D'num'>1,820,390</td><td class=3D'num'>31,858,275</t=
+d><td class=3D'num'>180,000</td><td class=3D'num'>13,974,187</td><td class=3D=
+'num'>2,722,500</td><td class=3D'num'>111,888</td><td class=3D'num'>32,903,99=
+4</td><td class=3D'num'>1,982,000</td><td class=3D'num'>92,945,726</td><td cl=
+ass=3D'num'>9,212,882</td><td class=3D'num'>16.1%</td><td class=3D'num'>19.3%=
+</td><td class=3D'num'>25.6%</td></tr><tr><td class=3D''></td><td class=3D''>=
+T=E1=BB=95ng</td><td class=3D'num'>3,650,000,000</td><td class=3D'num'>964,40=
+7,426</td><td class=3D'num'>53,590,000</td><td class=3D'num'>15,330,127</td><=
+td class=3D'num'>287,313,858</td><td class=3D'num'>6,284,818</td><td class=3D=
+'num'>111,155,008</td><td class=3D'num'>2,722,500</td><td class=3D'num'>111,8=
+88</td><td class=3D'num'>176,188,875</td><td class=3D'num'>8,718,000</td><td =
+class=3D'num'>741,613,865</td><td class=3D'num'>149,118,919</td><td class=3D'=
+num'>26.4%</td><td class=3D'num'>28.6%</td><td class=3D'num'>18.3%</td></tr><=
+/tbody></table></div>
+    <h3>CEO Scorecard Form Theo Mapping T=E1=BB=AB scorecard_by_channel</h3>
+ </section>
+
+  <section>
+    <h2>Scorecard Theo K=C3=AAnh</h2>
+    <div class=3D'table-wrap'><table class=3D'table small'><thead><tr><th>K=
+=C3=AAnh</th><th>Gross Sales</th><th>Net Sales</th><th>COGS</th><th>Gross Mar=
+gin</th><th>GM%</th><th>Ph=C3=AD s=C3=A0n</th><th>VC/ho=C3=A0n</th><th>Ads</t=
+h><th>Ads/DS</th><th>Live</th><th>Booking</th><th>Backoffice</th><th>Packagin=
+g</th><th>Payout</th><th>Profit</th><th>Profit Margin</th><th>C=E1=BA=A3nh b=
+=C3=A1o</th><th>Action</th></tr></thead><tbody><tr><td class=3D''>NHANH</td><=
+td class=3D'num'>3,184,000</td><td class=3D'num'>3,184,000</td><td class=3D'n=
+um'>963,234</td><td class=3D'num'>2,220,766</td><td class=3D'num'>69.75%</td>=
+<td class=3D'num'>0</td><td class=3D'num'>-6,870</td><td class=3D'num'>6,318,=
+316</td><td class=3D'num'>198.44%</td><td class=3D'num'>0</td><td class=3D'nu=
+m'>0</td><td class=3D'num'>477,600</td><td class=3D'num'>48,000</td><td class=
+=3D'num'>0</td><td class=3D'num'>-4,616,280</td><td class=3D'num'>-144.98%</t=
+d><td class=3D'num'><span class=3D'badge p1'>P1: Profit margin r=E1=BA=A5t th=
+=E1=BA=A5p</span></td><td class=3D'num'>R=C3=A0 ngay chi ph=C3=AD ads/fee/liv=
+e/booking v=C3=A0 SKU =C4=91ang k=C3=A9o l=E1=BB=97.</td></tr><tr><td class=
+=3D''>SHOPEE</td><td class=3D'num'>55,186,000</td><td class=3D'num'>40,990,00=
+0</td><td class=3D'num'>9,474,259</td><td class=3D'num'>31,515,741</td><td cl=
+ass=3D'num'>76.89%</td><td class=3D'num'>14,623,881</td><td class=3D'num'>0</=
+td><td class=3D'num'>6,909,313</td><td class=3D'num'>16.86%</td><td class=3D'=
+num'>0</td><td class=3D'num'>0</td><td class=3D'num'>3,954,918</td><td class=
+=3D'num'>388,000</td><td class=3D'num'>26,366,119</td><td class=3D'num'>5,639=
+,629</td><td class=3D'num'>13.76%</td><td class=3D'num'><span class=3D'badge =
+watch'>Theo d=C3=B5i</span></td><td class=3D'num'>Duy tr=C3=AC, t=E1=BB=91i =
+=C6=B0u SKU v=C3=A0 ng=C3=A2n s=C3=A1ch.</td></tr><tr><td class=3D''>TIKTOK</=
+td><td class=3D'num'>12,793,000</td><td class=3D'num'>9,416,000</td><td class=
+=3D'num'>2,201,208</td><td class=3D'num'>7,214,792</td><td class=3D'num'>76.6=
+2%</td><td class=3D'num'>3,210,493</td><td class=3D'num'>0</td><td class=3D'n=
+um'>1,820,390</td><td class=3D'num'>19.33%</td><td class=3D'num'>0</td><td cl=
+ass=3D'num'>0</td><td class=3D'num'>998,226</td><td class=3D'num'>174,000</td=
+><td class=3D'num'>6,654,810</td><td class=3D'num'>1,011,683</td><td class=3D=
+'num'>10.74%</td><td class=3D'num'><span class=3D'badge watch'>Theo d=C3=B5i<=
+/span></td><td class=3D'num'>Duy tr=C3=AC, t=E1=BB=91i =C6=B0u SKU v=C3=A0 ng=
+=C3=A2n s=C3=A1ch.</td></tr></tbody></table></div>
+    <div class=3D"grid-2">
+      <div class=3D"callout"><strong>K=C3=AAnh t=C4=83ng doanh thu m=E1=BA=A1=
+nh nh=E1=BA=A5t:</strong> SHOPEE (20,523,000).</div>
+      <div class=3D"callout"><strong>K=C3=AAnh gi=E1=BA=A3m doanh thu m=E1=BA=
+=A1nh nh=E1=BA=A5t:</strong> GT (-6,240,000).</div>
+      <div class=3D"callout"><strong>K=C3=AAnh l=E1=BB=A3i nhu=E1=BA=ADn x=E1=
+=BA=A5u =C4=91i m=E1=BA=A1nh nh=E1=BA=A5t:</strong> NHANH (-338,222).</div>
+      <div class=3D"callout"><strong>Ads/DS v=C6=B0=E1=BB=A3t ng=C6=B0=E1=BB=
+=A1ng:</strong> NHANH 198.44%</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Top SKU To=C3=A0n C=C3=B4ng Ty</h2>
+    <p class=3D"muted">SKU v=E1=BA=ABn n=E1=BA=B1m top: 3; SKU m=E1=BB=9Bi v=
+=C3=A0o top: 7; SKU r=E1=BB=9Bt kh=E1=BB=8Fi top: 7.</p>
+    <div class=3D'table-wrap'><table class=3D'table small'><thead><tr><th>Ran=
+k</th><th>SKU</th><th>T=C3=AAn s=E1=BA=A3n ph=E1=BA=A9m</th><th>Qty sold</th>=
+<th>Net Sales</th><th>K=C3=AAnh =C4=91=C3=B3ng g=C3=B3p</th><th>So v=E1=BB=9B=
+i top ng=C3=A0y tr=C6=B0=E1=BB=9Bc</th></tr></thead><tbody><tr><td class=3D''=
+>1</td><td class=3D''>ST01172</td><td class=3D''>S=E1=BB=AFa T=E1=BA=AFm Ph=
+=C3=A1p Le Petit Marseillais Cho Nam Chi=E1=BA=BFt Xu=E1=BA=A5t Thi=C3=AAn Nh=
+i=C3=AAn 4in1 Nhi=E1=BB=81u M=C3=B9i=E2=80=A6</td><td class=3D'num'>24</td><t=
+d class=3D'num'>6,030,200</td><td class=3D'num'>SHOPEE, TIKTOK</td><td class=
+=3D'num'>V=E1=BA=ABn n=E1=BA=B1m top</td></tr><tr><td class=3D''>2</td><td cl=
+ass=3D''>ST01902</td><td class=3D''>[KOL huynhdangthong x LPM] S=E1=BB=AFa T=
+=E1=BA=AFm/Gel T=E1=BA=AFm Ph=C3=A1p Le Petit Marseillais Chi=E1=BA=BFt Xu=E1=
+=BA=A5t=E2=80=A6</td><td class=3D'num'>13</td><td class=3D'num'>5,146,250</td=
+><td class=3D'num'>SHOPEE, TIKTOK</td><td class=3D'num'>V=E1=BA=ABn n=E1=BA=
+=B1m top</td></tr><tr><td class=3D''>3</td><td class=3D''>ST68816</td><td cla=
+ss=3D''>[KOL huynhdangthong x LPM] S=E1=BB=AFa T=E1=BA=AFm/Gel T=E1=BA=AFm Ph=
+=C3=A1p Le Petit Marseillais Chi=E1=BA=BFt Xu=E1=BA=A5t=E2=80=A6</td><td clas=
+s=3D'num'>9</td><td class=3D'num'>3,447,250</td><td class=3D'num'>SHOPEE, TIK=
+TOK</td><td class=3D'num'>M=E1=BB=9Bi v=C3=A0o top</td></tr><tr><td class=3D'=
+'>4</td><td class=3D''>ST01431</td><td class=3D''>S=E1=BB=AFa T=E1=BA=AFm Ph=
+=C3=A1p Le Petit Marseillais Cho Nam Chi=E1=BA=BFt Xu=E1=BA=A5t Thi=C3=AAn Nh=
+i=C3=AAn 4in1 Nhi=E1=BB=81u M=C3=B9i=E2=80=A6</td><td class=3D'num'>8</td><td=
+ class=3D'num'>1,854,200</td><td class=3D'num'>SHOPEE, TIKTOK</td><td class=
+=3D'num'>V=E1=BA=ABn n=E1=BA=B1m top</td></tr><tr><td class=3D''>5</td><td cl=
+ass=3D''>3574661701356</td><td class=3D''>S=E1=BB=AFa T=E1=BA=AFm Ph=C3=A1p L=
+e Petit Marseillais Cho Nam Chi=E1=BA=BFt Xu=E1=BA=A5t Thi=C3=AAn Nhi=C3=AAn =
+4in1 Nhi=E1=BB=81u M=C3=B9i=E2=80=A6</td><td class=3D'num'>8</td><td class=3D=
+'num'>1,592,000</td><td class=3D'num'>NHANH</td><td class=3D'num'>M=E1=BB=9Bi=
+ v=C3=A0o top</td></tr><tr><td class=3D''>6</td><td class=3D''>1 B=C3=81NH-XP=
+</td><td class=3D''>X=C3=A0 Ph=C3=B2ng Le Petit Marseillais Ch=C3=ADnh H=C3=
+=A3ng B=C3=A1nh X=C3=A0 Ph=C3=B2ng T=E1=BA=AFm Thi=C3=AAn Nhi=C3=AAn (Ng=E1=
+=BA=ABu nh=E2=80=A6</td><td class=3D'num'>8</td><td class=3D'num'>225,000</td=
+><td class=3D'num'>TIKTOK</td><td class=3D'num'>M=E1=BB=9Bi v=C3=A0o top</td>=
+</tr><tr><td class=3D''>7</td><td class=3D''>ST01288</td><td class=3D''>S=E1=
+=BB=AFa T=E1=BA=AFm/Gel T=E1=BA=AFm Ph=C3=A1p Le Petit Marseillais Chi=E1=BA=
+=BFt Xu=E1=BA=A5t Thi=C3=AAn Nhi=C3=AAn 650ml - S=E1=BB=AFa T=E1=BA=AF=E2=80=
+=A6</td><td class=3D'num'>7</td><td class=3D'num'>2,968,000</td><td class=3D'=
+num'>SHOPEE, TIKTOK</td><td class=3D'num'>M=E1=BB=9Bi v=C3=A0o top</td></tr><=
+tr><td class=3D''>8</td><td class=3D''>ST48441</td><td class=3D''>S=E1=BB=AFa=
+ T=E1=BA=AFm/Gel T=E1=BA=AFm Ph=C3=A1p Le Petit Marseillais Thi=C3=AAn Nhi=C3=
+=AAn 250ml - S=E1=BB=AFa T=E1=BA=AFm L=C6=B0u H=C6=B0=C6=A1ng=E2=80=A6</td><t=
+d class=3D'num'>7</td><td class=3D'num'>1,497,000</td><td class=3D'num'>SHOPE=
+E</td><td class=3D'num'>M=E1=BB=9Bi v=C3=A0o top</td></tr><tr><td class=3D''>=
+9</td><td class=3D''>3574661701172</td><td class=3D''>S=E1=BB=AFa T=E1=BA=AFm=
+ D=E1=BA=A1ng Kem Le Petit Marseillais 4 Trong 1 M=C3=A1t L=E1=BA=A1nh V=E1=
+=BB=9Bi Chi=E1=BA=BFt Xu=E1=BA=A5t G=E1=BB=97 Tuy=E1=BA=BF=E2=80=A6</td><td c=
+lass=3D'num'>7</td><td class=3D'num'>1,393,000</td><td class=3D'num'>NHANH</t=
+d><td class=3D'num'>M=E1=BB=9Bi v=C3=A0o top</td></tr><tr><td class=3D''>10</=
+td><td class=3D''>ST68823</td><td class=3D''>[KOL huynhdangthong x LPM] S=E1=
+=BB=AFa T=E1=BA=AFm/Gel T=E1=BA=AFm Ph=C3=A1p Le Petit Marseillais Chi=E1=BA=
+=BFt Xu=E1=BA=A5t=E2=80=A6</td><td class=3D'num'>6</td><td class=3D'num'>2,36=
+4,000</td><td class=3D'num'>SHOPEE</td><td class=3D'num'>M=E1=BB=9Bi v=C3=A0o=
+ top</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>Top SKU Theo K=C3=AAnh</h2>
+    <p class=3D"muted">Shopee c=C3=B3 d=E1=BB=AF li=E1=BB=87u v=C3=A0 =C4=91=
+=C6=B0=E1=BB=A3c hi=E1=BB=83n th=E1=BB=8B =C4=91=E1=BA=A7y =C4=91=E1=BB=A7 th=
+eo package.</p>
+    <div class=3D'table-wrap'><table class=3D'table small'><thead><tr><th>K=
+=C3=AAnh</th><th>Rank</th><th>SKU</th><th>T=C3=AAn s=E1=BA=A3n ph=E1=BA=A9m</=
+th><th>Qty sold</th><th>Net Sales</th></tr></thead><tbody><tr><td class=3D''>=
+NHANH</td><td class=3D'num'>1</td><td class=3D'num'>3574661701356</td><td cla=
+ss=3D'num'>S=E1=BB=AFa T=E1=BA=AFm Ph=C3=A1p Le Petit Marseillais Cho Nam Chi=
+=E1=BA=BFt Xu=E1=BA=A5t Thi=C3=AAn Nhi=C3=AAn 4in1 Nhi=E1=BB=81u M=C3=B9i H=
+=E2=80=A6</td><td class=3D'num'>8</td><td class=3D'num'>1,592,000</td></tr><t=
+r><td class=3D''>NHANH</td><td class=3D'num'>2</td><td class=3D'num'>35746617=
+01172</td><td class=3D'num'>S=E1=BB=AFa T=E1=BA=AFm D=E1=BA=A1ng Kem Le Petit=
+ Marseillais 4 Trong 1 M=C3=A1t L=E1=BA=A1nh V=E1=BB=9Bi Chi=E1=BA=BFt Xu=E1=
+=BA=A5t G=E1=BB=97 Tuy=E1=BA=BFt =E2=80=A6</td><td class=3D'num'>7</td><td cl=
+ass=3D'num'>1,393,000</td></tr><tr><td class=3D''>NHANH</td><td class=3D'num'=
+>3</td><td class=3D'num'>3574661701431</td><td class=3D'num'>S=E1=BB=AFa T=E1=
+=BA=AFm Ph=C3=A1p Le Petit Marseillais Cho Nam Chi=E1=BA=BFt Xu=E1=BA=A5t Thi=
+=C3=AAn Nhi=C3=AAn 4in1 Nhi=E1=BB=81u M=C3=B9i H=E2=80=A6</td><td class=3D'nu=
+m'>1</td><td class=3D'num'>199,000</td></tr><tr><td class=3D''>SHOPEE</td><td=
+ class=3D'num'>1</td><td class=3D'num'>ST01902</td><td class=3D'num'>[KOL huy=
+nhdangthong x LPM] S=E1=BB=AFa T=E1=BA=AFm/Gel T=E1=BA=AFm Ph=C3=A1p Le Petit=
+ Marseillais Chi=E1=BA=BFt Xu=E1=BA=A5t T=E2=80=A6</td><td class=3D'num'>11</=
+td><td class=3D'num'>4,148,250</td></tr><tr><td class=3D''>SHOPEE</td><td cla=
+ss=3D'num'>2</td><td class=3D'num'>ST68816</td><td class=3D'num'>[KOL huynhda=
+ngthong x LPM] S=E1=BB=AFa T=E1=BA=AFm/Gel T=E1=BA=AFm Ph=C3=A1p Le Petit Mar=
+seillais Chi=E1=BA=BFt Xu=E1=BA=A5t T=E2=80=A6</td><td class=3D'num'>8</td><t=
+d class=3D'num'>2,948,250</td></tr><tr><td class=3D''>SHOPEE</td><td class=3D=
+'num'>3</td><td class=3D'num'>ST48441</td><td class=3D'num'>S=E1=BB=AFa T=E1=
+=BA=AFm/Gel T=E1=BA=AFm Ph=C3=A1p Le Petit Marseillais Thi=C3=AAn Nhi=C3=AAn =
+250ml - S=E1=BB=AFa T=E1=BA=AFm L=C6=B0u H=C6=B0=C6=A1ng L=E2=80=A6</td><td c=
+lass=3D'num'>7</td><td class=3D'num'>1,497,000</td></tr><tr><td class=3D''>SH=
+OPEE</td><td class=3D'num'>4</td><td class=3D'num'>ST01172</td><td class=3D'n=
+um'>S=E1=BB=AFa T=E1=BA=AFm Ph=C3=A1p Le Petit Marseillais Cho Nam Chi=E1=BA=
+=BFt Xu=E1=BA=A5t Thi=C3=AAn Nhi=C3=AAn 4in1 Nhi=E1=BB=81u M=C3=B9i H=E2=80=
+=A6</td><td class=3D'num'>7</td><td class=3D'num'>1,457,200</td></tr><tr><td =
+class=3D''>SHOPEE</td><td class=3D'num'>5</td><td class=3D'num'>ST68823</td><=
+td class=3D'num'>[KOL huynhdangthong x LPM] S=E1=BB=AFa T=E1=BA=AFm/Gel T=E1=
+=BA=AFm Ph=C3=A1p Le Petit Marseillais Chi=E1=BA=BFt Xu=E1=BA=A5t T=E2=80=A6<=
+/td><td class=3D'num'>6</td><td class=3D'num'>2,364,000</td></tr><tr><td clas=
+s=3D''>TIKTOK</td><td class=3D'num'>1</td><td class=3D'num'>ST01172</td><td c=
+lass=3D'num'>S=E1=BB=AFa T=E1=BA=AFm Ph=C3=A1p Le Petit Marseillais Cho Nam C=
+hi=E1=BA=BFt Xu=E1=BA=A5t Thi=C3=AAn Nhi=C3=AAn 4in1 Nhi=E1=BB=81u M=C3=B9i H=
+=E2=80=A6</td><td class=3D'num'>17</td><td class=3D'num'>4,573,000</td></tr><=
+tr><td class=3D''>TIKTOK</td><td class=3D'num'>2</td><td class=3D'num'>1 B=C3=
+=81NH-XP</td><td class=3D'num'>X=C3=A0 Ph=C3=B2ng Le Petit Marseillais Ch=C3=
+=ADnh H=C3=A3ng B=C3=A1nh X=C3=A0 Ph=C3=B2ng T=E1=BA=AFm Thi=C3=AAn Nhi=C3=AA=
+n (Ng=E1=BA=ABu nhi=C3=AA=E2=80=A6</td><td class=3D'num'>8</td><td class=3D'n=
+um'>225,000</td></tr><tr><td class=3D''>TIKTOK</td><td class=3D'num'>3</td><t=
+d class=3D'num'>ST01356</td><td class=3D'num'>S=E1=BB=AFa T=E1=BA=AFm Ph=C3=
+=A1p Le Petit Marseillais Cho Nam Chi=E1=BA=BFt Xu=E1=BA=A5t Thi=C3=AAn Nhi=
+=C3=AAn 4in1 Nhi=E1=BB=81u M=C3=B9i H=E2=80=A6</td><td class=3D'num'>3</td><t=
+d class=3D'num'>807,000</td></tr><tr><td class=3D''>TIKTOK</td><td class=3D'n=
+um'>4</td><td class=3D'num'>ST01431</td><td class=3D'num'>S=E1=BB=AFa T=E1=BA=
+=AFm Ph=C3=A1p Le Petit Marseillais Cho Nam Chi=E1=BA=BFt Xu=E1=BA=A5t Thi=C3=
+=AAn Nhi=C3=AAn 4in1 Nhi=E1=BB=81u M=C3=B9i H=E2=80=A6</td><td class=3D'num'>=
+3</td><td class=3D'num'>807,000</td></tr><tr><td class=3D''>TIKTOK</td><td cl=
+ass=3D'num'>5</td><td class=3D'num'>3574661701455</td><td class=3D'num'>S=E1=
+=BB=AFa T=E1=BA=AFm Ph=C3=A1p Le Petit Marseillais Cho Nam Chi=E1=BA=BFt Xu=
+=E1=BA=A5t Thi=C3=AAn Nhi=C3=AAn 4in1 Nhi=E1=BB=81u M=C3=B9i H=E2=80=A6</td><=
+td class=3D'num'>3</td><td class=3D'num'>807,000</td></tr></tbody></table></d=
+iv>
+  </section>
+
+  <section class=3D"critical">
+    <h2>T=E1=BB=93n Kho V=C3=A0 C=E1=BA=A3nh B=C3=A1o T=E1=BB=93n Kho</h2>
+    <div class=3D"grid-2">
+      <div class=3D"callout"><strong>T=E1=BB=95ng t=E1=BB=93n:</strong> 145,1=
+14 | HN 114,692 | HCM 30,422</div>
+      <div class=3D"callout"><strong>C=E1=BA=A3nh b=C3=A1o:</strong> P1 13 | =
+P2 37 | P3 0</div>
+      <div class=3D"callout"><strong>SKU P1 m=E1=BB=9Bi ph=C3=A1t sinh:</stro=
+ng> 0 | <strong>SKU h=E1=BA=BFt c=E1=BA=A3nh b=C3=A1o P1:</strong> 0</div>
+      <div class=3D"callout"><strong>H=C3=A0ng h=E1=BA=BFt date:</strong> Kh=
+=C3=B4ng c=C3=B3 h=C3=A0ng h=E1=BA=BFt date trong package; c=C3=B3 h=C3=A0ng =
+low-date d=C6=B0=E1=BB=9Bi 12 th=C3=A1ng.</div>
+    </div>
+    <div class=3D'table-wrap'><table class=3D'table small'><thead><tr><th>Pri=
+ority</th><th>Lo=E1=BA=A1i c=E1=BA=A3nh b=C3=A1o</th><th>SKU</th><th>T=C3=AAn=
+ s=E1=BA=A3n ph=E1=BA=A9m</th><th>T=E1=BB=95ng t=E1=BB=93n</th><th>HN</th><th=
+>HCM</th><th>Affected qty</th><th>Affected %</th><th>HSD s=E1=BB=9Bm nh=E1=BA=
+=A5t</th><th>G=E1=BB=A3i =C3=BD x=E1=BB=AD l=C3=BD</th></tr></thead><tbody><t=
+r><td class=3D''><span class=3D'badge p1'>P1</span></td><td class=3D''>LOW_DA=
+TE_UNDER_12M</td><td class=3D''>3574661506999</td><td class=3D''>[KOL Huynhda=
+ngthong x LPM] S=E1=BB=AFa T=E1=BA=AFm V=C3=A0 Ng=C3=A2m B=E1=BB=93n D=E1=BA=
+=A1ng Kem Le Petit Marseill=E2=80=A6</td><td class=3D'num'>7,147</td><td clas=
+s=3D'num'>6,294</td><td class=3D'num'>853</td><td class=3D'num'>853</td><td c=
+lass=3D'num'>11.94%</td><td class=3D'num'>2027-03-22</td><td class=3D'num'>Sa=
+les + Marketing ph=E1=BA=A3i l=C3=AAn ch=C6=B0=C6=A1ng tr=C3=ACnh =C4=91=E1=
+=BA=A9y g=E1=BA=A5p.</td></tr><tr><td class=3D''><span class=3D'badge p1'>P1<=
+/span></td><td class=3D''>LOW_DATE_UNDER_12M</td><td class=3D''>3574661753379=
+</td><td class=3D''>S=E1=BB=AFa t=E1=BA=AFm Thi=C3=AAn Nhi=C3=AAn Ph=C3=A1p L=
+e Petit Marseillais Nhi=E1=BB=81u M=C3=B9i H=C6=B0=C6=A1ng D=E1=BB=8Bu Nh=E1=
+=BA=B9 Cho=E2=80=A6</td><td class=3D'num'>3,907</td><td class=3D'num'>3,330</=
+td><td class=3D'num'>577</td><td class=3D'num'>577</td><td class=3D'num'>14.7=
+7%</td><td class=3D'num'>2027-04-19</td><td class=3D'num'>Sales + Marketing p=
+h=E1=BA=A3i l=C3=AAn ch=C6=B0=C6=A1ng tr=C3=ACnh =C4=91=E1=BA=A9y g=E1=BA=A5p=
+.</td></tr><tr><td class=3D''><span class=3D'badge p1'>P1</span></td><td clas=
+s=3D''>LOW_DATE_UNDER_12M</td><td class=3D''>3574661700809</td><td class=3D''=
+>S=E1=BB=AFa T=E1=BA=AFm/Gel T=E1=BA=AFm Ph=C3=A1p Le Petit Marseillais Chi=
+=E1=BA=BFt Xu=E1=BA=A5t Thi=C3=AAn Nhi=C3=AAn 650ml - =E2=80=A6</td><td class=
+=3D'num'>4,727</td><td class=3D'num'>4,224</td><td class=3D'num'>503</td><td =
+class=3D'num'>503</td><td class=3D'num'>10.64%</td><td class=3D'num'>2027-04-=
+23</td><td class=3D'num'>Sales + Marketing ph=E1=BA=A3i l=C3=AAn ch=C6=B0=C6=
+=A1ng tr=C3=ACnh =C4=91=E1=BA=A9y g=E1=BA=A5p.</td></tr><tr><td class=3D''><s=
+pan class=3D'badge p1'>P1</span></td><td class=3D''>LOW_DATE_UNDER_12M</td><t=
+d class=3D''>3574661700991</td><td class=3D''>S=E1=BB=AFa T=E1=BA=AFm/Gel T=
+=E1=BA=AFm Ph=C3=A1p Le Petit Marseillais Chi=E1=BA=BFt Xu=E1=BA=A5t Thi=C3=
+=AAn Nhi=C3=AAn 650ml - =E2=80=A6</td><td class=3D'num'>1,413</td><td class=
+=3D'num'>962</td><td class=3D'num'>451</td><td class=3D'num'>316</td><td clas=
+s=3D'num'>22.36%</td><td class=3D'num'>2027-05-05</td><td class=3D'num'>Sales=
+ + Marketing ph=E1=BA=A3i l=C3=AAn ch=C6=B0=C6=A1ng tr=C3=ACnh =C4=91=E1=BA=
+=A9y g=E1=BA=A5p.</td></tr><tr><td class=3D''><span class=3D'badge p1'>P1</sp=
+an></td><td class=3D''>LOW_DATE_UNDER_12M</td><td class=3D''>3574661574752</t=
+d><td class=3D''>D=E1=BA=A7u X=E1=BA=A3 H=E1=BB=AFu C=C6=A1 D=C6=B0=E1=BB=A1n=
+g =E1=BA=A8m Le Petit Marseillais D=E1=BB=ABa D=C6=B0=E1=BB=A1ng =E1=BA=A8m, =
+Th=C6=A1m L=C3=A2u - Ph=C3=B9 =E2=80=A6</td><td class=3D'num'>1,536</td><td c=
+lass=3D'num'>1,222</td><td class=3D'num'>314</td><td class=3D'num'>314</td><t=
+d class=3D'num'>20.44%</td><td class=3D'num'>2026-11-10</td><td class=3D'num'=
+>Sales + Marketing ph=E1=BA=A3i l=C3=AAn ch=C6=B0=C6=A1ng tr=C3=ACnh =C4=91=
+=E1=BA=A9y g=E1=BA=A5p.</td></tr><tr><td class=3D''><span class=3D'badge p1'>=
+P1</span></td><td class=3D''>LOW_DATE_UNDER_12M</td><td class=3D''>3574661778=
+785</td><td class=3D''>D=E1=BA=A7u X=E1=BA=A3 H=E1=BB=AFu C=C6=A1 D=C6=B0=E1=
+=BB=A1ng =E1=BA=A8m Le Petit Marseillais D=E1=BB=ABa D=C6=B0=E1=BB=A1ng =E1=
+=BA=A8m, Th=C6=A1m L=C3=A2u - Ph=C3=B9 =E2=80=A6</td><td class=3D'num'>717</t=
+d><td class=3D'num'>428</td><td class=3D'num'>289</td><td class=3D'num'>289</=
+td><td class=3D'num'>40.31%</td><td class=3D'num'>2027-01-30</td><td class=3D=
+'num'>Sales + Marketing ph=E1=BA=A3i l=C3=AAn ch=C6=B0=C6=A1ng tr=C3=ACnh =C4=
+=91=E1=BA=A9y g=E1=BA=A5p.</td></tr><tr><td class=3D''><span class=3D'badge p=
+1'>P1</span></td><td class=3D''>LOW_DATE_UNDER_12M</td><td class=3D''>3574661=
+701868</td><td class=3D''>S=E1=BB=AFa T=E1=BA=AFm/Gel T=E1=BA=AFm Ph=C3=A1p L=
+e Petit Marseillais Chi=E1=BA=BFt Xu=E1=BA=A5t Thi=C3=AAn Nhi=C3=AAn 650ml - =
+=E2=80=A6</td><td class=3D'num'>858</td><td class=3D'num'>647</td><td class=
+=3D'num'>211</td><td class=3D'num'>211</td><td class=3D'num'>24.59%</td><td c=
+lass=3D'num'>2027-04-23</td><td class=3D'num'>Sales + Marketing ph=E1=BA=A3i =
+l=C3=AAn ch=C6=B0=C6=A1ng tr=C3=ACnh =C4=91=E1=BA=A9y g=E1=BA=A5p.</td></tr><=
+tr><td class=3D''><span class=3D'badge p1'>P1</span></td><td class=3D''>LOW_D=
+ATE_UNDER_12M</td><td class=3D''>3574661404660</td><td class=3D''>S=E1=BB=AFa=
+ D=C6=B0=E1=BB=A1ng Th=E1=BB=83 Le Petit Marseillais D=C6=B0=E1=BB=A1ng =E1=
+=BA=A8m Nu=C3=B4i D=C6=B0=E1=BB=A1ng Da Nhi=E1=BB=81u M=C3=B9i H=C6=B0=C6=A1n=
+g=E2=80=A6</td><td class=3D'num'>235</td><td class=3D'num'>126</td><td class=
+=3D'num'>109</td><td class=3D'num'>109</td><td class=3D'num'>46.38%</td><td c=
+lass=3D'num'>2027-02-07</td><td class=3D'num'>Sales + Marketing ph=E1=BA=A3i =
+l=C3=AAn ch=C6=B0=C6=A1ng tr=C3=ACnh =C4=91=E1=BA=A9y g=E1=BA=A5p.</td></tr><=
+tr><td class=3D''><span class=3D'badge p1'>P1</span></td><td class=3D''>LOW_D=
+ATE_UNDER_12M</td><td class=3D''>3574661574035</td><td class=3D''>D=E1=BA=A7u=
+ G=E1=BB=99i Le Petit Marseillais S=E1=BA=A1ch G=C3=A0u D=C3=A0nh Cho Nam V=
+=E1=BB=9Bi Chi=E1=BA=BFt Xu=E1=BA=A5t Tinh D=E1=BA=A7=E2=80=A6</td><td class=
+=3D'num'>2,992</td><td class=3D'num'>2,295</td><td class=3D'num'>697</td><td =
+class=3D'num'>97</td><td class=3D'num'>3.24%</td><td class=3D'num'>2027-04-19=
+</td><td class=3D'num'>Sales + Marketing ph=E1=BA=A3i l=C3=AAn ch=C6=B0=C6=A1=
+ng tr=C3=ACnh =C4=91=E1=BA=A9y g=E1=BA=A5p.</td></tr><tr><td class=3D''><span=
+ class=3D'badge p1'>P1</span></td><td class=3D''>LOW_DATE_UNDER_12M</td><td c=
+lass=3D''>3574661753362</td><td class=3D''>[Deal Live Mua 1 T=E1=BA=B7ng 1 Fu=
+ll Size] S=E1=BB=AFa t=E1=BA=AFm Thi=C3=AAn Nhi=C3=AAn Ph=C3=A1p Le Petit Mar=
+s=E2=80=A6</td><td class=3D'num'>2</td><td class=3D'num'>0</td><td class=3D'n=
+um'>2</td><td class=3D'num'>2</td><td class=3D'num'>100.00%</td><td class=3D'=
+num'>2026-10-26</td><td class=3D'num'>Sales + Marketing ph=E1=BA=A3i l=C3=AAn=
+ ch=C6=B0=C6=A1ng tr=C3=ACnh =C4=91=E1=BA=A9y g=E1=BA=A5p.</td></tr><tr><td c=
+lass=3D''><span class=3D'badge p1'>P1</span></td><td class=3D''>LOW_STOCK_CRI=
+TICAL</td><td class=3D''>3574661700755</td><td class=3D''>S=E1=BB=AFa T=E1=BA=
+=AFm/Gel T=E1=BA=AFm Ph=C3=A1p Le Petit Marseillais Chi=E1=BA=BFt Xu=E1=BA=A5=
+t Thi=C3=AAn Nhi=C3=AAn 650ml - =E2=80=A6</td><td class=3D'num'>31</td><td cl=
+ass=3D'num'>31</td><td class=3D'num'>0</td><td class=3D'num'>0</td><td class=
+=3D'num'>0.00%</td><td class=3D'num'>2028-05-06</td><td class=3D'num'>Kho + m=
+ua h=C3=A0ng ki=E1=BB=83m tra k=E1=BA=BF ho=E1=BA=A1ch b=E1=BB=95 sung t=E1=
+=BB=93n trong ng=C3=A0y.</td></tr><tr><td class=3D''><span class=3D'badge p1'=
+>P1</span></td><td class=3D''>OUT_OF_STOCK</td><td class=3D''>3574661701318</=
+td><td class=3D''>S=E1=BB=AFa T=E1=BA=AFm D=E1=BA=A1ng Kem Le Petit Marseilla=
+is 4 Trong 1 V=E1=BB=9Bi Chi=E1=BA=BFt Xu=E1=BA=A9t G=E1=BB=97 Ho=C3=A0ng =C4=
+=90=E2=80=A6</td><td class=3D'num'>0</td><td class=3D'num'>0</td><td class=3D=
+'num'>0</td><td class=3D'num'>0</td><td class=3D'num'>0.00%</td><td class=3D'=
+num'></td><td class=3D'num'>Kho + mua h=C3=A0ng x=C3=A1c nh=E1=BA=ADn k=E1=BA=
+=BF ho=E1=BA=A1ch nh=E1=BA=ADp ho=E1=BA=B7c x=C3=A1c nh=E1=BA=ADn SKU d=E1=BB=
+=ABng kinh doanh.</td></tr><tr><td class=3D''><span class=3D'badge p1'>P1</sp=
+an></td><td class=3D''>OUT_OF_STOCK</td><td class=3D''>3574661699493</td><td =
+class=3D''>S=E1=BB=AFa T=E1=BA=AFm/Gel T=E1=BA=AFm Ph=C3=A1p Le Petit Marseil=
+lais Thi=C3=AAn Nhi=C3=AAn 250ml - S=E1=BB=AFa T=E1=BA=AFm L=C6=B0u=E2=80=A6<=
+/td><td class=3D'num'>0</td><td class=3D'num'>0</td><td class=3D'num'>0</td><=
+td class=3D'num'>0</td><td class=3D'num'>0.00%</td><td class=3D'num'></td><td=
+ class=3D'num'>Kho + mua h=C3=A0ng x=C3=A1c nh=E1=BA=ADn k=E1=BA=BF ho=E1=BA=
+=A1ch nh=E1=BA=ADp ho=E1=BA=B7c x=C3=A1c nh=E1=BA=ADn SKU d=E1=BB=ABng kinh d=
+oanh.</td></tr><tr><td class=3D''><span class=3D'badge p2'>P2</span></td><td =
+class=3D''>LOW_DATE_12_TO_18M</td><td class=3D''>3574661574035</td><td class=
+=3D''>D=E1=BA=A7u G=E1=BB=99i Le Petit Marseillais S=E1=BA=A1ch G=C3=A0u D=C3=
+=A0nh Cho Nam V=E1=BB=9Bi Chi=E1=BA=BFt Xu=E1=BA=A5t Tinh D=E1=BA=A7=E2=80=A6=
+</td><td class=3D'num'>2,992</td><td class=3D'num'>2,295</td><td class=3D'num=
+'>697</td><td class=3D'num'>2,676</td><td class=3D'num'>89.44%</td><td class=
+=3D'num'>2027-04-19</td><td class=3D'num'>=C4=90=C6=B0a v=C3=A0o k=E1=BA=BF h=
+o=E1=BA=A1ch =C4=91=E1=BA=A9y t=E1=BB=93n v=C3=A0 theo d=C3=B5i trong b=C3=A1=
+o c=C3=A1o tu=E1=BA=A7n.</td></tr><tr><td class=3D''><span class=3D'badge p2'=
+>P2</span></td><td class=3D''>LOW_DATE_12_TO_18M</td><td class=3D''>357466160=
+1496</td><td class=3D''>Gel t=E1=BA=AFm H=E1=BB=AFu C=C6=A1 Ph=C3=A1p Le Peti=
+t Marseillais Nhi=E1=BB=81u M=C3=B9i H=C6=B0=C6=A1ng 250ml, Th=C6=A1m L=C3=A2=
+u =E2=80=A6</td><td class=3D'num'>3,477</td><td class=3D'num'>2,899</td><td c=
+lass=3D'num'>578</td><td class=3D'num'>1,983</td><td class=3D'num'>57.03%</td=
+><td class=3D'num'>2027-09-17</td><td class=3D'num'>=C4=90=C6=B0a v=C3=A0o k=
+=E1=BA=BF ho=E1=BA=A1ch =C4=91=E1=BA=A9y t=E1=BB=93n v=C3=A0 theo d=C3=B5i tr=
+ong b=C3=A1o c=C3=A1o tu=E1=BA=A7n.</td></tr><tr><td class=3D''><span class=
+=3D'badge p2'>P2</span></td><td class=3D''>LOW_DATE_12_TO_18M</td><td class=
+=3D''>3574661753386</td><td class=3D''>S=E1=BB=AFa t=E1=BA=AFm Thi=C3=AAn Nhi=
+=C3=AAn Ph=C3=A1p Le Petit Marseillais Nhi=E1=BB=81u M=C3=B9i H=C6=B0=C6=A1ng=
+ D=E1=BB=8Bu Nh=E1=BA=B9 Cho=E2=80=A6</td><td class=3D'num'>2,499</td><td cla=
+ss=3D'num'>2,073</td><td class=3D'num'>426</td><td class=3D'num'>1,513</td><t=
+d class=3D'num'>60.54%</td><td class=3D'num'>2027-10-21</td><td class=3D'num'=
+>=C4=90=C6=B0a v=C3=A0o k=E1=BA=BF ho=E1=BA=A1ch =C4=91=E1=BA=A9y t=E1=BB=93n=
+ v=C3=A0 theo d=C3=B5i trong b=C3=A1o c=C3=A1o tu=E1=BA=A7n.</td></tr><tr><td=
+ class=3D''><span class=3D'badge p2'>P2</span></td><td class=3D''>LOW_DATE_12=
+_TO_18M</td><td class=3D''>3574661574752</td><td class=3D''>D=E1=BA=A7u X=E1=
+=BA=A3 H=E1=BB=AFu C=C6=A1 D=C6=B0=E1=BB=A1ng =E1=BA=A8m Le Petit Marseillais=
+ D=E1=BB=ABa D=C6=B0=E1=BB=A1ng =E1=BA=A8m, Th=C6=A1m L=C3=A2u - Ph=C3=B9 =E2=
+=80=A6</td><td class=3D'num'>1,536</td><td class=3D'num'>1,222</td><td class=
+=3D'num'>314</td><td class=3D'num'>1,222</td><td class=3D'num'>79.56%</td><td=
+ class=3D'num'>2026-11-10</td><td class=3D'num'>=C4=90=C6=B0a v=C3=A0o k=E1=
+=BA=BF ho=E1=BA=A1ch =C4=91=E1=BA=A9y t=E1=BB=93n v=C3=A0 theo d=C3=B5i trong=
+ b=C3=A1o c=C3=A1o tu=E1=BA=A7n.</td></tr><tr><td class=3D''><span class=3D'b=
+adge p2'>P2</span></td><td class=3D''>LOW_DATE_12_TO_18M</td><td class=3D''>3=
+574661192871</td><td class=3D''>S=E1=BB=AFa T=E1=BA=AFm/Gel T=E1=BA=AFm Ph=C3=
+=A1p Le Petit Marseillais Thi=C3=AAn Nhi=C3=AAn 250ml - S=E1=BB=AFa T=E1=BA=
+=AFm L=C6=B0u=E2=80=A6</td><td class=3D'num'>1,603</td><td class=3D'num'>559<=
+/td><td class=3D'num'>1,044</td><td class=3D'num'>1,044</td><td class=3D'num'=
+>65.13%</td><td class=3D'num'>2027-12-16</td><td class=3D'num'>=C4=90=C6=B0a =
+v=C3=A0o k=E1=BA=BF ho=E1=BA=A1ch =C4=91=E1=BA=A9y t=E1=BB=93n v=C3=A0 theo d=
+=C3=B5i trong b=C3=A1o c=C3=A1o tu=E1=BA=A7n.</td></tr><tr><td class=3D''><sp=
+an class=3D'badge p2'>P2</span></td><td class=3D''>LOW_DATE_12_TO_18M</td><td=
+ class=3D''>3574661608273</td><td class=3D''>Gel t=E1=BA=AFm H=E1=BB=AFu C=C6=
+=A1 Ph=C3=A1p Le Petit Marseillais Nhi=E1=BB=81u M=C3=B9i H=C6=B0=C6=A1ng 250=
+ml, Th=C6=A1m L=C3=A2u =E2=80=A6</td><td class=3D'num'>2,980</td><td class=3D=
+'num'>1,942</td><td class=3D'num'>1,038</td><td class=3D'num'>836</td><td cla=
+ss=3D'num'>28.05%</td><td class=3D'num'>2027-09-30</td><td class=3D'num'>=C4=
+=90=C6=B0a v=C3=A0o k=E1=BA=BF ho=E1=BA=A1ch =C4=91=E1=BA=A9y t=E1=BB=93n v=
+=C3=A0 theo d=C3=B5i trong b=C3=A1o c=C3=A1o tu=E1=BA=A7n.</td></tr><tr><td c=
+lass=3D''><span class=3D'badge p2'>P2</span></td><td class=3D''>LOW_DATE_12_T=
+O_18M</td><td class=3D''>3574661655017</td><td class=3D''>Gel T=E1=BA=AFm Le =
+Petit Marseillais D=C6=B0=E1=BB=A1ng =E1=BA=A8m, D=E1=BB=8Bu Nh=E1=BA=B9 Cho =
+Da Nh=E1=BA=A1y C=E1=BA=A3m V=E1=BB=9Bi Chi=E1=BA=BFt =E2=80=A6</td><td class=
+=3D'num'>3,420</td><td class=3D'num'>2,926</td><td class=3D'num'>494</td><td =
+class=3D'num'>655</td><td class=3D'num'>19.15%</td><td class=3D'num'>2027-07-=
+31</td><td class=3D'num'>=C4=90=C6=B0a v=C3=A0o k=E1=BA=BF ho=E1=BA=A1ch =C4=
+=91=E1=BA=A9y t=E1=BB=93n v=C3=A0 theo d=C3=B5i trong b=C3=A1o c=C3=A1o tu=E1=
+=BA=A7n.</td></tr><tr><td class=3D''><span class=3D'badge p2'>P2</span></td><=
+td class=3D''>LOW_DATE_12_TO_18M</td><td class=3D''>3574661701868</td><td cla=
+ss=3D''>S=E1=BB=AFa T=E1=BA=AFm/Gel T=E1=BA=AFm Ph=C3=A1p Le Petit Marseillai=
+s Chi=E1=BA=BFt Xu=E1=BA=A5t Thi=C3=AAn Nhi=C3=AAn 650ml - =E2=80=A6</td><td =
+class=3D'num'>858</td><td class=3D'num'>647</td><td class=3D'num'>211</td><td=
+ class=3D'num'>586</td><td class=3D'num'>68.30%</td><td class=3D'num'>2027-04=
+-23</td><td class=3D'num'>=C4=90=C6=B0a v=C3=A0o k=E1=BA=BF ho=E1=BA=A1ch =C4=
+=91=E1=BA=A9y t=E1=BB=93n v=C3=A0 theo d=C3=B5i trong b=C3=A1o c=C3=A1o tu=E1=
+=BA=A7n.</td></tr><tr><td class=3D''><span class=3D'badge p2'>P2</span></td><=
+td class=3D''>LOW_DATE_12_TO_18M</td><td class=3D''>3574661568867</td><td cla=
+ss=3D''>Gel t=E1=BA=AFm H=E1=BB=AFu C=C6=A1 Ph=C3=A1p Le Petit Marseillais Nh=
+i=E1=BB=81u M=C3=B9i H=C6=B0=C6=A1ng 250ml, Th=C6=A1m L=C3=A2u =E2=80=A6</td>=
+<td class=3D'num'>4,217</td><td class=3D'num'>3,661</td><td class=3D'num'>556=
+</td><td class=3D'num'>483</td><td class=3D'num'>11.45%</td><td class=3D'num'=
+>2027-10-14</td><td class=3D'num'>=C4=90=C6=B0a v=C3=A0o k=E1=BA=BF ho=E1=BA=
+=A1ch =C4=91=E1=BA=A9y t=E1=BB=93n v=C3=A0 theo d=C3=B5i trong b=C3=A1o c=C3=
+=A1o tu=E1=BA=A7n.</td></tr><tr><td class=3D''><span class=3D'badge p2'>P2</s=
+pan></td><td class=3D''>LOW_DATE_12_TO_18M</td><td class=3D''>3574661319308</=
+td><td class=3D''>S=E1=BB=AFa T=E1=BA=AFm/Gel T=E1=BA=AFm Ph=C3=A1p Le Petit =
+Marseillais Thi=C3=AAn Nhi=C3=AAn 250ml - S=E1=BB=AFa T=E1=BA=AFm L=C6=B0u=E2=
+=80=A6</td><td class=3D'num'>3,110</td><td class=3D'num'>2,375</td><td class=
+=3D'num'>735</td><td class=3D'num'>427</td><td class=3D'num'>13.73%</td><td c=
+lass=3D'num'>2027-12-13</td><td class=3D'num'>=C4=90=C6=B0a v=C3=A0o k=E1=BA=
+=BF ho=E1=BA=A1ch =C4=91=E1=BA=A9y t=E1=BB=93n v=C3=A0 theo d=C3=B5i trong b=
+=C3=A1o c=C3=A1o tu=E1=BA=A7n.</td></tr><tr><td class=3D''><span class=3D'bad=
+ge p2'>P2</span></td><td class=3D''>LOW_DATE_12_TO_18M</td><td class=3D''>357=
+4661655031</td><td class=3D''>S=E1=BB=AFa t=E1=BA=AFm Thi=C3=AAn Nhi=C3=AAn P=
+h=C3=A1p Le Petit Marseillais Nhi=E1=BB=81u M=C3=B9i H=C6=B0=C6=A1ng D=E1=BB=
+=8Bu Nh=E1=BA=B9 Cho=E2=80=A6</td><td class=3D'num'>4,336</td><td class=3D'nu=
+m'>3,724</td><td class=3D'num'>612</td><td class=3D'num'>367</td><td class=3D=
+'num'>8.46%</td><td class=3D'num'>2027-11-15</td><td class=3D'num'>=C4=90=C6=
+=B0a v=C3=A0o k=E1=BA=BF ho=E1=BA=A1ch =C4=91=E1=BA=A9y t=E1=BB=93n v=C3=A0 t=
+heo d=C3=B5i trong b=C3=A1o c=C3=A1o tu=E1=BA=A7n.</td></tr><tr><td class=3D'=
+'><span class=3D'badge p2'>P2</span></td><td class=3D''>LOW_DATE_12_TO_18M</t=
+d><td class=3D''>3574661574646</td><td class=3D''>D=E1=BA=A7u g=E1=BB=99i Le =
+Petit Marseillais L=C3=A0m S=E1=BA=A1ch S=C3=A2u Cho T=C3=B3c B=E1=BA=BFt D=
+=E1=BA=A7u V=E1=BB=9Bi Chi=E1=BA=BFt Xu=E1=BA=A5t =E2=80=A6</td><td class=3D'=
+num'>1,621</td><td class=3D'num'>1,136</td><td class=3D'num'>485</td><td clas=
+s=3D'num'>349</td><td class=3D'num'>21.53%</td><td class=3D'num'>2027-11-11</=
+td><td class=3D'num'>=C4=90=C6=B0a v=C3=A0o k=E1=BA=BF ho=E1=BA=A1ch =C4=91=
+=E1=BA=A9y t=E1=BB=93n v=C3=A0 theo d=C3=B5i trong b=C3=A1o c=C3=A1o tu=E1=BA=
+=A7n.</td></tr><tr><td class=3D''><span class=3D'badge p2'>P2</span></td><td =
+class=3D''>LOW_DATE_12_TO_18M</td><td class=3D''>3574661760650</td><td class=
+=3D''>D=E1=BA=A7u G=E1=BB=99i Ph=C3=A1p Le Petit Marseillais S=E1=BA=A1ch G=
+=C3=A0u 2 In 1 Tinh D=E1=BA=A7u B=E1=BA=A1c H=C3=A0 H=E1=BB=AFu C=C6=A1 =E2=
+=80=A6</td><td class=3D'num'>1,540</td><td class=3D'num'>1,232</td><td class=
+=3D'num'>308</td><td class=3D'num'>308</td><td class=3D'num'>20.00%</td><td c=
+lass=3D'num'>2027-10-08</td><td class=3D'num'>=C4=90=C6=B0a v=C3=A0o k=E1=BA=
+=BF ho=E1=BA=A1ch =C4=91=E1=BA=A9y t=E1=BB=93n v=C3=A0 theo d=C3=B5i trong b=
+=C3=A1o c=C3=A1o tu=E1=BA=A7n.</td></tr><tr><td class=3D''><span class=3D'bad=
+ge p2'>P2</span></td><td class=3D''>LOW_DATE_12_TO_18M</td><td class=3D''>357=
+4661573618</td><td class=3D''>Gel R=E1=BB=ADa Tay H=E1=BB=AFu C=C6=A1 Le Peti=
+t Marseillais V=E1=BB=9Bi Chi=E1=BA=BFt Xu=E1=BA=A5t L=C3=A1 =C3=94 Liu 290ml=
+</td><td class=3D'num'>301</td><td class=3D'num'>196</td><td class=3D'num'>10=
+5</td><td class=3D'num'>301</td><td class=3D'num'>100.00%</td><td class=3D'nu=
+m'>2027-11-28</td><td class=3D'num'>=C4=90=C6=B0a v=C3=A0o k=E1=BA=BF ho=E1=
+=BA=A1ch =C4=91=E1=BA=A9y t=E1=BB=93n v=C3=A0 theo d=C3=B5i trong b=C3=A1o c=
+=C3=A1o tu=E1=BA=A7n.</td></tr><tr><td class=3D''><span class=3D'badge p2'>P2=
+</span></td><td class=3D''>LOW_DATE_12_TO_18M</td><td class=3D''>357466157520=
+9</td><td class=3D''>M=E1=BA=B7t N=E1=BA=A1 D=C6=B0=E1=BB=A1ng T=C3=B3c Le Pe=
+tit Marseillais 4in1 Chi=E1=BA=BFt Xu=E1=BA=A5t N=C6=B0=E1=BB=9Bc D=E1=BB=ABa=
+ H=E1=BB=AFu C=C6=A1, D=C6=B0=E2=80=A6</td><td class=3D'num'>403</td><td clas=
+s=3D'num'>122</td><td class=3D'num'>281</td><td class=3D'num'>281</td><td cla=
+ss=3D'num'>69.73%</td><td class=3D'num'>2027-10-21</td><td class=3D'num'>=C4=
+=90=C6=B0a v=C3=A0o k=E1=BA=BF ho=E1=BA=A1ch =C4=91=E1=BA=A9y t=E1=BB=93n v=
+=C3=A0 theo d=C3=B5i trong b=C3=A1o c=C3=A1o tu=E1=BA=A7n.</td></tr><tr><td c=
+lass=3D''><span class=3D'badge p2'>P2</span></td><td class=3D''>LOW_DATE_12_T=
+O_18M</td><td class=3D''>3574661574042</td><td class=3D''>D=E1=BA=A7u G=E1=BB=
+=99i Ph=C3=A1p Le Petit Marseillais S=E1=BA=A1ch G=C3=A0u 2 In 1 Tinh D=E1=BA=
+=A7u B=E1=BA=A1c H=C3=A0 H=E1=BB=AFu C=C6=A1 =E2=80=A6</td><td class=3D'num'>=
+1,367</td><td class=3D'num'>1,119</td><td class=3D'num'>248</td><td class=3D'=
+num'>248</td><td class=3D'num'>18.14%</td><td class=3D'num'>2027-10-09</td><t=
+d class=3D'num'>=C4=90=C6=B0a v=C3=A0o k=E1=BA=BF ho=E1=BA=A1ch =C4=91=E1=BA=
+=A9y t=E1=BB=93n v=C3=A0 theo d=C3=B5i trong b=C3=A1o c=C3=A1o tu=E1=BA=A7n.<=
+/td></tr><tr><td class=3D''><span class=3D'badge p2'>P2</span></td><td class=
+=3D''>LOW_DATE_12_TO_18M</td><td class=3D''>3574661573601</td><td class=3D''>=
+Gel R=E1=BB=ADa Tay H=E1=BB=AFu C=C6=A1 Le Petit Marseillais Thi=C3=AAn Nhi=
+=C3=AAn D=E1=BB=8Bu Nh=E1=BA=B9 L=C3=A0nh T=C3=ADnh B=E1=BA=A3o=E2=80=A6</td>=
+<td class=3D'num'>237</td><td class=3D'num'>143</td><td class=3D'num'>94</td>=
+<td class=3D'num'>237</td><td class=3D'num'>100.00%</td><td class=3D'num'>202=
+7-11-28</td><td class=3D'num'>=C4=90=C6=B0a v=C3=A0o k=E1=BA=BF ho=E1=BA=A1ch=
+ =C4=91=E1=BA=A9y t=E1=BB=93n v=C3=A0 theo d=C3=B5i trong b=C3=A1o c=C3=A1o t=
+u=E1=BA=A7n.</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>=C4=90=C6=A1n M=E1=BA=ABu</h2>
+    <p class=3D"muted">D=E1=BB=AF li=E1=BB=87u h=C3=A0ng m=E1=BA=ABu ng=C3=A0=
+y 12/07 l=C3=A0 0. MTD ch=E1=BB=89 c=C3=B3 TikTok theo package.</p>
+    <div class=3D'table-wrap'><table class=3D'table'><thead><tr><th>Ph=E1=BA=
+=A1m vi</th><th>S=E1=BB=91 =C4=91=C6=A1n m=E1=BA=ABu</th><th>Qty m=E1=BA=ABu<=
+/th><th>Gi=C3=A1 v=E1=BB=91n/impact m=E1=BA=ABu</th><th>T=E1=BB=B7 l=E1=BB=87=
+ tr=C3=AAn Net Sales</th></tr></thead><tbody><tr><td class=3D''>Ng=C3=A0y 12/=
+07</td><td class=3D'num'>0</td><td class=3D'num'>0</td><td class=3D'num'>0</t=
+d><td class=3D'num'>kh=C3=B4ng c=C3=B3 trong package</td></tr><tr><td class=
+=3D''>MTD 2026-07-01 - 2026-07-12</td><td class=3D'num'>2</td><td class=3D'nu=
+m'>2</td><td class=3D'num'>127,965</td><td class=3D'num'>kh=C3=B4ng c=C3=B3 t=
+rong package</td></tr></tbody></table></div>
+  </section>
+
+  <section class=3D"critical">
+    <h2>Action List H=C3=B4m Nay</h2>
+    <div class=3D'table-wrap'><table class=3D'table small'><thead><tr><th>Pri=
+ority</th><th>V=E1=BA=A5n =C4=91=E1=BB=81</th><th>K=C3=AAnh/SKU</th><th>B=E1=
+=BA=B1ng ch=E1=BB=A9ng</th><th>Owner =C4=91=E1=BB=81 xu=E1=BA=A5t</th><th>Dea=
+dline</th><th>H=C3=A0nh =C4=91=E1=BB=99ng c=E1=BA=A7n l=C3=A0m</th></tr></the=
+ad><tbody><tr><td class=3D''>P1</td><td class=3D''>NHANH l=E1=BB=97 do Ads/DS=
+ v=C6=B0=E1=BB=A3t ng=C6=B0=E1=BB=A1ng Digital</td><td class=3D''>NHANH</td><=
+td class=3D''>Ads 6,318,316; Net Sales 3,184,000; Ads/DS 198.44%; Profit -4,6=
+16,280</td><td class=3D''>Sales + Finance</td><td class=3D''>H=C3=B4m nay 16:=
+00</td><td class=3D''>T=E1=BA=A1m d=E1=BB=ABng campaign/SKU kh=C3=B4ng ch=E1=
+=BB=A9ng minh =C4=91=C6=B0=E1=BB=A3c contribution margin d=C6=B0=C6=A1ng; ch=
+=E1=BB=89 gi=E1=BB=AF ng=C3=A2n s=C3=A1ch remarketing/SKU b=C3=A1n c=C3=B3 l=
+=C3=A3i.</td></tr><tr><td class=3D''>P1</td><td class=3D''>Margin to=C3=A0n c=
+=C3=B4ng ty d=C6=B0=E1=BB=9Bi ng=C6=B0=E1=BB=A1ng 5%</td><td class=3D''>All c=
+hannels</td><td class=3D''>Profit Margin 4.72%; Profit 2,528,877</td><td clas=
+s=3D''>CEO + Finance</td><td class=3D''>H=C3=B4m nay</td><td class=3D''>Ch=E1=
+=BB=91t tr=E1=BA=A7n Ads/DS theo k=C3=AAnh v=C3=A0 y=C3=AAu c=E1=BA=A7u b=C3=
+=A1o c=C3=A1o l=C3=A3i g=E1=BB=99p sau ads theo SKU top.</td></tr><tr><td cla=
+ss=3D''>P1</td><td class=3D''>T=E1=BB=93n date th=E1=BA=A5p d=C6=B0=E1=BB=9Bi=
+ 12 th=C3=A1ng v=C3=A0 out-of-stock</td><td class=3D''>Inventory</td><td clas=
+s=3D''>P1 13; low-date under 12m qty 3,271; out-of-stock SKU 2</td><td class=
+=3D''>Supply Chain + Trade Marketing</td><td class=3D''>H=C3=B4m nay 17:00</t=
+d><td class=3D''>Ch=E1=BB=91t danh s=C3=A1ch x=E1=BA=A3 t=E1=BB=93n low-date =
+theo SKU, =C4=91=E1=BB=93ng th=E1=BB=9Di x=C3=A1c nh=E1=BA=ADn nh=E1=BA=ADp/b=
+=E1=BB=8F listing v=E1=BB=9Bi SKU h=E1=BA=BFt h=C3=A0ng.</td></tr><tr><td cla=
+ss=3D''>P2</td><td class=3D''>Shopee =C4=91ang k=C3=A9o doanh thu nh=C6=B0ng =
+c=E1=BA=A7n gi=E1=BB=AF k=E1=BB=B7 lu=E1=BA=ADt ads</td><td class=3D''>SHOPEE=
+</td><td class=3D''>Net Sales 40,990,000; Profit 5,639,629; Ads/DS 16.86%</td=
+><td class=3D''>Ecom</td><td class=3D''>H=C3=B4m nay</td><td class=3D''>Gi=E1=
+=BB=AF scale SKU top, kh=C3=B4ng v=C6=B0=E1=BB=A3t ng=C6=B0=E1=BB=A1ng Ads/DS=
+ 20%; =C6=B0u ti=C3=AAn ST01902, ST68816, ST01172.</td></tr><tr><td class=3D'=
+'>P2</td><td class=3D''>TikTok =C4=91=C3=A3 c=E1=BA=A3i thi=E1=BB=87n profit =
+nh=C6=B0ng t=E1=BB=B7 l=E1=BB=87 h=E1=BB=A7y cao</td><td class=3D''>TIKTOK</t=
+d><td class=3D''>Profit 1,011,683; Cancel rate 19.51%; Ads/DS 19.33%</td><td =
+class=3D''>Ecom + Ops</td><td class=3D''>H=C3=B4m nay</td><td class=3D''>Gi=
+=E1=BB=AF ng=C3=A2n s=C3=A1ch theo ng=C6=B0=E1=BB=A1ng, r=C3=A0 SKU/offer g=
+=C3=A2y h=E1=BB=A7y v=C3=A0 t=E1=BA=ADp trung ST01172 =C4=91ang b=C3=A1n t=E1=
+=BB=91t.</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>Market Benchmark V=C3=A0 B=E1=BB=91i C=E1=BA=A3nh Th=E1=BB=8B Tr=C6=
+=B0=E1=BB=9Dng</h2>
+    <p class=3D"muted">Ph=E1=BA=A7n n=C3=A0y d=C3=B9ng ngu=E1=BB=93n c=C3=B4n=
+g khai =C4=91=E1=BB=83 h=E1=BB=97 tr=E1=BB=A3 quy=E1=BA=BFt =C4=91=E1=BB=8Bnh=
+, kh=C3=B4ng thay th=E1=BA=BF s=E1=BB=91 li=E1=BB=87u package.</p>
+    <div class=3D'table-wrap'><table class=3D'table'><thead><tr><th>G=C3=B3c =
+nh=C3=ACn</th><th>T=C3=ADn hi=E1=BB=87u &amp; khuy=E1=BA=BFn ngh=E1=BB=8B cho=
+ CEO</th><th>Ngu=E1=BB=93n</th></tr></thead><tbody><tr><td class=3D''>Xu h=C6=
+=B0=E1=BB=9Bng m=C3=B9a b=C3=A1n s=E1=BA=AFp t=E1=BB=9Bi</td><td class=3D''>T=
+h=C3=A1ng 7 t=E1=BA=A1i Vi=E1=BB=87t Nam n=C3=B3ng =E1=BA=A9m v=C3=A0 m=C6=B0=
+a nhi=E1=BB=81u; =C4=91i=E1=BB=81u ki=E1=BB=87n n=C3=A0y h=E1=BB=97 tr=E1=BB=
+=A3 nhu c=E1=BA=A7u s=E1=BA=A3n ph=E1=BA=A9m l=C3=A0m s=E1=BA=A1ch, d=E1=BB=
+=8Bu nh=E1=BA=B9, th=C6=A1m l=C3=A2u v=C3=A0 c=E1=BA=A3m gi=C3=A1c m=C3=A1t/s=
+=E1=BA=A1ch sau v=E1=BA=ADn =C4=91=E1=BB=99ng. CEO n=C3=AAn =C6=B0u ti=C3=AAn=
+ th=C3=B4ng =C4=91i=E1=BB=87p summer/rainy season cho s=E1=BB=AFa t=E1=BA=AFm=
+ 250ml/650ml thay v=C3=AC gi=E1=BA=A3m gi=C3=A1 =C4=91=E1=BA=A1i tr=C3=A0.</t=
+d><td class=3D''><a href=3D'https://www.tnktravel.com/blogs/vietnam-weather-i=
+n-july-smart-travelers-guide/'>TNK Travel</a></td></tr><tr><td class=3D''>M=
+=E1=BA=B7t b=E1=BA=B1ng gi=C3=A1</td><td class=3D''>Shopee Mall Le Petit Mars=
+eillais =C4=91ang hi=E1=BB=83n th=E1=BB=8B s=E1=BB=AFa t=E1=BA=AFm 250ml kho=
+=E1=BA=A3ng 190,000 v=E1=BB=9Bi m=E1=BB=A9c gi=E1=BA=A3m 30%, 650ml kho=E1=BA=
+=A3ng 360,000 v=E1=BB=9Bi m=E1=BB=A9c gi=E1=BA=A3m 31% v=C3=A0 qu=C3=A0 t=E1=
+=BA=B7ng. =C4=90i=E1=BB=81u n=C3=A0y c=E1=BB=A7ng c=E1=BB=91 vi=E1=BB=87c gi=
+=E1=BB=AF gi=C3=A1 ni=C3=AAm y=E1=BA=BFt cao nh=C6=B0ng ch=E1=BA=A1y promo c=
+=C3=B3 ki=E1=BB=83m so=C3=A1t.</td><td class=3D''><a href=3D'https://shopee.v=
+n/lepetitmarseillaisvn'>Shopee Mall Le Petit Marseillais</a></td></tr><tr><td=
+ class=3D''>S=E1=BA=A3n ph=E1=BA=A9m c=C3=B9ng lo=E1=BA=A1i</td><td class=3D'=
+'>B=C3=A1o c=C3=A1o ng=C3=A0nh bath/shower Vi=E1=BB=87t Nam d=E1=BB=B1 b=C3=
+=A1o t=C4=83ng tr=C6=B0=E1=BB=9Fng giai =C4=91o=E1=BA=A1n 2025-2029, =C4=91=
+=C6=B0=E1=BB=A3c th=C3=BAc =C4=91=E1=BA=A9y b=E1=BB=9Fi personal hygiene, pre=
+mium bath/shower, natural/sustainable product v=C3=A0 e-commerce. =C4=90=C3=
+=A2y l=C3=A0 t=C3=ADn hi=E1=BB=87u n=C3=AAn gi=E1=BB=AF =C4=91=E1=BA=A7u t=C6=
+=B0 v=C3=A0o SKU thi=C3=AAn nhi=C3=AAn/d=E1=BB=8Bu nh=E1=BA=B9 nh=C6=B0ng ph=
+=E1=BA=A3i g=E1=BA=AFn ng=C6=B0=E1=BB=A1ng ads.</td><td class=3D''><a href=3D=
+'https://www.6wresearch.com/industry-report/vietnam-bath-and-shower-products-=
+market-2020-2026'>6Wresearch</a></td></tr><tr><td class=3D''>Khu v=E1=BB=B1c =
+mua t=E1=BB=91t</td><td class=3D''>Package kh=C3=B4ng c=C3=B3 d=E1=BB=AF li=
+=E1=BB=87u v=C3=B9ng mua theo t=E1=BB=89nh/th=C3=A0nh; tuy nhi=C3=AAn t=E1=BB=
+=93n HN =C4=91ang 114,692 v=C3=A0 HCM 30,422. Khuy=E1=BA=BFn ngh=E1=BB=8B =C4=
+=91i=E1=BB=81u h=C3=A0nh l=C3=A0 kh=C3=B4ng suy di=E1=BB=85n nhu c=E1=BA=A7u =
+v=C3=B9ng, m=C3=A0 y=C3=AAu c=E1=BA=A7u Ecom/Ops b=E1=BB=95 sung b=C3=A1o c=
+=C3=A1o =C4=91=C6=A1n theo khu v=E1=BB=B1c tr=C6=B0=E1=BB=9Bc khi =C4=91i=E1=
+=BB=81u chuy=E1=BB=83n t=E1=BB=93n l=E1=BB=9Bn.</td><td class=3D''>Package JS=
+ON</td></tr><tr><td class=3D''>=C4=90=E1=BB=91i th=E1=BB=A7 =C4=91ang l=C3=A0=
+m g=C3=AC</td><td class=3D''>Ngu=E1=BB=93n th=E1=BB=8B tr=C6=B0=E1=BB=9Dng ch=
+o th=E1=BA=A5y nh=C3=B3m personal hygiene c=E1=BA=A1nh tranh b=E1=BB=9Fi c=C3=
+=A1c t=E1=BA=ADp =C4=91o=C3=A0n l=E1=BB=9Bn nh=C6=B0 Unilever, P&amp;G, Colga=
+te-Palmolive; =C4=91i=E1=BB=83m c=E1=BA=A1nh tranh ch=C3=ADnh l=C3=A0 ph=C3=
+=A2n ph=E1=BB=91i, ni=E1=BB=81m tin s=E1=BA=A3n ph=E1=BA=A9m v=C3=A0 hi=E1=BB=
+=87u qu=E1=BA=A3 marketing. CEO n=C3=AAn y=C3=AAu c=E1=BA=A7u benchmark gi=C3=
+=A1/promo s=C3=A0n theo SKU top trong ng=C3=A0y.</td><td class=3D''><a href=
+=3D'https://www.kenresearch.com/industry-reports/vietnam-personal-hygiene-mar=
+ket'>Ken Research</a></td></tr></tbody></table></div>
+  </section>
+  <footer>
+    CEO Control Tower HTML report | Created from JSON package only for intern=
+al metrics | Current 2026-07-12 vs Previous 2026-07-11
+  </footer>
+</main>
+</body>
+</html>
+
+--===============5271943020662092522==--
+
+--===============3009998217074175803==
+Content-Type: text/html
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename*=utf-8''B%C3%A1o%20c%C3%A1o%20ng%C3%A0y%2012-07-2026.html
+MIME-Version: 1.0
+
+PCFkb2N0eXBlIGh0bWw+CjxodG1sIGxhbmc9InZpIj4KPGhlYWQ+CiAgPG1ldGEgY2hhcnNldD0i
+dXRmLTgiPgogIDxtZXRhIG5hbWU9InZpZXdwb3J0IiBjb250ZW50PSJ3aWR0aD1kZXZpY2Utd2lk
+dGgsIGluaXRpYWwtc2NhbGU9MSI+CiAgPHRpdGxlPkNFTyBDb250cm9sIFRvd2VyIC0gU+G7r2Eg
+dOG6r20gLSAyMDI2LTA3LTEyPC90aXRsZT4KICA8c3R5bGU+CiAgICA6cm9vdCB7CiAgICAgIC0t
+aW5rOiMxODIwMWY7IC0tbXV0ZWQ6IzY2NzE2ZjsgLS1saW5lOiNkZmU3ZTM7IC0tc29mdDojZjZm
+OGY1OwogICAgICAtLWN1cjojMGY4YjZkOyAtLXByZXY6IzhmOWI5NjsgLS1hbWJlcjojYjk3NzBl
+OyAtLXJlZDojYjQyMzE4OyAtLWdyZWVuOiMxNDdkNDg7CiAgICAgIC0tcGFuZWw6I2ZmZmZmZjsg
+LS13YXNoOiNlZWY2ZjE7IC0tZGFyazojMjIzMTJkOwogICAgfQogICAgKiB7IGJveC1zaXppbmc6
+Ym9yZGVyLWJveDsgfQogICAgYm9keSB7IG1hcmdpbjowOyBmb250LWZhbWlseTpBcmlhbCwgSGVs
+dmV0aWNhLCBzYW5zLXNlcmlmOyBjb2xvcjp2YXIoLS1pbmspOyBiYWNrZ3JvdW5kOiNmN2Y2ZjE7
+IGxpbmUtaGVpZ2h0OjEuNDU7IH0KICAgIC5wYWdlIHsgbWF4LXdpZHRoOjExODBweDsgbWFyZ2lu
+OjAgYXV0bzsgcGFkZGluZzoyMnB4OyB9CiAgICAuaGVybyB7IGJhY2tncm91bmQ6bGluZWFyLWdy
+YWRpZW50KDEzNWRlZywjMTYzNTJlLCMyMzZiNTkgNjAlLCNiOTg5M2MpOyBjb2xvcjp3aGl0ZTsg
+Ym9yZGVyLXJhZGl1czo2cHg7IHBhZGRpbmc6MjhweDsgYm94LXNoYWRvdzowIDE4cHggNDVweCBy
+Z2JhKDIwLDQzLDM4LC4xNik7IH0KICAgIC5oZXJvIGgxIHsgbWFyZ2luOjAgMCA4cHg7IGZvbnQt
+c2l6ZTozMHB4OyBsaW5lLWhlaWdodDoxLjEyOyBsZXR0ZXItc3BhY2luZzowOyB9CiAgICAuaGVy
+byBwIHsgbWFyZ2luOjZweCAwOyBjb2xvcjojZWFmNGVmOyBtYXgtd2lkdGg6OTAwcHg7IH0KICAg
+IC5tZXRhIHsgZGlzcGxheTpmbGV4OyBmbGV4LXdyYXA6d3JhcDsgZ2FwOjhweDsgbWFyZ2luLXRv
+cDoxNnB4OyB9CiAgICAucGlsbCB7IGJvcmRlcjoxcHggc29saWQgcmdiYSgyNTUsMjU1LDI1NSwu
+MjUpOyBiYWNrZ3JvdW5kOnJnYmEoMjU1LDI1NSwyNTUsLjEyKTsgcGFkZGluZzo2cHggMTBweDsg
+Ym9yZGVyLXJhZGl1czo5OTlweDsgZm9udC1zaXplOjEycHg7IH0KICAgIC5rcGlzIHsgZGlzcGxh
+eTpncmlkOyBncmlkLXRlbXBsYXRlLWNvbHVtbnM6cmVwZWF0KDYsMWZyKTsgZ2FwOjEycHg7IG1h
+cmdpbjoxOHB4IDA7IH0KICAgIC5rcGkgeyBiYWNrZ3JvdW5kOnZhcigtLXBhbmVsKTsgYm9yZGVy
+OjFweCBzb2xpZCB2YXIoLS1saW5lKTsgYm9yZGVyLXJhZGl1czo2cHg7IHBhZGRpbmc6MTRweDsg
+bWluLWhlaWdodDoxMDRweDsgfQogICAgLmtwaSAubGFiZWwgeyBjb2xvcjp2YXIoLS1tdXRlZCk7
+IGZvbnQtc2l6ZToxMnB4OyB0ZXh0LXRyYW5zZm9ybTp1cHBlcmNhc2U7IGZvbnQtd2VpZ2h0Ojcw
+MDsgfQogICAgLmtwaSAudmFsdWUgeyBmb250LXNpemU6MjRweDsgZm9udC13ZWlnaHQ6ODAwOyBt
+YXJnaW46OHB4IDAgNHB4OyB9CiAgICAua3BpIC5zdWIgeyBjb2xvcjp2YXIoLS1tdXRlZCk7IGZv
+bnQtc2l6ZToxMnB4OyB9CiAgICAua3BpLmdvb2QgeyBib3JkZXItdG9wOjRweCBzb2xpZCB2YXIo
+LS1ncmVlbik7IH0gLmtwaS53YXJuIHsgYm9yZGVyLXRvcDo0cHggc29saWQgdmFyKC0tYW1iZXIp
+OyB9IC5rcGkuYmFkIHsgYm9yZGVyLXRvcDo0cHggc29saWQgdmFyKC0tcmVkKTsgfSAua3BpLm5l
+dXRyYWwgeyBib3JkZXItdG9wOjRweCBzb2xpZCB2YXIoLS1wcmV2KTsgfQogICAgc2VjdGlvbiB7
+IGJhY2tncm91bmQ6dmFyKC0tcGFuZWwpOyBib3JkZXI6MXB4IHNvbGlkIHZhcigtLWxpbmUpOyBi
+b3JkZXItcmFkaXVzOjZweDsgcGFkZGluZzoyMHB4OyBtYXJnaW46MTRweCAwOyB9CiAgICBzZWN0
+aW9uLmNyaXRpY2FsIHsgYm9yZGVyLWxlZnQ6NXB4IHNvbGlkIHZhcigtLXJlZCk7IH0gc2VjdGlv
+bi5mb2N1cyB7IGJvcmRlci1sZWZ0OjVweCBzb2xpZCB2YXIoLS1jdXIpOyB9CiAgICBoMiB7IG1h
+cmdpbjowIDAgMTJweDsgZm9udC1zaXplOjIwcHg7IGxldHRlci1zcGFjaW5nOjA7IH0gaDMgeyBt
+YXJnaW46MTZweCAwIDhweDsgZm9udC1zaXplOjE1cHg7IH0KICAgIHVsIHsgbWFyZ2luOjhweCAw
+IDAgMThweDsgcGFkZGluZzowOyB9IGxpIHsgbWFyZ2luOjdweCAwOyB9CiAgICAuZ3JpZC0yIHsg
+ZGlzcGxheTpncmlkOyBncmlkLXRlbXBsYXRlLWNvbHVtbnM6MWZyIDFmcjsgZ2FwOjE0cHg7IH0K
+ICAgIC5jYWxsb3V0IHsgYmFja2dyb3VuZDp2YXIoLS13YXNoKTsgYm9yZGVyOjFweCBzb2xpZCAj
+Y2NlNGRhOyBwYWRkaW5nOjE0cHg7IGJvcmRlci1yYWRpdXM6NnB4OyB9CiAgICAubXV0ZWQgeyBj
+b2xvcjp2YXIoLS1tdXRlZCk7IH0gLmluc2lnaHQgeyBiYWNrZ3JvdW5kOiNmZmY4ZTg7IGJvcmRl
+ci1sZWZ0OjRweCBzb2xpZCB2YXIoLS1hbWJlcik7IHBhZGRpbmc6MTBweCAxMnB4OyBtYXJnaW46
+MTJweCAwIDA7IH0KICAgIC50YWJsZS13cmFwIHsgb3ZlcmZsb3cteDphdXRvOyBib3JkZXI6MXB4
+IHNvbGlkIHZhcigtLWxpbmUpOyBib3JkZXItcmFkaXVzOjZweDsgfQogICAgdGFibGUgeyBib3Jk
+ZXItY29sbGFwc2U6Y29sbGFwc2U7IHdpZHRoOjEwMCU7IG1pbi13aWR0aDo5MjBweDsgYmFja2dy
+b3VuZDp3aGl0ZTsgfQogICAgdGgsIHRkIHsgYm9yZGVyLWJvdHRvbToxcHggc29saWQgdmFyKC0t
+bGluZSk7IHBhZGRpbmc6OXB4IDEwcHg7IHZlcnRpY2FsLWFsaWduOnRvcDsgZm9udC1zaXplOjEz
+cHg7IH0KICAgIHRoIHsgYmFja2dyb3VuZDojZWRmNGVmOyB0ZXh0LWFsaWduOmxlZnQ7IGNvbG9y
+OiMyNjNhMzU7IHBvc2l0aW9uOnN0aWNreTsgdG9wOjA7IHotaW5kZXg6MTsgfQogICAgdGQubnVt
+LCB0aC5udW0geyB0ZXh0LWFsaWduOnJpZ2h0OyB3aGl0ZS1zcGFjZTpub3dyYXA7IGZvbnQtdmFy
+aWFudC1udW1lcmljOnRhYnVsYXItbnVtczsgfQogICAgLnNtYWxsIHRoLCAuc21hbGwgdGQgeyBm
+b250LXNpemU6MTJweDsgcGFkZGluZzo3cHggOHB4OyB9CiAgICAuYmFkZ2UgeyBkaXNwbGF5Omlu
+bGluZS1ibG9jazsgcGFkZGluZzo0cHggOHB4OyBib3JkZXItcmFkaXVzOjk5OXB4OyBmb250LXdl
+aWdodDo3MDA7IGZvbnQtc2l6ZToxMnB4OyB3aGl0ZS1zcGFjZTpub3dyYXA7IH0KICAgIC5wMSB7
+IGJhY2tncm91bmQ6I2ZmZTVlMjsgY29sb3I6dmFyKC0tcmVkKTsgfSAucDIgeyBiYWNrZ3JvdW5k
+OiNmZmYwZDI7IGNvbG9yOiM4YTU3MDA7IH0gLnAzIHsgYmFja2dyb3VuZDojZWFmMWZmOyBjb2xv
+cjojMjU1NGE0OyB9IC53YXRjaCB7IGJhY2tncm91bmQ6I2VlZjFlZjsgY29sb3I6IzUxNjE1ZDsg
+fQogICAgLmdvb2QgeyBjb2xvcjp2YXIoLS1ncmVlbik7IH0gLmJhZCB7IGNvbG9yOnZhcigtLXJl
+ZCk7IH0gLm5ldXRyYWwgeyBjb2xvcjp2YXIoLS1tdXRlZCk7IH0KICAgIC5sZWdlbmQgeyBkaXNw
+bGF5OmZsZXg7IGdhcDoxNnB4OyBtYXJnaW4tYm90dG9tOjEwcHg7IGNvbG9yOnZhcigtLW11dGVk
+KTsgZm9udC1zaXplOjEzcHg7IH0KICAgIC5kb3QgeyBkaXNwbGF5OmlubGluZS1ibG9jazsgd2lk
+dGg6MTBweDsgaGVpZ2h0OjEwcHg7IGJvcmRlci1yYWRpdXM6NTAlOyBtYXJnaW4tcmlnaHQ6NXB4
+OyB9IC5jdXItZG90IHsgYmFja2dyb3VuZDp2YXIoLS1jdXIpOyB9IC5wcmV2LWRvdCB7IGJhY2tn
+cm91bmQ6dmFyKC0tcHJldik7IH0KICAgIC5jaGFydC1ncmlkIHsgZGlzcGxheTpncmlkOyBnYXA6
+MTBweDsgfQogICAgLmJhci1yb3cgeyBkaXNwbGF5OmdyaWQ7IGdyaWQtdGVtcGxhdGUtY29sdW1u
+czoxMzBweCAxZnIgMTE1cHggMWZyIDExNXB4OyBnYXA6OHB4OyBhbGlnbi1pdGVtczpjZW50ZXI7
+IH0KICAgIC5iYXItbGFiZWwgeyBmb250LXdlaWdodDo3MDA7IH0KICAgIC5iYXItYm94IHsgaGVp
+Z2h0OjE4cHg7IGJhY2tncm91bmQ6I2VlZjFlZTsgYm9yZGVyLXJhZGl1czo5OTlweDsgb3ZlcmZs
+b3c6aGlkZGVuOyB9CiAgICAuYmFyIHsgZGlzcGxheTpibG9jazsgaGVpZ2h0OjEwMCU7IGJvcmRl
+ci1yYWRpdXM6OTk5cHg7IH0gLmJhci5jdXIgeyBiYWNrZ3JvdW5kOnZhcigtLWN1cik7IH0gLmJh
+ci5wcmV2IHsgYmFja2dyb3VuZDp2YXIoLS1wcmV2KTsgfSAuYmFyLm5lZyB7IGJhY2tncm91bmQ6
+dmFyKC0tcmVkKTsgfQogICAgLmJhci12YWx1ZSB7IHRleHQtYWxpZ246cmlnaHQ7IGZvbnQtdmFy
+aWFudC1udW1lcmljOnRhYnVsYXItbnVtczsgZm9udC1zaXplOjEycHg7IH0KICAgIC5zb3VyY2Ut
+bGlzdCBhIHsgY29sb3I6IzBhNmI1NDsgdGV4dC1kZWNvcmF0aW9uOm5vbmU7IH0gLnNvdXJjZS1s
+aXN0IGE6aG92ZXIgeyB0ZXh0LWRlY29yYXRpb246dW5kZXJsaW5lOyB9CiAgICBmb290ZXIgeyBj
+b2xvcjp2YXIoLS1tdXRlZCk7IGZvbnQtc2l6ZToxMnB4OyBwYWRkaW5nOjE4cHggNHB4IDMwcHg7
+IHRleHQtYWxpZ246Y2VudGVyOyB9CiAgICBAbWVkaWEgKG1heC13aWR0aDo5MDBweCkgeyAucGFn
+ZSB7IHBhZGRpbmc6MTJweDsgfSAua3BpcyB7IGdyaWQtdGVtcGxhdGUtY29sdW1uczpyZXBlYXQo
+MiwxZnIpOyB9IC5ncmlkLTIgeyBncmlkLXRlbXBsYXRlLWNvbHVtbnM6MWZyOyB9IC5iYXItcm93
+IHsgZ3JpZC10ZW1wbGF0ZS1jb2x1bW5zOjFmcjsgZ2FwOjVweDsgfSAuYmFyLXZhbHVlIHsgdGV4
+dC1hbGlnbjpsZWZ0OyB9IC5oZXJvIGgxIHsgZm9udC1zaXplOjI0cHg7IH0gfQogIDwvc3R5bGU+
+CjwvaGVhZD4KPGJvZHk+CjxtYWluIGNsYXNzPSJwYWdlIj4KICA8aGVhZGVyIGNsYXNzPSJoZXJv
+Ij4KICAgIDxoMT5DRU8gQ29udHJvbCBUb3dlciAtIEhp4buHdSBxdeG6oyBiw6FuIHPhu69hIHTh
+uq9tPC9oMT4KICAgIDxwPjxzdHJvbmc+S+G7syBiw6FvIGPDoW86PC9zdHJvbmc+IG5nw6B5IDIw
+MjYtMDctMTIgfCA8c3Ryb25nPlNvIHPDoW5oOjwvc3Ryb25nPiBuZ8OgeSAyMDI2LTA3LTExIHwg
+PHN0cm9uZz5EYXRhIFF1YWxpdHk6PC9zdHJvbmc+IFBBU1MgLSBDw7MgdGjhu4MgZ+G7rWk8L3A+
+CiAKICA8L2hlYWRlcj4KCiAgPGRpdiBjbGFzcz0ia3BpcyI+CiAgICA8ZGl2IGNsYXNzPSdrcGkg
+Z29vZCc+PGRpdiBjbGFzcz0nbGFiZWwnPk5ldCBTYWxlczwvZGl2PjxkaXYgY2xhc3M9J3ZhbHVl
+Jz41Myw1OTAsMDAwPC9kaXY+PGRpdiBjbGFzcz0nc3ViJz4xMywzNzEsMDAwIC8gMzMuMjUlIHZz
+IDExLzA3PC9kaXY+PC9kaXY+PGRpdiBjbGFzcz0na3BpIGdvb2QnPjxkaXYgY2xhc3M9J2xhYmVs
+Jz5Qcm9maXQ8L2Rpdj48ZGl2IGNsYXNzPSd2YWx1ZSc+Miw1MjgsODc3PC9kaXY+PGRpdiBjbGFz
+cz0nc3ViJz4zLDc2MSwzMTA7IHThu6sgw6JtIHNhbmcgZMawxqFuZzwvZGl2PjwvZGl2PjxkaXYg
+Y2xhc3M9J2twaSB3YXJuJz48ZGl2IGNsYXNzPSdsYWJlbCc+UHJvZml0IE1hcmdpbjwvZGl2Pjxk
+aXYgY2xhc3M9J3ZhbHVlJz40LjcyJTwvZGl2PjxkaXYgY2xhc3M9J3N1Yic+KzcuNzggxJFp4buD
+bSAlPC9kaXY+PC9kaXY+PGRpdiBjbGFzcz0na3BpIHdhcm4nPjxkaXYgY2xhc3M9J2xhYmVsJz5B
+ZHMvRFM8L2Rpdj48ZGl2IGNsYXNzPSd2YWx1ZSc+MjguMDglPC9kaXY+PGRpdiBjbGFzcz0nc3Vi
+Jz4tMy44NSDEkWnhu4NtICU8L2Rpdj48L2Rpdj48ZGl2IGNsYXNzPSdrcGkgbmV1dHJhbCc+PGRp
+diBjbGFzcz0nbGFiZWwnPk9yZGVyczwvZGl2PjxkaXYgY2xhc3M9J3ZhbHVlJz4xNjQ8L2Rpdj48
+ZGl2IGNsYXNzPSdzdWInPlN1Y2Nlc3MgMTQyOyBDYW5jZWwgMTMuNDElPC9kaXY+PC9kaXY+PGRp
+diBjbGFzcz0na3BpIGJhZCc+PGRpdiBjbGFzcz0nbGFiZWwnPkludmVudG9yeSBQMS9QMjwvZGl2
+PjxkaXYgY2xhc3M9J3ZhbHVlJz4xMyAvIDM3PC9kaXY+PGRpdiBjbGFzcz0nc3ViJz5QcmV2aW91
+cyAxMyAvIDM3PC9kaXY+PC9kaXY+CiAgPC9kaXY+CgogIDxzZWN0aW9uIGNsYXNzPSJmb2N1cyI+
+CiAgICA8aDI+RXhlY3V0aXZlIFN1bW1hcnk8L2gyPgogICAgPHVsPjxsaT5Ub8OgbiBjw7RuZyB0
+eSDEkeG6o28gY2hp4buBdSBs4bujaSBuaHXhuq1uOiBOZXQgU2FsZXMgNTMsNTkwLDAwMCBzbyB2
+4bubaSA0MCwyMTksMDAwLCB0xINuZyAxMywzNzEsMDAwICgzMy4yNSUpOyBQcm9maXQgMiw1Mjgs
+ODc3IHNvIHbhu5tpIC0xLDIzMiw0MzMsIHTEg25nIDMsNzYxLDMxMCB2w6AgY2h1eeG7g24gdOG7
+qyDDom0gc2FuZyBkxrDGoW5nLjwvbGk+PGxpPlByb2ZpdCBNYXJnaW4gxJHhuqF0IDQuNzIlLCBj
+4bqjaSB0aGnhu4duICs3Ljc4IMSRaeG7g20gJSBuaMawbmcgduG6q24gZMaw4bubaSBuZ8aw4buh
+bmcgNSUsIGPhuqduIGdp4buvIGvhu7cgbHXhuq10IGNoaSBwaMOtLjwvbGk+PGxpPlNob3BlZSBs
+w6AgZHJpdmVyIGNow61uaDogTmV0IFNhbGVzIDQwLDk5MCwwMDAsIHTEg25nIDIwLDUyMywwMDA7
+IFByb2ZpdCA1LDYzOSw2MjksIEFkcy9EUyAxNi44NiUuPC9saT48bGk+VGlrVG9rIGdp4bqjbSBk
+b2FuaCB0aHUgY8OybiA5LDQxNiwwMDAgbmjGsG5nIHByb2ZpdCBwaOG7pWMgaOG7k2kgbMOqbiAx
+LDAxMSw2ODM7IEFkcy9EUyBo4bqhIHThu6sgMjkuODglIHh14buRbmcgMTkuMzMlLjwvbGk+PGxp
+Pk5IQU5IIHRp4bq/cCB04bulYyBsw6AgUDE6IE5ldCBTYWxlcyAzLDE4NCwwMDAgbmjGsG5nIEFk
+cyA2LDMxOCwzMTYsIEFkcy9EUyAxOTguNDQlLCBQcm9maXQgLTQsNjE2LDI4MC48L2xpPjxsaT5U
+4buTbiBraG8ga2jDtG5nIMSR4buVaSBzbyB24bubaSBuZ8OgeSB0csaw4bubYzogdOG7lW5nIHTh
+u5NuIDE0NSwxMTQsIEhOIDExNCw2OTIsIEhDTSAzMCw0MjI7IFAxIDEzLCBQMiAzNy48L2xpPjxs
+aT5Ub3AgU0tVIHPhu5EgMSBsw6AgU1QwMTE3MiB24bubaSAyNCBz4bqjbiBwaOG6qW0gdsOgIE5l
+dCBTYWxlcyA2LDAzMCwyMDAsIMSRw7NuZyBnw7NwIOG7nyBTSE9QRUUgdsOgIFRJS1RPSy48L2xp
+PjwvdWw+CiAgPC9zZWN0aW9uPgoKICA8c2VjdGlvbiBjbGFzcz0iY3JpdGljYWwiPgogICAgPGgy
+PkRlY2lzaW9uIEJyaWVmIENobyBDRU88L2gyPgogICAgPHA+PHN0cm9uZz5Ub8OgbiBj4bqjbmg6
+PC9zdHJvbmc+IE5nw6B5IDEyLzA3IMSRw6MgcGjhu6VjIGjhu5NpIGRvYW5oIHRodSB2w6AgY2h1
+eeG7g24gbMOjaSwgbmjGsG5nIGNoxrBhIMSR4bunIGFuIHRvw6BuIHbDrCBtYXJnaW4gdGjhuqVw
+IHbDoCBt4buZdCBrw6puaCDEkWFuZyDEkeG7kXQgYWRzIHF1w6EgbeG6oW5oLjwvcD4KICAgIDx1
+bD48bGk+xJBp4buBdSDEkWFuZyB44bqjeSByYTogbmfDoHkgMTIvMDcgdMSDbmcgdHLGsOG7n25n
+IHRy4bufIGzhuqFpIHbDoCBjw7MgbMOjaSwgbmjGsG5nIGNo4bqldCBsxrDhu6NuZyBs4bujaSBu
+aHXhuq1uIGPDsm4gbeG7j25nIHbDrCBtYXJnaW4gY2jhu4kgNC43MiUuPC9saT48bGk+VsOsIHNh
+byDEkcOhbmcgY2jDuiDDvTogU2hvcGVlIGvDqW8gdMSDbmcgdHLGsOG7n25nLCBUaWtUb2sgY+G6
+o2kgdGhp4buHbiBuaOG7nSBnaeG6o20gYWRzLCBjw7JuIE5IQU5IIMSR4buRdCBhZHMgdsaw4buj
+dCB4YSBkb2FuaCB0aHUgdsOgIGzDoG0gw6JtIDQsNjE2LDI4MC48L2xpPjxsaT5DRU8gbsOqbiBx
+dXnhur90IGjDtG0gbmF5OiBraMOzYSBuZ8OibiBzw6FjaCBOSEFOSCB0aGVvIFNLVS9jYW1wYWln
+biBjw7MgY29udHJpYnV0aW9uIG1hcmdpbiBkxrDGoW5nLCBnaeG7ryBTaG9wZWUgc2NhbGUgY8Oz
+IHRy4bqnbiBBZHMvRFMsIHbDoCBkw7luZyBUaWtUb2sgdGhlbyBuZ8aw4buhbmcgZOG7q25nIHLD
+tS48L2xpPjxsaT5TdXBwbHkgQ2hhaW4gY+G6p24geOG7rSBsw70gUDEgdOG7k24ga2hvIG5nYXk6
+IDEzIGPhuqNuaCBiw6FvIFAxLCBn4buTbSBsb3ctZGF0ZSBkxrDhu5tpIDEyIHRow6FuZyB2w6Ag
+b3V0LW9mLXN0b2NrLjwvbGk+PGxpPkVjb20vVHJhZGUgTWFya2V0aW5nIG7Dqm4gxrB1IHRpw6pu
+IGJ1bmRsZSBz4buvYSB04bqvbSB0b3AgU0tVIHbhu5tpIGjDoG5nIGxvdy1kYXRlIHBow7kgaOG7
+o3AsIGtow7RuZyBnaeG6o20gZ2nDoSB0csOgbiBsYW4gbMOgbSBt4bqldCBtYXJnaW4gduG7q2Eg
+cGjhu6VjIGjhu5NpLjwvbGk+PC91bD4KICAgIDxoMz5W4bqlbiDEkeG7gSB0w6FpIGRp4buFbiB0
+4burIE1lbW9yeTwvaDM+PHVsPjxsaT5OSEFOSCBs4bq3cCBs4bqhaSBuaGnhu4F1IGvhu7MgbMOg
+IMSRaeG7g20gUDEgduG7gSBtYXJnaW4vQWRzOyBuZ8OgeSAxMi8wNyB24bqrbiDDom0gcHJvZml0
+IC00LDYxNiwyODAgduG7m2kgQWRzL0RTIDE5OC40NCUuPC9saT48bGk+VOG7k24gZGF0ZSB0aOG6
+pXAvb3V0LW9mLXN0b2NrIHRp4bq/cCB04bulYyBsw6AgduG6pW4gxJHhu4EgdMOhaSBkaeG7hW47
+IGN1cnJlbnQgY8OzIFAxPTEzIHbDoCBQMj0zNyBj4bqjbmggYsOhbyB04buTbiBraG8uPC9saT48
+L3VsPgogIDwvc2VjdGlvbj4KCiAgPHNlY3Rpb24+CiAgICA8aDI+Q2jhu4kgU+G7kSDEkGnhu4F1
+IEjDoG5oIENow61uaDwvaDI+CiAgICA8ZGl2IGNsYXNzPSd0YWJsZS13cmFwJz48dGFibGUgY2xh
+c3M9J3RhYmxlJz48dGhlYWQ+PHRyPjx0aD5DaOG7iSBz4buRPC90aD48dGg+Q3VycmVudCAxMi8w
+NzwvdGg+PHRoPlByZXZpb3VzIDExLzA3PC90aD48dGg+RGVsdGE8L3RoPjx0aD5EZWx0YSAlPC90
+aD48L3RyPjwvdGhlYWQ+PHRib2R5Pjx0cj48dGQgY2xhc3M9Jyc+R3Jvc3MgU2FsZXM8L3RkPjx0
+ZCBjbGFzcz0nbnVtJz43MSwxNjMsMDAwPC90ZD48dGQgY2xhc3M9J251bSc+NTAsNjA3LDc3ODwv
+dGQ+PHRkIGNsYXNzPSdudW0nPjIwLDU1NSwyMjI8L3RkPjx0ZCBjbGFzcz0nbnVtJz40MC42MiU8
+L3RkPjwvdHI+PHRyPjx0ZCBjbGFzcz0nJz5OZXQgU2FsZXM8L3RkPjx0ZCBjbGFzcz0nbnVtJz41
+Myw1OTAsMDAwPC90ZD48dGQgY2xhc3M9J251bSc+NDAsMjE5LDAwMDwvdGQ+PHRkIGNsYXNzPSdu
+dW0nPjEzLDM3MSwwMDA8L3RkPjx0ZCBjbGFzcz0nbnVtJz4zMy4yNSU8L3RkPjwvdHI+PHRyPjx0
+ZCBjbGFzcz0nJz5DT0dTPC90ZD48dGQgY2xhc3M9J251bSc+MTIsNjM4LDcwMTwvdGQ+PHRkIGNs
+YXNzPSdudW0nPjEyLDkxMiw1NzM8L3RkPjx0ZCBjbGFzcz0nbnVtJz4tMjczLDg3MjwvdGQ+PHRk
+IGNsYXNzPSdudW0nPi0yLjEyJTwvdGQ+PC90cj48dHI+PHRkIGNsYXNzPScnPlByb2ZpdDwvdGQ+
+PHRkIGNsYXNzPSdudW0nPjIsNTI4LDg3NzwvdGQ+PHRkIGNsYXNzPSdudW0nPi0xLDIzMiw0MzM8
+L3RkPjx0ZCBjbGFzcz0nbnVtJz4zLDc2MSwzMTA8L3RkPjx0ZCBjbGFzcz0nbnVtJz4tMzA1LjE5
+JTwvdGQ+PC90cj48dHI+PHRkIGNsYXNzPScnPlByb2ZpdCBNYXJnaW48L3RkPjx0ZCBjbGFzcz0n
+bnVtJz40LjcyJTwvdGQ+PHRkIGNsYXNzPSdudW0nPi0zLjA2JTwvdGQ+PHRkIGNsYXNzPSdudW0n
+Pis3Ljc4IMSRaeG7g20gJTwvdGQ+PHRkIGNsYXNzPSdudW0nPjwvdGQ+PC90cj48dHI+PHRkIGNs
+YXNzPScnPkFkcy9EUzwvdGQ+PHRkIGNsYXNzPSdudW0nPjI4LjA4JTwvdGQ+PHRkIGNsYXNzPSdu
+dW0nPjMxLjkzJTwvdGQ+PHRkIGNsYXNzPSdudW0nPi0zLjg1IMSRaeG7g20gJTwvdGQ+PHRkIGNs
+YXNzPSdudW0nPjwvdGQ+PC90cj48L3Rib2R5PjwvdGFibGU+PC9kaXY+CiAgPC9zZWN0aW9uPgoK
+ICA8c2VjdGlvbj4KICAgIDxoMj5CaeG7g3UgxJDhu5MgU28gU8OhbmggS+G7szwvaDI+CiAgICAK
+PGRpdiBjbGFzcz0ibGVnZW5kIj48c3Bhbj48aSBjbGFzcz0iZG90IHByZXYtZG90Ij48L2k+IDEx
+LzA3PC9zcGFuPjxzcGFuPjxpIGNsYXNzPSJkb3QgY3VyLWRvdCI+PC9pPiAxMi8wNzwvc3Bhbj48
+L2Rpdj4KPGRpdiBjbGFzcz0iY2hhcnQtZ3JpZCI+CiAgCiAgICA8ZGl2IGNsYXNzPSJiYXItcm93
+Ij4KICAgICAgPGRpdiBjbGFzcz0iYmFyLWxhYmVsIj5OZXQgU2FsZXM8L2Rpdj4KICAgICAgPGRp
+diBjbGFzcz0iYmFyLWJveCI+PHNwYW4gY2xhc3M9ImJhciBwcmV2IiBzdHlsZT0id2lkdGg6NzUu
+MDUlIj48L3NwYW4+PC9kaXY+CiAgICAgIDxkaXYgY2xhc3M9ImJhci12YWx1ZSBuZXV0cmFsIj40
+MCwyMTksMDAwPC9kaXY+CiAgICAgIDxkaXYgY2xhc3M9ImJhci1ib3giPjxzcGFuIGNsYXNzPSJi
+YXIgY3VyICIgc3R5bGU9IndpZHRoOjEwMC4wMCUiPjwvc3Bhbj48L2Rpdj4KICAgICAgPGRpdiBj
+bGFzcz0iYmFyLXZhbHVlIj41Myw1OTAsMDAwPC9kaXY+CiAgICA8L2Rpdj4KICAgIAogIAogICAg
+PGRpdiBjbGFzcz0iYmFyLXJvdyI+CiAgICAgIDxkaXYgY2xhc3M9ImJhci1sYWJlbCI+UHJvZml0
+PC9kaXY+CiAgICAgIDxkaXYgY2xhc3M9ImJhci1ib3giPjxzcGFuIGNsYXNzPSJiYXIgcHJldiIg
+c3R5bGU9IndpZHRoOjQ4LjczJSI+PC9zcGFuPjwvZGl2PgogICAgICA8ZGl2IGNsYXNzPSJiYXIt
+dmFsdWUgbmV1dHJhbCI+LTEsMjMyLDQzMzwvZGl2PgogICAgICA8ZGl2IGNsYXNzPSJiYXItYm94
+Ij48c3BhbiBjbGFzcz0iYmFyIGN1ciAiIHN0eWxlPSJ3aWR0aDoxMDAuMDAlIj48L3NwYW4+PC9k
+aXY+CiAgICAgIDxkaXYgY2xhc3M9ImJhci12YWx1ZSI+Miw1MjgsODc3PC9kaXY+CiAgICA8L2Rp
+dj4KICAgIAogIAogICAgPGRpdiBjbGFzcz0iYmFyLXJvdyI+CiAgICAgIDxkaXYgY2xhc3M9ImJh
+ci1sYWJlbCI+QWRzPC9kaXY+CiAgICAgIDxkaXYgY2xhc3M9ImJhci1ib3giPjxzcGFuIGNsYXNz
+PSJiYXIgcHJldiIgc3R5bGU9IndpZHRoOjg1LjMzJSI+PC9zcGFuPjwvZGl2PgogICAgICA8ZGl2
+IGNsYXNzPSJiYXItdmFsdWUgbmV1dHJhbCI+MTIsODQwLDIyNDwvZGl2PgogICAgICA8ZGl2IGNs
+YXNzPSJiYXItYm94Ij48c3BhbiBjbGFzcz0iYmFyIGN1ciAiIHN0eWxlPSJ3aWR0aDoxMDAuMDAl
+Ij48L3NwYW4+PC9kaXY+CiAgICAgIDxkaXYgY2xhc3M9ImJhci12YWx1ZSI+MTUsMDQ4LDAxOTwv
+ZGl2PgogICAgPC9kaXY+CiAgICAKICAKICAgIDxkaXYgY2xhc3M9ImJhci1yb3ciPgogICAgICA8
+ZGl2IGNsYXNzPSJiYXItbGFiZWwiPlByb2ZpdCBNYXJnaW48L2Rpdj4KICAgICAgPGRpdiBjbGFz
+cz0iYmFyLWJveCI+PHNwYW4gY2xhc3M9ImJhciBwcmV2IiBzdHlsZT0id2lkdGg6NjQuODMlIj48
+L3NwYW4+PC9kaXY+CiAgICAgIDxkaXYgY2xhc3M9ImJhci12YWx1ZSBuZXV0cmFsIj4tMy4wNiU8
+L2Rpdj4KICAgICAgPGRpdiBjbGFzcz0iYmFyLWJveCI+PHNwYW4gY2xhc3M9ImJhciBjdXIgIiBz
+dHlsZT0id2lkdGg6MTAwLjAwJSI+PC9zcGFuPjwvZGl2PgogICAgICA8ZGl2IGNsYXNzPSJiYXIt
+dmFsdWUiPjQuNzIlPC9kaXY+CiAgICA8L2Rpdj4KICAgIAogIAogICAgPGRpdiBjbGFzcz0iYmFy
+LXJvdyI+CiAgICAgIDxkaXYgY2xhc3M9ImJhci1sYWJlbCI+QWRzL0RTPC9kaXY+CiAgICAgIDxk
+aXYgY2xhc3M9ImJhci1ib3giPjxzcGFuIGNsYXNzPSJiYXIgcHJldiIgc3R5bGU9IndpZHRoOjEw
+MC4wMCUiPjwvc3Bhbj48L2Rpdj4KICAgICAgPGRpdiBjbGFzcz0iYmFyLXZhbHVlIG5ldXRyYWwi
+PjMxLjkzJTwvZGl2PgogICAgICA8ZGl2IGNsYXNzPSJiYXItYm94Ij48c3BhbiBjbGFzcz0iYmFy
+IGN1ciAiIHN0eWxlPSJ3aWR0aDo4Ny45NSUiPjwvc3Bhbj48L2Rpdj4KICAgICAgPGRpdiBjbGFz
+cz0iYmFyLXZhbHVlIj4yOC4wOCU8L2Rpdj4KICAgIDwvZGl2PgogICAgCjwvZGl2Pgo8cCBjbGFz
+cz0iaW5zaWdodCI+SMOgbSDDvTogdMSDbmcgdHLGsOG7n25nIG5nw6B5IDEyLzA3IMSR4bq/biBj
+aOG7pyB54bq/dSB04burIFNob3BlZSwgdHJvbmcga2hpIEFkcy9EUyB0b8OgbiBjw7RuZyB0eSBn
+aeG6o20gbmjGsG5nIHbhuqtuIGNhbyAyOC4wOCU7IMawdSB0acOqbiBDRU8gbMOgIGdp4buvIHNj
+YWxlIOG7nyBrw6puaCBjw7MgbMOjaSB2w6AgY+G6r3QgbOG7lyBOSEFOSCB0cm9uZyBuZ8OgeS48
+L3A+CgogIDwvc2VjdGlvbj4KCiAgPHNlY3Rpb24+CiAgICA8aDI+Q0VPIEVtYWlsIFNjb3JlY2Fy
+ZCBGb3JtPC9oMj4KICAgPGRpdiBjbGFzcz0ndGFibGUtd3JhcCc+PHRhYmxlIGNsYXNzPSd0YWJs
+ZSBzbWFsbCc+PHRoZWFkPjx0cj48dGg+U1RUPC90aD48dGg+S8Oqbmg8L3RoPjx0aD5DaOG7iSB0
+acOqdSB0aMOhbmc8L3RoPjx0aD5U4buVbmcgdGjhu7FjIGhp4buHbiB04bubaSBuZ8OgeTwvdGg+
+PHRoPkRvYW5oIHPhu5EgbmfDoHk8L3RoPjx0aD5DaGkgcGjDrSBxdeG6o25nIGPDoW88L3RoPjx0
+aD5HacOhIHbhu5FuPC90aD48dGg+VkMvaG/DoG48L3RoPjx0aD5CYWNrb2ZmaWNlPC90aD48dGg+
+TGl2ZTwvdGg+PHRoPkJvb2tpbmc8L3RoPjx0aD5RdeG6o25nIGPDoW8gbMWpeSBr4bq/PC90aD48
+dGg+QmFvIGLDrDwvdGg+PHRoPlRp4buBbiB0aHU8L3RoPjx0aD5MTiBjw7JuIGzhuqFpPC90aD48
+dGg+JSB0aOG7sWMgaGnhu4duPC90aD48dGg+JSBRQyBuZ8OgeTwvdGg+PHRoPiUgUUMgbMWpeSBr
+4bq/PC90aD48L3RyPjwvdGhlYWQ+PHRib2R5Pjx0cj48dGQgY2xhc3M9Jyc+MTwvdGQ+PHRkIGNs
+YXNzPScnPk1UPC90ZD48dGQgY2xhc3M9J251bSc+NjAwLDAwMCwwMDA8L3RkPjx0ZCBjbGFzcz0n
+bnVtJz4xMTYsMDU0LDkxMjwvdGQ+PHRkIGNsYXNzPSdudW0nPjA8L3RkPjx0ZCBjbGFzcz0nbnVt
+Jz4wPC90ZD48dGQgY2xhc3M9J251bSc+NDEsOTMyLDc5NDwvdGQ+PHRkIGNsYXNzPSdudW0nPjIs
+MzIxLDA5ODwvdGQ+PHRkIGNsYXNzPSdudW0nPjE3LDQwOCwyMzc8L3RkPjx0ZCBjbGFzcz0nbnVt
+Jz4wPC90ZD48dGQgY2xhc3M9J251bSc+MDwvdGQ+PHRkIGNsYXNzPSdudW0nPjA8L3RkPjx0ZCBj
+bGFzcz0nbnVtJz4wPC90ZD48dGQgY2xhc3M9J251bSc+MTE2LDA1NCw5MTI8L3RkPjx0ZCBjbGFz
+cz0nbnVtJz41NCwzOTIsNzgzPC90ZD48dGQgY2xhc3M9J251bSc+MTkuMyU8L3RkPjx0ZCBjbGFz
+cz0nbnVtJz4wPC90ZD48dGQgY2xhc3M9J251bSc+MC4wJTwvdGQ+PC90cj48dHI+PHRkIGNsYXNz
+PScnPjI8L3RkPjx0ZCBjbGFzcz0nJz5HVDwvdGQ+PHRkIGNsYXNzPSdudW0nPjM1MCwwMDAsMDAw
+PC90ZD48dGQgY2xhc3M9J251bSc+MTE0LDQ0Niw4ODA8L3RkPjx0ZCBjbGFzcz0nbnVtJz4wPC90
+ZD48dGQgY2xhc3M9J251bSc+MjgyLDEwODwvdGQ+PHRkIGNsYXNzPSdudW0nPjYwLDg1Nyw1MzE8
+L3RkPjx0ZCBjbGFzcz0nbnVtJz4yLDI4OCw5Mzg8L3RkPjx0ZCBjbGFzcz0nbnVtJz4xNywxNjcs
+MDMyPC90ZD48dGQgY2xhc3M9J251bSc+MDwvdGQ+PHRkIGNsYXNzPSdudW0nPjA8L3RkPjx0ZCBj
+bGFzcz0nbnVtJz4yLDk4NiwzMTc8L3RkPjx0ZCBjbGFzcz0nbnVtJz4wPC90ZD48dGQgY2xhc3M9
+J251bSc+MTE0LDQ0Niw4ODA8L3RkPjx0ZCBjbGFzcz0nbnVtJz4zMSwxNDcsMDYyPC90ZD48dGQg
+Y2xhc3M9J251bSc+MzIuNyU8L3RkPjx0ZCBjbGFzcz0nbnVtJz4xMDAuMCU8L3RkPjx0ZCBjbGFz
+cz0nbnVtJz4yLjYlPC90ZD48L3RyPjx0cj48dGQgY2xhc3M9Jyc+MzwvdGQ+PHRkIGNsYXNzPScn
+PkRpZ2l0YWw8L3RkPjx0ZCBjbGFzcz0nbnVtJz40MDAsMDAwLDAwMDwvdGQ+PHRkIGNsYXNzPSdu
+dW0nPjcxLDMyOCwwMDA8L3RkPjx0ZCBjbGFzcz0nbnVtJz4zLDE4NCwwMDA8L3RkPjx0ZCBjbGFz
+cz0nbnVtJz42LDMxOCwzMTY8L3RkPjx0ZCBjbGFzcz0nbnVtJz4yMSwzOTcsNDIyPC90ZD48dGQg
+Y2xhc3M9J251bSc+Njg0LDc4MjwvdGQ+PHRkIGNsYXNzPSdudW0nPjEwLDU3OSw4MDA8L3RkPjx0
+ZCBjbGFzcz0nbnVtJz4wPC90ZD48dGQgY2xhc3M9J251bSc+MDwvdGQ+PHRkIGNsYXNzPSdudW0n
+PjQ2LDc3OSw3Mjk8L3RkPjx0ZCBjbGFzcz0nbnVtJz4xLDA1MCwwMDA8L3RkPjx0ZCBjbGFzcz0n
+bnVtJz43MSwzMjgsMDAwPC90ZD48dGQgY2xhc3M9J251bSc+LTksMTYzLDczMzwvdGQ+PHRkIGNs
+YXNzPSdudW0nPjE3LjglPC90ZD48dGQgY2xhc3M9J251bSc+MTk4LjQlPC90ZD48dGQgY2xhc3M9
+J251bSc+NjUuNiU8L3RkPjwvdHI+PHRyPjx0ZCBjbGFzcz0nJz40PC90ZD48dGQgY2xhc3M9Jyc+
+RWNvbTwvdGQ+PHRkIGNsYXNzPSdudW0nPjIsMzAwLDAwMCwwMDA8L3RkPjx0ZCBjbGFzcz0nbnVt
+Jz42NjIsNTc3LDYzNDwvdGQ+PHRkIGNsYXNzPSdudW0nPjUwLDQwNiwwMDA8L3RkPjx0ZCBjbGFz
+cz0nbnVtJz44LDcyOSw3MDM8L3RkPjx0ZCBjbGFzcz0nbnVtJz4xNjMsMTI2LDExMDwvdGQ+PHRk
+IGNsYXNzPSdudW0nPjk5MCwwMDA8L3RkPjx0ZCBjbGFzcz0nbnVtJz42NSw5OTksOTM5PC90ZD48
+dGQgY2xhc3M9J251bSc+Miw3MjIsNTAwPC90ZD48dGQgY2xhc3M9J251bSc+MTExLDg4ODwvdGQ+
+PHRkIGNsYXNzPSdudW0nPjEyNiw0MjIsODI5PC90ZD48dGQgY2xhc3M9J251bSc+Nyw2NjgsMDAw
+PC90ZD48dGQgY2xhc3M9J251bSc+NDM5LDc4NCwwNzM8L3RkPjx0ZCBjbGFzcz0nbnVtJz43Miw3
+NDIsODA3PC90ZD48dGQgY2xhc3M9J251bSc+MjguOCU8L3RkPjx0ZCBjbGFzcz0nbnVtJz4xNy4z
+JTwvdGQ+PHRkIGNsYXNzPSdudW0nPjE5LjElPC90ZD48L3RyPjx0cj48dGQgY2xhc3M9Jyc+NTwv
+dGQ+PHRkIGNsYXNzPScnPlNob3BlZTwvdGQ+PHRkIGNsYXNzPSdudW0nPjEsNTAwLDAwMCwwMDA8
+L3RkPjx0ZCBjbGFzcz0nbnVtJz41MzQsMDM0LDAyNDwvdGQ+PHRkIGNsYXNzPSdudW0nPjQwLDk5
+MCwwMDA8L3RkPjx0ZCBjbGFzcz0nbnVtJz42LDkwOSwzMTM8L3RkPjx0ZCBjbGFzcz0nbnVtJz4x
+MzEsMjY3LDgzNTwvdGQ+PHRkIGNsYXNzPSdudW0nPjgxMCwwMDA8L3RkPjx0ZCBjbGFzcz0nbnVt
+Jz41MiwwMjUsNzUyPC90ZD48dGQgY2xhc3M9J251bSc+MDwvdGQ+PHRkIGNsYXNzPSdudW0nPjA8
+L3RkPjx0ZCBjbGFzcz0nbnVtJz45Myw1MTgsODM1PC90ZD48dGQgY2xhc3M9J251bSc+NSw2ODYs
+MDAwPC90ZD48dGQgY2xhc3M9J251bSc+MzQ2LDgzOCwzNDc8L3RkPjx0ZCBjbGFzcz0nbnVtJz42
+Myw1MjksOTI1PC90ZD48dGQgY2xhc3M9J251bSc+MzUuNiU8L3RkPjx0ZCBjbGFzcz0nbnVtJz4x
+Ni45JTwvdGQ+PHRkIGNsYXNzPSdudW0nPjE3LjUlPC90ZD48L3RyPjx0cj48dGQgY2xhc3M9Jyc+
+NjwvdGQ+PHRkIGNsYXNzPScnPlRpa3RvazwvdGQ+PHRkIGNsYXNzPSdudW0nPjgwMCwwMDAsMDAw
+PC90ZD48dGQgY2xhc3M9J251bSc+MTI4LDU0Myw2MTA8L3RkPjx0ZCBjbGFzcz0nbnVtJz45LDQx
+NiwwMDA8L3RkPjx0ZCBjbGFzcz0nbnVtJz4xLDgyMCwzOTA8L3RkPjx0ZCBjbGFzcz0nbnVtJz4z
+MSw4NTgsMjc1PC90ZD48dGQgY2xhc3M9J251bSc+MTgwLDAwMDwvdGQ+PHRkIGNsYXNzPSdudW0n
+PjEzLDk3NCwxODc8L3RkPjx0ZCBjbGFzcz0nbnVtJz4yLDcyMiw1MDA8L3RkPjx0ZCBjbGFzcz0n
+bnVtJz4xMTEsODg4PC90ZD48dGQgY2xhc3M9J251bSc+MzIsOTAzLDk5NDwvdGQ+PHRkIGNsYXNz
+PSdudW0nPjEsOTgyLDAwMDwvdGQ+PHRkIGNsYXNzPSdudW0nPjkyLDk0NSw3MjY8L3RkPjx0ZCBj
+bGFzcz0nbnVtJz45LDIxMiw4ODI8L3RkPjx0ZCBjbGFzcz0nbnVtJz4xNi4xJTwvdGQ+PHRkIGNs
+YXNzPSdudW0nPjE5LjMlPC90ZD48dGQgY2xhc3M9J251bSc+MjUuNiU8L3RkPjwvdHI+PHRyPjx0
+ZCBjbGFzcz0nJz48L3RkPjx0ZCBjbGFzcz0nJz5U4buVbmc8L3RkPjx0ZCBjbGFzcz0nbnVtJz4z
+LDY1MCwwMDAsMDAwPC90ZD48dGQgY2xhc3M9J251bSc+OTY0LDQwNyw0MjY8L3RkPjx0ZCBjbGFz
+cz0nbnVtJz41Myw1OTAsMDAwPC90ZD48dGQgY2xhc3M9J251bSc+MTUsMzMwLDEyNzwvdGQ+PHRk
+IGNsYXNzPSdudW0nPjI4NywzMTMsODU4PC90ZD48dGQgY2xhc3M9J251bSc+NiwyODQsODE4PC90
+ZD48dGQgY2xhc3M9J251bSc+MTExLDE1NSwwMDg8L3RkPjx0ZCBjbGFzcz0nbnVtJz4yLDcyMiw1
+MDA8L3RkPjx0ZCBjbGFzcz0nbnVtJz4xMTEsODg4PC90ZD48dGQgY2xhc3M9J251bSc+MTc2LDE4
+OCw4NzU8L3RkPjx0ZCBjbGFzcz0nbnVtJz44LDcxOCwwMDA8L3RkPjx0ZCBjbGFzcz0nbnVtJz43
+NDEsNjEzLDg2NTwvdGQ+PHRkIGNsYXNzPSdudW0nPjE0OSwxMTgsOTE5PC90ZD48dGQgY2xhc3M9
+J251bSc+MjYuNCU8L3RkPjx0ZCBjbGFzcz0nbnVtJz4yOC42JTwvdGQ+PHRkIGNsYXNzPSdudW0n
+PjE4LjMlPC90ZD48L3RyPjwvdGJvZHk+PC90YWJsZT48L2Rpdj4KICAgIDxoMz5DRU8gU2NvcmVj
+YXJkIEZvcm0gVGhlbyBNYXBwaW5nIFThu6sgc2NvcmVjYXJkX2J5X2NoYW5uZWw8L2gzPgogPC9z
+ZWN0aW9uPgoKICA8c2VjdGlvbj4KICAgIDxoMj5TY29yZWNhcmQgVGhlbyBLw6puaDwvaDI+CiAg
+ICA8ZGl2IGNsYXNzPSd0YWJsZS13cmFwJz48dGFibGUgY2xhc3M9J3RhYmxlIHNtYWxsJz48dGhl
+YWQ+PHRyPjx0aD5Lw6puaDwvdGg+PHRoPkdyb3NzIFNhbGVzPC90aD48dGg+TmV0IFNhbGVzPC90
+aD48dGg+Q09HUzwvdGg+PHRoPkdyb3NzIE1hcmdpbjwvdGg+PHRoPkdNJTwvdGg+PHRoPlBow60g
+c8OgbjwvdGg+PHRoPlZDL2hvw6BuPC90aD48dGg+QWRzPC90aD48dGg+QWRzL0RTPC90aD48dGg+
+TGl2ZTwvdGg+PHRoPkJvb2tpbmc8L3RoPjx0aD5CYWNrb2ZmaWNlPC90aD48dGg+UGFja2FnaW5n
+PC90aD48dGg+UGF5b3V0PC90aD48dGg+UHJvZml0PC90aD48dGg+UHJvZml0IE1hcmdpbjwvdGg+
+PHRoPkPhuqNuaCBiw6FvPC90aD48dGg+QWN0aW9uPC90aD48L3RyPjwvdGhlYWQ+PHRib2R5Pjx0
+cj48dGQgY2xhc3M9Jyc+TkhBTkg8L3RkPjx0ZCBjbGFzcz0nbnVtJz4zLDE4NCwwMDA8L3RkPjx0
+ZCBjbGFzcz0nbnVtJz4zLDE4NCwwMDA8L3RkPjx0ZCBjbGFzcz0nbnVtJz45NjMsMjM0PC90ZD48
+dGQgY2xhc3M9J251bSc+MiwyMjAsNzY2PC90ZD48dGQgY2xhc3M9J251bSc+NjkuNzUlPC90ZD48
+dGQgY2xhc3M9J251bSc+MDwvdGQ+PHRkIGNsYXNzPSdudW0nPi02LDg3MDwvdGQ+PHRkIGNsYXNz
+PSdudW0nPjYsMzE4LDMxNjwvdGQ+PHRkIGNsYXNzPSdudW0nPjE5OC40NCU8L3RkPjx0ZCBjbGFz
+cz0nbnVtJz4wPC90ZD48dGQgY2xhc3M9J251bSc+MDwvdGQ+PHRkIGNsYXNzPSdudW0nPjQ3Nyw2
+MDA8L3RkPjx0ZCBjbGFzcz0nbnVtJz40OCwwMDA8L3RkPjx0ZCBjbGFzcz0nbnVtJz4wPC90ZD48
+dGQgY2xhc3M9J251bSc+LTQsNjE2LDI4MDwvdGQ+PHRkIGNsYXNzPSdudW0nPi0xNDQuOTglPC90
+ZD48dGQgY2xhc3M9J251bSc+PHNwYW4gY2xhc3M9J2JhZGdlIHAxJz5QMTogUHJvZml0IG1hcmdp
+biBy4bqldCB0aOG6pXA8L3NwYW4+PC90ZD48dGQgY2xhc3M9J251bSc+UsOgIG5nYXkgY2hpIHBo
+w60gYWRzL2ZlZS9saXZlL2Jvb2tpbmcgdsOgIFNLVSDEkWFuZyBrw6lvIGzhu5cuPC90ZD48L3Ry
+Pjx0cj48dGQgY2xhc3M9Jyc+U0hPUEVFPC90ZD48dGQgY2xhc3M9J251bSc+NTUsMTg2LDAwMDwv
+dGQ+PHRkIGNsYXNzPSdudW0nPjQwLDk5MCwwMDA8L3RkPjx0ZCBjbGFzcz0nbnVtJz45LDQ3NCwy
+NTk8L3RkPjx0ZCBjbGFzcz0nbnVtJz4zMSw1MTUsNzQxPC90ZD48dGQgY2xhc3M9J251bSc+NzYu
+ODklPC90ZD48dGQgY2xhc3M9J251bSc+MTQsNjIzLDg4MTwvdGQ+PHRkIGNsYXNzPSdudW0nPjA8
+L3RkPjx0ZCBjbGFzcz0nbnVtJz42LDkwOSwzMTM8L3RkPjx0ZCBjbGFzcz0nbnVtJz4xNi44NiU8
+L3RkPjx0ZCBjbGFzcz0nbnVtJz4wPC90ZD48dGQgY2xhc3M9J251bSc+MDwvdGQ+PHRkIGNsYXNz
+PSdudW0nPjMsOTU0LDkxODwvdGQ+PHRkIGNsYXNzPSdudW0nPjM4OCwwMDA8L3RkPjx0ZCBjbGFz
+cz0nbnVtJz4yNiwzNjYsMTE5PC90ZD48dGQgY2xhc3M9J251bSc+NSw2MzksNjI5PC90ZD48dGQg
+Y2xhc3M9J251bSc+MTMuNzYlPC90ZD48dGQgY2xhc3M9J251bSc+PHNwYW4gY2xhc3M9J2JhZGdl
+IHdhdGNoJz5UaGVvIGTDtWk8L3NwYW4+PC90ZD48dGQgY2xhc3M9J251bSc+RHV5IHRyw6wsIHTh
+u5FpIMawdSBTS1UgdsOgIG5nw6JuIHPDoWNoLjwvdGQ+PC90cj48dHI+PHRkIGNsYXNzPScnPlRJ
+S1RPSzwvdGQ+PHRkIGNsYXNzPSdudW0nPjEyLDc5MywwMDA8L3RkPjx0ZCBjbGFzcz0nbnVtJz45
+LDQxNiwwMDA8L3RkPjx0ZCBjbGFzcz0nbnVtJz4yLDIwMSwyMDg8L3RkPjx0ZCBjbGFzcz0nbnVt
+Jz43LDIxNCw3OTI8L3RkPjx0ZCBjbGFzcz0nbnVtJz43Ni42MiU8L3RkPjx0ZCBjbGFzcz0nbnVt
+Jz4zLDIxMCw0OTM8L3RkPjx0ZCBjbGFzcz0nbnVtJz4wPC90ZD48dGQgY2xhc3M9J251bSc+MSw4
+MjAsMzkwPC90ZD48dGQgY2xhc3M9J251bSc+MTkuMzMlPC90ZD48dGQgY2xhc3M9J251bSc+MDwv
+dGQ+PHRkIGNsYXNzPSdudW0nPjA8L3RkPjx0ZCBjbGFzcz0nbnVtJz45OTgsMjI2PC90ZD48dGQg
+Y2xhc3M9J251bSc+MTc0LDAwMDwvdGQ+PHRkIGNsYXNzPSdudW0nPjYsNjU0LDgxMDwvdGQ+PHRk
+IGNsYXNzPSdudW0nPjEsMDExLDY4MzwvdGQ+PHRkIGNsYXNzPSdudW0nPjEwLjc0JTwvdGQ+PHRk
+IGNsYXNzPSdudW0nPjxzcGFuIGNsYXNzPSdiYWRnZSB3YXRjaCc+VGhlbyBkw7VpPC9zcGFuPjwv
+dGQ+PHRkIGNsYXNzPSdudW0nPkR1eSB0csOsLCB04buRaSDGsHUgU0tVIHbDoCBuZ8OibiBzw6Fj
+aC48L3RkPjwvdHI+PC90Ym9keT48L3RhYmxlPjwvZGl2PgogICAgPGRpdiBjbGFzcz0iZ3JpZC0y
+Ij4KICAgICAgPGRpdiBjbGFzcz0iY2FsbG91dCI+PHN0cm9uZz5Lw6puaCB0xINuZyBkb2FuaCB0
+aHUgbeG6oW5oIG5o4bqldDo8L3N0cm9uZz4gU0hPUEVFICgyMCw1MjMsMDAwKS48L2Rpdj4KICAg
+ICAgPGRpdiBjbGFzcz0iY2FsbG91dCI+PHN0cm9uZz5Lw6puaCBnaeG6o20gZG9hbmggdGh1IG3h
+uqFuaCBuaOG6pXQ6PC9zdHJvbmc+IEdUICgtNiwyNDAsMDAwKS48L2Rpdj4KICAgICAgPGRpdiBj
+bGFzcz0iY2FsbG91dCI+PHN0cm9uZz5Lw6puaCBs4bujaSBuaHXhuq1uIHjhuqV1IMSRaSBt4bqh
+bmggbmjhuqV0Ojwvc3Ryb25nPiBOSEFOSCAoLTMzOCwyMjIpLjwvZGl2PgogICAgICA8ZGl2IGNs
+YXNzPSJjYWxsb3V0Ij48c3Ryb25nPkFkcy9EUyB2xrDhu6N0IG5nxrDhu6FuZzo8L3N0cm9uZz4g
+TkhBTkggMTk4LjQ0JTwvZGl2PgogICAgPC9kaXY+CiAgPC9zZWN0aW9uPgoKICA8c2VjdGlvbj4K
+ICAgIDxoMj5Ub3AgU0tVIFRvw6BuIEPDtG5nIFR5PC9oMj4KICAgIDxwIGNsYXNzPSJtdXRlZCI+
+U0tVIHbhuqtuIG7hurFtIHRvcDogMzsgU0tVIG3hu5tpIHbDoG8gdG9wOiA3OyBTS1UgcuG7m3Qg
+a2jhu49pIHRvcDogNy48L3A+CiAgICA8ZGl2IGNsYXNzPSd0YWJsZS13cmFwJz48dGFibGUgY2xh
+c3M9J3RhYmxlIHNtYWxsJz48dGhlYWQ+PHRyPjx0aD5SYW5rPC90aD48dGg+U0tVPC90aD48dGg+
+VMOqbiBz4bqjbiBwaOG6qW08L3RoPjx0aD5RdHkgc29sZDwvdGg+PHRoPk5ldCBTYWxlczwvdGg+
+PHRoPkvDqm5oIMSRw7NuZyBnw7NwPC90aD48dGg+U28gduG7m2kgdG9wIG5nw6B5IHRyxrDhu5tj
+PC90aD48L3RyPjwvdGhlYWQ+PHRib2R5Pjx0cj48dGQgY2xhc3M9Jyc+MTwvdGQ+PHRkIGNsYXNz
+PScnPlNUMDExNzI8L3RkPjx0ZCBjbGFzcz0nJz5T4buvYSBU4bqvbSBQaMOhcCBMZSBQZXRpdCBN
+YXJzZWlsbGFpcyBDaG8gTmFtIENoaeG6v3QgWHXhuqV0IFRoacOqbiBOaGnDqm4gNGluMSBOaGnh
+u4F1IE3DuWnigKY8L3RkPjx0ZCBjbGFzcz0nbnVtJz4yNDwvdGQ+PHRkIGNsYXNzPSdudW0nPjYs
+MDMwLDIwMDwvdGQ+PHRkIGNsYXNzPSdudW0nPlNIT1BFRSwgVElLVE9LPC90ZD48dGQgY2xhc3M9
+J251bSc+VuG6q24gbuG6sW0gdG9wPC90ZD48L3RyPjx0cj48dGQgY2xhc3M9Jyc+MjwvdGQ+PHRk
+IGNsYXNzPScnPlNUMDE5MDI8L3RkPjx0ZCBjbGFzcz0nJz5bS09MIGh1eW5oZGFuZ3Rob25nIHgg
+TFBNXSBT4buvYSBU4bqvbS9HZWwgVOG6r20gUGjDoXAgTGUgUGV0aXQgTWFyc2VpbGxhaXMgQ2hp
+4bq/dCBYdeG6pXTigKY8L3RkPjx0ZCBjbGFzcz0nbnVtJz4xMzwvdGQ+PHRkIGNsYXNzPSdudW0n
+PjUsMTQ2LDI1MDwvdGQ+PHRkIGNsYXNzPSdudW0nPlNIT1BFRSwgVElLVE9LPC90ZD48dGQgY2xh
+c3M9J251bSc+VuG6q24gbuG6sW0gdG9wPC90ZD48L3RyPjx0cj48dGQgY2xhc3M9Jyc+MzwvdGQ+
+PHRkIGNsYXNzPScnPlNUNjg4MTY8L3RkPjx0ZCBjbGFzcz0nJz5bS09MIGh1eW5oZGFuZ3Rob25n
+IHggTFBNXSBT4buvYSBU4bqvbS9HZWwgVOG6r20gUGjDoXAgTGUgUGV0aXQgTWFyc2VpbGxhaXMg
+Q2hp4bq/dCBYdeG6pXTigKY8L3RkPjx0ZCBjbGFzcz0nbnVtJz45PC90ZD48dGQgY2xhc3M9J251
+bSc+Myw0NDcsMjUwPC90ZD48dGQgY2xhc3M9J251bSc+U0hPUEVFLCBUSUtUT0s8L3RkPjx0ZCBj
+bGFzcz0nbnVtJz5N4bubaSB2w6BvIHRvcDwvdGQ+PC90cj48dHI+PHRkIGNsYXNzPScnPjQ8L3Rk
+Pjx0ZCBjbGFzcz0nJz5TVDAxNDMxPC90ZD48dGQgY2xhc3M9Jyc+U+G7r2EgVOG6r20gUGjDoXAg
+TGUgUGV0aXQgTWFyc2VpbGxhaXMgQ2hvIE5hbSBDaGnhur90IFh14bqldCBUaGnDqm4gTmhpw6pu
+IDRpbjEgTmhp4buBdSBNw7lp4oCmPC90ZD48dGQgY2xhc3M9J251bSc+ODwvdGQ+PHRkIGNsYXNz
+PSdudW0nPjEsODU0LDIwMDwvdGQ+PHRkIGNsYXNzPSdudW0nPlNIT1BFRSwgVElLVE9LPC90ZD48
+dGQgY2xhc3M9J251bSc+VuG6q24gbuG6sW0gdG9wPC90ZD48L3RyPjx0cj48dGQgY2xhc3M9Jyc+
+NTwvdGQ+PHRkIGNsYXNzPScnPjM1NzQ2NjE3MDEzNTY8L3RkPjx0ZCBjbGFzcz0nJz5T4buvYSBU
+4bqvbSBQaMOhcCBMZSBQZXRpdCBNYXJzZWlsbGFpcyBDaG8gTmFtIENoaeG6v3QgWHXhuqV0IFRo
+acOqbiBOaGnDqm4gNGluMSBOaGnhu4F1IE3DuWnigKY8L3RkPjx0ZCBjbGFzcz0nbnVtJz44PC90
+ZD48dGQgY2xhc3M9J251bSc+MSw1OTIsMDAwPC90ZD48dGQgY2xhc3M9J251bSc+TkhBTkg8L3Rk
+Pjx0ZCBjbGFzcz0nbnVtJz5N4bubaSB2w6BvIHRvcDwvdGQ+PC90cj48dHI+PHRkIGNsYXNzPScn
+PjY8L3RkPjx0ZCBjbGFzcz0nJz4xIELDgU5ILVhQPC90ZD48dGQgY2xhc3M9Jyc+WMOgIFBow7Ju
+ZyBMZSBQZXRpdCBNYXJzZWlsbGFpcyBDaMOtbmggSMOjbmcgQsOhbmggWMOgIFBow7JuZyBU4bqv
+bSBUaGnDqm4gTmhpw6puIChOZ+G6q3UgbmjigKY8L3RkPjx0ZCBjbGFzcz0nbnVtJz44PC90ZD48
+dGQgY2xhc3M9J251bSc+MjI1LDAwMDwvdGQ+PHRkIGNsYXNzPSdudW0nPlRJS1RPSzwvdGQ+PHRk
+IGNsYXNzPSdudW0nPk3hu5tpIHbDoG8gdG9wPC90ZD48L3RyPjx0cj48dGQgY2xhc3M9Jyc+Nzwv
+dGQ+PHRkIGNsYXNzPScnPlNUMDEyODg8L3RkPjx0ZCBjbGFzcz0nJz5T4buvYSBU4bqvbS9HZWwg
+VOG6r20gUGjDoXAgTGUgUGV0aXQgTWFyc2VpbGxhaXMgQ2hp4bq/dCBYdeG6pXQgVGhpw6puIE5o
+acOqbiA2NTBtbCAtIFPhu69hIFThuq/igKY8L3RkPjx0ZCBjbGFzcz0nbnVtJz43PC90ZD48dGQg
+Y2xhc3M9J251bSc+Miw5NjgsMDAwPC90ZD48dGQgY2xhc3M9J251bSc+U0hPUEVFLCBUSUtUT0s8
+L3RkPjx0ZCBjbGFzcz0nbnVtJz5N4bubaSB2w6BvIHRvcDwvdGQ+PC90cj48dHI+PHRkIGNsYXNz
+PScnPjg8L3RkPjx0ZCBjbGFzcz0nJz5TVDQ4NDQxPC90ZD48dGQgY2xhc3M9Jyc+U+G7r2EgVOG6
+r20vR2VsIFThuq9tIFBow6FwIExlIFBldGl0IE1hcnNlaWxsYWlzIFRoacOqbiBOaGnDqm4gMjUw
+bWwgLSBT4buvYSBU4bqvbSBMxrB1IEjGsMahbmfigKY8L3RkPjx0ZCBjbGFzcz0nbnVtJz43PC90
+ZD48dGQgY2xhc3M9J251bSc+MSw0OTcsMDAwPC90ZD48dGQgY2xhc3M9J251bSc+U0hPUEVFPC90
+ZD48dGQgY2xhc3M9J251bSc+TeG7m2kgdsOgbyB0b3A8L3RkPjwvdHI+PHRyPjx0ZCBjbGFzcz0n
+Jz45PC90ZD48dGQgY2xhc3M9Jyc+MzU3NDY2MTcwMTE3MjwvdGQ+PHRkIGNsYXNzPScnPlPhu69h
+IFThuq9tIEThuqFuZyBLZW0gTGUgUGV0aXQgTWFyc2VpbGxhaXMgNCBUcm9uZyAxIE3DoXQgTOG6
+oW5oIFbhu5tpIENoaeG6v3QgWHXhuqV0IEfhu5cgVHV54bq/4oCmPC90ZD48dGQgY2xhc3M9J251
+bSc+NzwvdGQ+PHRkIGNsYXNzPSdudW0nPjEsMzkzLDAwMDwvdGQ+PHRkIGNsYXNzPSdudW0nPk5I
+QU5IPC90ZD48dGQgY2xhc3M9J251bSc+TeG7m2kgdsOgbyB0b3A8L3RkPjwvdHI+PHRyPjx0ZCBj
+bGFzcz0nJz4xMDwvdGQ+PHRkIGNsYXNzPScnPlNUNjg4MjM8L3RkPjx0ZCBjbGFzcz0nJz5bS09M
+IGh1eW5oZGFuZ3Rob25nIHggTFBNXSBT4buvYSBU4bqvbS9HZWwgVOG6r20gUGjDoXAgTGUgUGV0
+aXQgTWFyc2VpbGxhaXMgQ2hp4bq/dCBYdeG6pXTigKY8L3RkPjx0ZCBjbGFzcz0nbnVtJz42PC90
+ZD48dGQgY2xhc3M9J251bSc+MiwzNjQsMDAwPC90ZD48dGQgY2xhc3M9J251bSc+U0hPUEVFPC90
+ZD48dGQgY2xhc3M9J251bSc+TeG7m2kgdsOgbyB0b3A8L3RkPjwvdHI+PC90Ym9keT48L3RhYmxl
+PjwvZGl2PgogIDwvc2VjdGlvbj4KCiAgPHNlY3Rpb24+CiAgICA8aDI+VG9wIFNLVSBUaGVvIEvD
+qm5oPC9oMj4KICAgIDxwIGNsYXNzPSJtdXRlZCI+U2hvcGVlIGPDsyBk4buvIGxp4buHdSB2w6Ag
+xJHGsOG7o2MgaGnhu4NuIHRo4buLIMSR4bqneSDEkeG7pyB0aGVvIHBhY2thZ2UuPC9wPgogICAg
+PGRpdiBjbGFzcz0ndGFibGUtd3JhcCc+PHRhYmxlIGNsYXNzPSd0YWJsZSBzbWFsbCc+PHRoZWFk
+Pjx0cj48dGg+S8Oqbmg8L3RoPjx0aD5SYW5rPC90aD48dGg+U0tVPC90aD48dGg+VMOqbiBz4bqj
+biBwaOG6qW08L3RoPjx0aD5RdHkgc29sZDwvdGg+PHRoPk5ldCBTYWxlczwvdGg+PC90cj48L3Ro
+ZWFkPjx0Ym9keT48dHI+PHRkIGNsYXNzPScnPk5IQU5IPC90ZD48dGQgY2xhc3M9J251bSc+MTwv
+dGQ+PHRkIGNsYXNzPSdudW0nPjM1NzQ2NjE3MDEzNTY8L3RkPjx0ZCBjbGFzcz0nbnVtJz5T4buv
+YSBU4bqvbSBQaMOhcCBMZSBQZXRpdCBNYXJzZWlsbGFpcyBDaG8gTmFtIENoaeG6v3QgWHXhuqV0
+IFRoacOqbiBOaGnDqm4gNGluMSBOaGnhu4F1IE3DuWkgSOKApjwvdGQ+PHRkIGNsYXNzPSdudW0n
+Pjg8L3RkPjx0ZCBjbGFzcz0nbnVtJz4xLDU5MiwwMDA8L3RkPjwvdHI+PHRyPjx0ZCBjbGFzcz0n
+Jz5OSEFOSDwvdGQ+PHRkIGNsYXNzPSdudW0nPjI8L3RkPjx0ZCBjbGFzcz0nbnVtJz4zNTc0NjYx
+NzAxMTcyPC90ZD48dGQgY2xhc3M9J251bSc+U+G7r2EgVOG6r20gROG6oW5nIEtlbSBMZSBQZXRp
+dCBNYXJzZWlsbGFpcyA0IFRyb25nIDEgTcOhdCBM4bqhbmggVuG7m2kgQ2hp4bq/dCBYdeG6pXQg
+R+G7lyBUdXnhur90IOKApjwvdGQ+PHRkIGNsYXNzPSdudW0nPjc8L3RkPjx0ZCBjbGFzcz0nbnVt
+Jz4xLDM5MywwMDA8L3RkPjwvdHI+PHRyPjx0ZCBjbGFzcz0nJz5OSEFOSDwvdGQ+PHRkIGNsYXNz
+PSdudW0nPjM8L3RkPjx0ZCBjbGFzcz0nbnVtJz4zNTc0NjYxNzAxNDMxPC90ZD48dGQgY2xhc3M9
+J251bSc+U+G7r2EgVOG6r20gUGjDoXAgTGUgUGV0aXQgTWFyc2VpbGxhaXMgQ2hvIE5hbSBDaGnh
+ur90IFh14bqldCBUaGnDqm4gTmhpw6puIDRpbjEgTmhp4buBdSBNw7lpIEjigKY8L3RkPjx0ZCBj
+bGFzcz0nbnVtJz4xPC90ZD48dGQgY2xhc3M9J251bSc+MTk5LDAwMDwvdGQ+PC90cj48dHI+PHRk
+IGNsYXNzPScnPlNIT1BFRTwvdGQ+PHRkIGNsYXNzPSdudW0nPjE8L3RkPjx0ZCBjbGFzcz0nbnVt
+Jz5TVDAxOTAyPC90ZD48dGQgY2xhc3M9J251bSc+W0tPTCBodXluaGRhbmd0aG9uZyB4IExQTV0g
+U+G7r2EgVOG6r20vR2VsIFThuq9tIFBow6FwIExlIFBldGl0IE1hcnNlaWxsYWlzIENoaeG6v3Qg
+WHXhuqV0IFTigKY8L3RkPjx0ZCBjbGFzcz0nbnVtJz4xMTwvdGQ+PHRkIGNsYXNzPSdudW0nPjQs
+MTQ4LDI1MDwvdGQ+PC90cj48dHI+PHRkIGNsYXNzPScnPlNIT1BFRTwvdGQ+PHRkIGNsYXNzPSdu
+dW0nPjI8L3RkPjx0ZCBjbGFzcz0nbnVtJz5TVDY4ODE2PC90ZD48dGQgY2xhc3M9J251bSc+W0tP
+TCBodXluaGRhbmd0aG9uZyB4IExQTV0gU+G7r2EgVOG6r20vR2VsIFThuq9tIFBow6FwIExlIFBl
+dGl0IE1hcnNlaWxsYWlzIENoaeG6v3QgWHXhuqV0IFTigKY8L3RkPjx0ZCBjbGFzcz0nbnVtJz44
+PC90ZD48dGQgY2xhc3M9J251bSc+Miw5NDgsMjUwPC90ZD48L3RyPjx0cj48dGQgY2xhc3M9Jyc+
+U0hPUEVFPC90ZD48dGQgY2xhc3M9J251bSc+MzwvdGQ+PHRkIGNsYXNzPSdudW0nPlNUNDg0NDE8
+L3RkPjx0ZCBjbGFzcz0nbnVtJz5T4buvYSBU4bqvbS9HZWwgVOG6r20gUGjDoXAgTGUgUGV0aXQg
+TWFyc2VpbGxhaXMgVGhpw6puIE5oacOqbiAyNTBtbCAtIFPhu69hIFThuq9tIEzGsHUgSMawxqFu
+ZyBM4oCmPC90ZD48dGQgY2xhc3M9J251bSc+NzwvdGQ+PHRkIGNsYXNzPSdudW0nPjEsNDk3LDAw
+MDwvdGQ+PC90cj48dHI+PHRkIGNsYXNzPScnPlNIT1BFRTwvdGQ+PHRkIGNsYXNzPSdudW0nPjQ8
+L3RkPjx0ZCBjbGFzcz0nbnVtJz5TVDAxMTcyPC90ZD48dGQgY2xhc3M9J251bSc+U+G7r2EgVOG6
+r20gUGjDoXAgTGUgUGV0aXQgTWFyc2VpbGxhaXMgQ2hvIE5hbSBDaGnhur90IFh14bqldCBUaGnD
+qm4gTmhpw6puIDRpbjEgTmhp4buBdSBNw7lpIEjigKY8L3RkPjx0ZCBjbGFzcz0nbnVtJz43PC90
+ZD48dGQgY2xhc3M9J251bSc+MSw0NTcsMjAwPC90ZD48L3RyPjx0cj48dGQgY2xhc3M9Jyc+U0hP
+UEVFPC90ZD48dGQgY2xhc3M9J251bSc+NTwvdGQ+PHRkIGNsYXNzPSdudW0nPlNUNjg4MjM8L3Rk
+Pjx0ZCBjbGFzcz0nbnVtJz5bS09MIGh1eW5oZGFuZ3Rob25nIHggTFBNXSBT4buvYSBU4bqvbS9H
+ZWwgVOG6r20gUGjDoXAgTGUgUGV0aXQgTWFyc2VpbGxhaXMgQ2hp4bq/dCBYdeG6pXQgVOKApjwv
+dGQ+PHRkIGNsYXNzPSdudW0nPjY8L3RkPjx0ZCBjbGFzcz0nbnVtJz4yLDM2NCwwMDA8L3RkPjwv
+dHI+PHRyPjx0ZCBjbGFzcz0nJz5USUtUT0s8L3RkPjx0ZCBjbGFzcz0nbnVtJz4xPC90ZD48dGQg
+Y2xhc3M9J251bSc+U1QwMTE3MjwvdGQ+PHRkIGNsYXNzPSdudW0nPlPhu69hIFThuq9tIFBow6Fw
+IExlIFBldGl0IE1hcnNlaWxsYWlzIENobyBOYW0gQ2hp4bq/dCBYdeG6pXQgVGhpw6puIE5oacOq
+biA0aW4xIE5oaeG7gXUgTcO5aSBI4oCmPC90ZD48dGQgY2xhc3M9J251bSc+MTc8L3RkPjx0ZCBj
+bGFzcz0nbnVtJz40LDU3MywwMDA8L3RkPjwvdHI+PHRyPjx0ZCBjbGFzcz0nJz5USUtUT0s8L3Rk
+Pjx0ZCBjbGFzcz0nbnVtJz4yPC90ZD48dGQgY2xhc3M9J251bSc+MSBCw4FOSC1YUDwvdGQ+PHRk
+IGNsYXNzPSdudW0nPljDoCBQaMOybmcgTGUgUGV0aXQgTWFyc2VpbGxhaXMgQ2jDrW5oIEjDo25n
+IELDoW5oIFjDoCBQaMOybmcgVOG6r20gVGhpw6puIE5oacOqbiAoTmfhuqt1IG5oacOq4oCmPC90
+ZD48dGQgY2xhc3M9J251bSc+ODwvdGQ+PHRkIGNsYXNzPSdudW0nPjIyNSwwMDA8L3RkPjwvdHI+
+PHRyPjx0ZCBjbGFzcz0nJz5USUtUT0s8L3RkPjx0ZCBjbGFzcz0nbnVtJz4zPC90ZD48dGQgY2xh
+c3M9J251bSc+U1QwMTM1NjwvdGQ+PHRkIGNsYXNzPSdudW0nPlPhu69hIFThuq9tIFBow6FwIExl
+IFBldGl0IE1hcnNlaWxsYWlzIENobyBOYW0gQ2hp4bq/dCBYdeG6pXQgVGhpw6puIE5oacOqbiA0
+aW4xIE5oaeG7gXUgTcO5aSBI4oCmPC90ZD48dGQgY2xhc3M9J251bSc+MzwvdGQ+PHRkIGNsYXNz
+PSdudW0nPjgwNywwMDA8L3RkPjwvdHI+PHRyPjx0ZCBjbGFzcz0nJz5USUtUT0s8L3RkPjx0ZCBj
+bGFzcz0nbnVtJz40PC90ZD48dGQgY2xhc3M9J251bSc+U1QwMTQzMTwvdGQ+PHRkIGNsYXNzPSdu
+dW0nPlPhu69hIFThuq9tIFBow6FwIExlIFBldGl0IE1hcnNlaWxsYWlzIENobyBOYW0gQ2hp4bq/
+dCBYdeG6pXQgVGhpw6puIE5oacOqbiA0aW4xIE5oaeG7gXUgTcO5aSBI4oCmPC90ZD48dGQgY2xh
+c3M9J251bSc+MzwvdGQ+PHRkIGNsYXNzPSdudW0nPjgwNywwMDA8L3RkPjwvdHI+PHRyPjx0ZCBj
+bGFzcz0nJz5USUtUT0s8L3RkPjx0ZCBjbGFzcz0nbnVtJz41PC90ZD48dGQgY2xhc3M9J251bSc+
+MzU3NDY2MTcwMTQ1NTwvdGQ+PHRkIGNsYXNzPSdudW0nPlPhu69hIFThuq9tIFBow6FwIExlIFBl
+dGl0IE1hcnNlaWxsYWlzIENobyBOYW0gQ2hp4bq/dCBYdeG6pXQgVGhpw6puIE5oacOqbiA0aW4x
+IE5oaeG7gXUgTcO5aSBI4oCmPC90ZD48dGQgY2xhc3M9J251bSc+MzwvdGQ+PHRkIGNsYXNzPSdu
+dW0nPjgwNywwMDA8L3RkPjwvdHI+PC90Ym9keT48L3RhYmxlPjwvZGl2PgogIDwvc2VjdGlvbj4K
+CiAgPHNlY3Rpb24gY2xhc3M9ImNyaXRpY2FsIj4KICAgIDxoMj5U4buTbiBLaG8gVsOgIEPhuqNu
+aCBCw6FvIFThu5NuIEtobzwvaDI+CiAgICA8ZGl2IGNsYXNzPSJncmlkLTIiPgogICAgICA8ZGl2
+IGNsYXNzPSJjYWxsb3V0Ij48c3Ryb25nPlThu5VuZyB04buTbjo8L3N0cm9uZz4gMTQ1LDExNCB8
+IEhOIDExNCw2OTIgfCBIQ00gMzAsNDIyPC9kaXY+CiAgICAgIDxkaXYgY2xhc3M9ImNhbGxvdXQi
+PjxzdHJvbmc+Q+G6o25oIGLDoW86PC9zdHJvbmc+IFAxIDEzIHwgUDIgMzcgfCBQMyAwPC9kaXY+
+CiAgICAgIDxkaXYgY2xhc3M9ImNhbGxvdXQiPjxzdHJvbmc+U0tVIFAxIG3hu5tpIHBow6F0IHNp
+bmg6PC9zdHJvbmc+IDAgfCA8c3Ryb25nPlNLVSBo4bq/dCBj4bqjbmggYsOhbyBQMTo8L3N0cm9u
+Zz4gMDwvZGl2PgogICAgICA8ZGl2IGNsYXNzPSJjYWxsb3V0Ij48c3Ryb25nPkjDoG5nIGjhur90
+IGRhdGU6PC9zdHJvbmc+IEtow7RuZyBjw7MgaMOgbmcgaOG6v3QgZGF0ZSB0cm9uZyBwYWNrYWdl
+OyBjw7MgaMOgbmcgbG93LWRhdGUgZMaw4bubaSAxMiB0aMOhbmcuPC9kaXY+CiAgICA8L2Rpdj4K
+ICAgIDxkaXYgY2xhc3M9J3RhYmxlLXdyYXAnPjx0YWJsZSBjbGFzcz0ndGFibGUgc21hbGwnPjx0
+aGVhZD48dHI+PHRoPlByaW9yaXR5PC90aD48dGg+TG/huqFpIGPhuqNuaCBiw6FvPC90aD48dGg+
+U0tVPC90aD48dGg+VMOqbiBz4bqjbiBwaOG6qW08L3RoPjx0aD5U4buVbmcgdOG7k248L3RoPjx0
+aD5ITjwvdGg+PHRoPkhDTTwvdGg+PHRoPkFmZmVjdGVkIHF0eTwvdGg+PHRoPkFmZmVjdGVkICU8
+L3RoPjx0aD5IU0Qgc+G7m20gbmjhuqV0PC90aD48dGg+R+G7o2kgw70geOG7rSBsw708L3RoPjwv
+dHI+PC90aGVhZD48dGJvZHk+PHRyPjx0ZCBjbGFzcz0nJz48c3BhbiBjbGFzcz0nYmFkZ2UgcDEn
+PlAxPC9zcGFuPjwvdGQ+PHRkIGNsYXNzPScnPkxPV19EQVRFX1VOREVSXzEyTTwvdGQ+PHRkIGNs
+YXNzPScnPjM1NzQ2NjE1MDY5OTk8L3RkPjx0ZCBjbGFzcz0nJz5bS09MIEh1eW5oZGFuZ3Rob25n
+IHggTFBNXSBT4buvYSBU4bqvbSBWw6AgTmfDom0gQuG7k24gROG6oW5nIEtlbSBMZSBQZXRpdCBN
+YXJzZWlsbOKApjwvdGQ+PHRkIGNsYXNzPSdudW0nPjcsMTQ3PC90ZD48dGQgY2xhc3M9J251bSc+
+NiwyOTQ8L3RkPjx0ZCBjbGFzcz0nbnVtJz44NTM8L3RkPjx0ZCBjbGFzcz0nbnVtJz44NTM8L3Rk
+Pjx0ZCBjbGFzcz0nbnVtJz4xMS45NCU8L3RkPjx0ZCBjbGFzcz0nbnVtJz4yMDI3LTAzLTIyPC90
+ZD48dGQgY2xhc3M9J251bSc+U2FsZXMgKyBNYXJrZXRpbmcgcGjhuqNpIGzDqm4gY2jGsMahbmcg
+dHLDrG5oIMSR4bqpeSBn4bqlcC48L3RkPjwvdHI+PHRyPjx0ZCBjbGFzcz0nJz48c3BhbiBjbGFz
+cz0nYmFkZ2UgcDEnPlAxPC9zcGFuPjwvdGQ+PHRkIGNsYXNzPScnPkxPV19EQVRFX1VOREVSXzEy
+TTwvdGQ+PHRkIGNsYXNzPScnPjM1NzQ2NjE3NTMzNzk8L3RkPjx0ZCBjbGFzcz0nJz5T4buvYSB0
+4bqvbSBUaGnDqm4gTmhpw6puIFBow6FwIExlIFBldGl0IE1hcnNlaWxsYWlzIE5oaeG7gXUgTcO5
+aSBIxrDGoW5nIEThu4t1IE5o4bq5IENob+KApjwvdGQ+PHRkIGNsYXNzPSdudW0nPjMsOTA3PC90
+ZD48dGQgY2xhc3M9J251bSc+MywzMzA8L3RkPjx0ZCBjbGFzcz0nbnVtJz41Nzc8L3RkPjx0ZCBj
+bGFzcz0nbnVtJz41Nzc8L3RkPjx0ZCBjbGFzcz0nbnVtJz4xNC43NyU8L3RkPjx0ZCBjbGFzcz0n
+bnVtJz4yMDI3LTA0LTE5PC90ZD48dGQgY2xhc3M9J251bSc+U2FsZXMgKyBNYXJrZXRpbmcgcGjh
+uqNpIGzDqm4gY2jGsMahbmcgdHLDrG5oIMSR4bqpeSBn4bqlcC48L3RkPjwvdHI+PHRyPjx0ZCBj
+bGFzcz0nJz48c3BhbiBjbGFzcz0nYmFkZ2UgcDEnPlAxPC9zcGFuPjwvdGQ+PHRkIGNsYXNzPScn
+PkxPV19EQVRFX1VOREVSXzEyTTwvdGQ+PHRkIGNsYXNzPScnPjM1NzQ2NjE3MDA4MDk8L3RkPjx0
+ZCBjbGFzcz0nJz5T4buvYSBU4bqvbS9HZWwgVOG6r20gUGjDoXAgTGUgUGV0aXQgTWFyc2VpbGxh
+aXMgQ2hp4bq/dCBYdeG6pXQgVGhpw6puIE5oacOqbiA2NTBtbCAtIOKApjwvdGQ+PHRkIGNsYXNz
+PSdudW0nPjQsNzI3PC90ZD48dGQgY2xhc3M9J251bSc+NCwyMjQ8L3RkPjx0ZCBjbGFzcz0nbnVt
+Jz41MDM8L3RkPjx0ZCBjbGFzcz0nbnVtJz41MDM8L3RkPjx0ZCBjbGFzcz0nbnVtJz4xMC42NCU8
+L3RkPjx0ZCBjbGFzcz0nbnVtJz4yMDI3LTA0LTIzPC90ZD48dGQgY2xhc3M9J251bSc+U2FsZXMg
+KyBNYXJrZXRpbmcgcGjhuqNpIGzDqm4gY2jGsMahbmcgdHLDrG5oIMSR4bqpeSBn4bqlcC48L3Rk
+PjwvdHI+PHRyPjx0ZCBjbGFzcz0nJz48c3BhbiBjbGFzcz0nYmFkZ2UgcDEnPlAxPC9zcGFuPjwv
+dGQ+PHRkIGNsYXNzPScnPkxPV19EQVRFX1VOREVSXzEyTTwvdGQ+PHRkIGNsYXNzPScnPjM1NzQ2
+NjE3MDA5OTE8L3RkPjx0ZCBjbGFzcz0nJz5T4buvYSBU4bqvbS9HZWwgVOG6r20gUGjDoXAgTGUg
+UGV0aXQgTWFyc2VpbGxhaXMgQ2hp4bq/dCBYdeG6pXQgVGhpw6puIE5oacOqbiA2NTBtbCAtIOKA
+pjwvdGQ+PHRkIGNsYXNzPSdudW0nPjEsNDEzPC90ZD48dGQgY2xhc3M9J251bSc+OTYyPC90ZD48
+dGQgY2xhc3M9J251bSc+NDUxPC90ZD48dGQgY2xhc3M9J251bSc+MzE2PC90ZD48dGQgY2xhc3M9
+J251bSc+MjIuMzYlPC90ZD48dGQgY2xhc3M9J251bSc+MjAyNy0wNS0wNTwvdGQ+PHRkIGNsYXNz
+PSdudW0nPlNhbGVzICsgTWFya2V0aW5nIHBo4bqjaSBsw6puIGNoxrDGoW5nIHRyw6xuaCDEkeG6
+qXkgZ+G6pXAuPC90ZD48L3RyPjx0cj48dGQgY2xhc3M9Jyc+PHNwYW4gY2xhc3M9J2JhZGdlIHAx
+Jz5QMTwvc3Bhbj48L3RkPjx0ZCBjbGFzcz0nJz5MT1dfREFURV9VTkRFUl8xMk08L3RkPjx0ZCBj
+bGFzcz0nJz4zNTc0NjYxNTc0NzUyPC90ZD48dGQgY2xhc3M9Jyc+ROG6p3UgWOG6oyBI4buvdSBD
+xqEgRMaw4buhbmcg4bqobSBMZSBQZXRpdCBNYXJzZWlsbGFpcyBE4burYSBExrDhu6FuZyDhuqht
+LCBUaMahbSBMw6J1IC0gUGjDuSDigKY8L3RkPjx0ZCBjbGFzcz0nbnVtJz4xLDUzNjwvdGQ+PHRk
+IGNsYXNzPSdudW0nPjEsMjIyPC90ZD48dGQgY2xhc3M9J251bSc+MzE0PC90ZD48dGQgY2xhc3M9
+J251bSc+MzE0PC90ZD48dGQgY2xhc3M9J251bSc+MjAuNDQlPC90ZD48dGQgY2xhc3M9J251bSc+
+MjAyNi0xMS0xMDwvdGQ+PHRkIGNsYXNzPSdudW0nPlNhbGVzICsgTWFya2V0aW5nIHBo4bqjaSBs
+w6puIGNoxrDGoW5nIHRyw6xuaCDEkeG6qXkgZ+G6pXAuPC90ZD48L3RyPjx0cj48dGQgY2xhc3M9
+Jyc+PHNwYW4gY2xhc3M9J2JhZGdlIHAxJz5QMTwvc3Bhbj48L3RkPjx0ZCBjbGFzcz0nJz5MT1df
+REFURV9VTkRFUl8xMk08L3RkPjx0ZCBjbGFzcz0nJz4zNTc0NjYxNzc4Nzg1PC90ZD48dGQgY2xh
+c3M9Jyc+ROG6p3UgWOG6oyBI4buvdSBDxqEgRMaw4buhbmcg4bqobSBMZSBQZXRpdCBNYXJzZWls
+bGFpcyBE4burYSBExrDhu6FuZyDhuqhtLCBUaMahbSBMw6J1IC0gUGjDuSDigKY8L3RkPjx0ZCBj
+bGFzcz0nbnVtJz43MTc8L3RkPjx0ZCBjbGFzcz0nbnVtJz40Mjg8L3RkPjx0ZCBjbGFzcz0nbnVt
+Jz4yODk8L3RkPjx0ZCBjbGFzcz0nbnVtJz4yODk8L3RkPjx0ZCBjbGFzcz0nbnVtJz40MC4zMSU8
+L3RkPjx0ZCBjbGFzcz0nbnVtJz4yMDI3LTAxLTMwPC90ZD48dGQgY2xhc3M9J251bSc+U2FsZXMg
+KyBNYXJrZXRpbmcgcGjhuqNpIGzDqm4gY2jGsMahbmcgdHLDrG5oIMSR4bqpeSBn4bqlcC48L3Rk
+PjwvdHI+PHRyPjx0ZCBjbGFzcz0nJz48c3BhbiBjbGFzcz0nYmFkZ2UgcDEnPlAxPC9zcGFuPjwv
+dGQ+PHRkIGNsYXNzPScnPkxPV19EQVRFX1VOREVSXzEyTTwvdGQ+PHRkIGNsYXNzPScnPjM1NzQ2
+NjE3MDE4Njg8L3RkPjx0ZCBjbGFzcz0nJz5T4buvYSBU4bqvbS9HZWwgVOG6r20gUGjDoXAgTGUg
+UGV0aXQgTWFyc2VpbGxhaXMgQ2hp4bq/dCBYdeG6pXQgVGhpw6puIE5oacOqbiA2NTBtbCAtIOKA
+pjwvdGQ+PHRkIGNsYXNzPSdudW0nPjg1ODwvdGQ+PHRkIGNsYXNzPSdudW0nPjY0NzwvdGQ+PHRk
+IGNsYXNzPSdudW0nPjIxMTwvdGQ+PHRkIGNsYXNzPSdudW0nPjIxMTwvdGQ+PHRkIGNsYXNzPSdu
+dW0nPjI0LjU5JTwvdGQ+PHRkIGNsYXNzPSdudW0nPjIwMjctMDQtMjM8L3RkPjx0ZCBjbGFzcz0n
+bnVtJz5TYWxlcyArIE1hcmtldGluZyBwaOG6o2kgbMOqbiBjaMawxqFuZyB0csOsbmggxJHhuql5
+IGfhuqVwLjwvdGQ+PC90cj48dHI+PHRkIGNsYXNzPScnPjxzcGFuIGNsYXNzPSdiYWRnZSBwMSc+
+UDE8L3NwYW4+PC90ZD48dGQgY2xhc3M9Jyc+TE9XX0RBVEVfVU5ERVJfMTJNPC90ZD48dGQgY2xh
+c3M9Jyc+MzU3NDY2MTQwNDY2MDwvdGQ+PHRkIGNsYXNzPScnPlPhu69hIETGsOG7oW5nIFRo4buD
+IExlIFBldGl0IE1hcnNlaWxsYWlzIETGsOG7oW5nIOG6qG0gTnXDtGkgRMaw4buhbmcgRGEgTmhp
+4buBdSBNw7lpIEjGsMahbmfigKY8L3RkPjx0ZCBjbGFzcz0nbnVtJz4yMzU8L3RkPjx0ZCBjbGFz
+cz0nbnVtJz4xMjY8L3RkPjx0ZCBjbGFzcz0nbnVtJz4xMDk8L3RkPjx0ZCBjbGFzcz0nbnVtJz4x
+MDk8L3RkPjx0ZCBjbGFzcz0nbnVtJz40Ni4zOCU8L3RkPjx0ZCBjbGFzcz0nbnVtJz4yMDI3LTAy
+LTA3PC90ZD48dGQgY2xhc3M9J251bSc+U2FsZXMgKyBNYXJrZXRpbmcgcGjhuqNpIGzDqm4gY2jG
+sMahbmcgdHLDrG5oIMSR4bqpeSBn4bqlcC48L3RkPjwvdHI+PHRyPjx0ZCBjbGFzcz0nJz48c3Bh
+biBjbGFzcz0nYmFkZ2UgcDEnPlAxPC9zcGFuPjwvdGQ+PHRkIGNsYXNzPScnPkxPV19EQVRFX1VO
+REVSXzEyTTwvdGQ+PHRkIGNsYXNzPScnPjM1NzQ2NjE1NzQwMzU8L3RkPjx0ZCBjbGFzcz0nJz5E
+4bqndSBH4buZaSBMZSBQZXRpdCBNYXJzZWlsbGFpcyBT4bqhY2ggR8OgdSBEw6BuaCBDaG8gTmFt
+IFbhu5tpIENoaeG6v3QgWHXhuqV0IFRpbmggROG6p+KApjwvdGQ+PHRkIGNsYXNzPSdudW0nPjIs
+OTkyPC90ZD48dGQgY2xhc3M9J251bSc+MiwyOTU8L3RkPjx0ZCBjbGFzcz0nbnVtJz42OTc8L3Rk
+Pjx0ZCBjbGFzcz0nbnVtJz45NzwvdGQ+PHRkIGNsYXNzPSdudW0nPjMuMjQlPC90ZD48dGQgY2xh
+c3M9J251bSc+MjAyNy0wNC0xOTwvdGQ+PHRkIGNsYXNzPSdudW0nPlNhbGVzICsgTWFya2V0aW5n
+IHBo4bqjaSBsw6puIGNoxrDGoW5nIHRyw6xuaCDEkeG6qXkgZ+G6pXAuPC90ZD48L3RyPjx0cj48
+dGQgY2xhc3M9Jyc+PHNwYW4gY2xhc3M9J2JhZGdlIHAxJz5QMTwvc3Bhbj48L3RkPjx0ZCBjbGFz
+cz0nJz5MT1dfREFURV9VTkRFUl8xMk08L3RkPjx0ZCBjbGFzcz0nJz4zNTc0NjYxNzUzMzYyPC90
+ZD48dGQgY2xhc3M9Jyc+W0RlYWwgTGl2ZSBNdWEgMSBU4bq3bmcgMSBGdWxsIFNpemVdIFPhu69h
+IHThuq9tIFRoacOqbiBOaGnDqm4gUGjDoXAgTGUgUGV0aXQgTWFyc+KApjwvdGQ+PHRkIGNsYXNz
+PSdudW0nPjI8L3RkPjx0ZCBjbGFzcz0nbnVtJz4wPC90ZD48dGQgY2xhc3M9J251bSc+MjwvdGQ+
+PHRkIGNsYXNzPSdudW0nPjI8L3RkPjx0ZCBjbGFzcz0nbnVtJz4xMDAuMDAlPC90ZD48dGQgY2xh
+c3M9J251bSc+MjAyNi0xMC0yNjwvdGQ+PHRkIGNsYXNzPSdudW0nPlNhbGVzICsgTWFya2V0aW5n
+IHBo4bqjaSBsw6puIGNoxrDGoW5nIHRyw6xuaCDEkeG6qXkgZ+G6pXAuPC90ZD48L3RyPjx0cj48
+dGQgY2xhc3M9Jyc+PHNwYW4gY2xhc3M9J2JhZGdlIHAxJz5QMTwvc3Bhbj48L3RkPjx0ZCBjbGFz
+cz0nJz5MT1dfU1RPQ0tfQ1JJVElDQUw8L3RkPjx0ZCBjbGFzcz0nJz4zNTc0NjYxNzAwNzU1PC90
+ZD48dGQgY2xhc3M9Jyc+U+G7r2EgVOG6r20vR2VsIFThuq9tIFBow6FwIExlIFBldGl0IE1hcnNl
+aWxsYWlzIENoaeG6v3QgWHXhuqV0IFRoacOqbiBOaGnDqm4gNjUwbWwgLSDigKY8L3RkPjx0ZCBj
+bGFzcz0nbnVtJz4zMTwvdGQ+PHRkIGNsYXNzPSdudW0nPjMxPC90ZD48dGQgY2xhc3M9J251bSc+
+MDwvdGQ+PHRkIGNsYXNzPSdudW0nPjA8L3RkPjx0ZCBjbGFzcz0nbnVtJz4wLjAwJTwvdGQ+PHRk
+IGNsYXNzPSdudW0nPjIwMjgtMDUtMDY8L3RkPjx0ZCBjbGFzcz0nbnVtJz5LaG8gKyBtdWEgaMOg
+bmcga2nhu4NtIHRyYSBr4bq/IGhv4bqhY2ggYuG7lSBzdW5nIHThu5NuIHRyb25nIG5nw6B5Ljwv
+dGQ+PC90cj48dHI+PHRkIGNsYXNzPScnPjxzcGFuIGNsYXNzPSdiYWRnZSBwMSc+UDE8L3NwYW4+
+PC90ZD48dGQgY2xhc3M9Jyc+T1VUX09GX1NUT0NLPC90ZD48dGQgY2xhc3M9Jyc+MzU3NDY2MTcw
+MTMxODwvdGQ+PHRkIGNsYXNzPScnPlPhu69hIFThuq9tIEThuqFuZyBLZW0gTGUgUGV0aXQgTWFy
+c2VpbGxhaXMgNCBUcm9uZyAxIFbhu5tpIENoaeG6v3QgWHXhuql0IEfhu5cgSG/DoG5nIMSQ4oCm
+PC90ZD48dGQgY2xhc3M9J251bSc+MDwvdGQ+PHRkIGNsYXNzPSdudW0nPjA8L3RkPjx0ZCBjbGFz
+cz0nbnVtJz4wPC90ZD48dGQgY2xhc3M9J251bSc+MDwvdGQ+PHRkIGNsYXNzPSdudW0nPjAuMDAl
+PC90ZD48dGQgY2xhc3M9J251bSc+PC90ZD48dGQgY2xhc3M9J251bSc+S2hvICsgbXVhIGjDoG5n
+IHjDoWMgbmjhuq1uIGvhur8gaG/huqFjaCBuaOG6rXAgaG/hurdjIHjDoWMgbmjhuq1uIFNLVSBk
+4burbmcga2luaCBkb2FuaC48L3RkPjwvdHI+PHRyPjx0ZCBjbGFzcz0nJz48c3BhbiBjbGFzcz0n
+YmFkZ2UgcDEnPlAxPC9zcGFuPjwvdGQ+PHRkIGNsYXNzPScnPk9VVF9PRl9TVE9DSzwvdGQ+PHRk
+IGNsYXNzPScnPjM1NzQ2NjE2OTk0OTM8L3RkPjx0ZCBjbGFzcz0nJz5T4buvYSBU4bqvbS9HZWwg
+VOG6r20gUGjDoXAgTGUgUGV0aXQgTWFyc2VpbGxhaXMgVGhpw6puIE5oacOqbiAyNTBtbCAtIFPh
+u69hIFThuq9tIEzGsHXigKY8L3RkPjx0ZCBjbGFzcz0nbnVtJz4wPC90ZD48dGQgY2xhc3M9J251
+bSc+MDwvdGQ+PHRkIGNsYXNzPSdudW0nPjA8L3RkPjx0ZCBjbGFzcz0nbnVtJz4wPC90ZD48dGQg
+Y2xhc3M9J251bSc+MC4wMCU8L3RkPjx0ZCBjbGFzcz0nbnVtJz48L3RkPjx0ZCBjbGFzcz0nbnVt
+Jz5LaG8gKyBtdWEgaMOgbmcgeMOhYyBuaOG6rW4ga+G6vyBob+G6oWNoIG5o4bqtcCBob+G6t2Mg
+eMOhYyBuaOG6rW4gU0tVIGThu6tuZyBraW5oIGRvYW5oLjwvdGQ+PC90cj48dHI+PHRkIGNsYXNz
+PScnPjxzcGFuIGNsYXNzPSdiYWRnZSBwMic+UDI8L3NwYW4+PC90ZD48dGQgY2xhc3M9Jyc+TE9X
+X0RBVEVfMTJfVE9fMThNPC90ZD48dGQgY2xhc3M9Jyc+MzU3NDY2MTU3NDAzNTwvdGQ+PHRkIGNs
+YXNzPScnPkThuqd1IEfhu5lpIExlIFBldGl0IE1hcnNlaWxsYWlzIFPhuqFjaCBHw6B1IETDoG5o
+IENobyBOYW0gVuG7m2kgQ2hp4bq/dCBYdeG6pXQgVGluaCBE4bqn4oCmPC90ZD48dGQgY2xhc3M9
+J251bSc+Miw5OTI8L3RkPjx0ZCBjbGFzcz0nbnVtJz4yLDI5NTwvdGQ+PHRkIGNsYXNzPSdudW0n
+PjY5NzwvdGQ+PHRkIGNsYXNzPSdudW0nPjIsNjc2PC90ZD48dGQgY2xhc3M9J251bSc+ODkuNDQl
+PC90ZD48dGQgY2xhc3M9J251bSc+MjAyNy0wNC0xOTwvdGQ+PHRkIGNsYXNzPSdudW0nPsSQxrBh
+IHbDoG8ga+G6vyBob+G6oWNoIMSR4bqpeSB04buTbiB2w6AgdGhlbyBkw7VpIHRyb25nIGLDoW8g
+Y8OhbyB0deG6p24uPC90ZD48L3RyPjx0cj48dGQgY2xhc3M9Jyc+PHNwYW4gY2xhc3M9J2JhZGdl
+IHAyJz5QMjwvc3Bhbj48L3RkPjx0ZCBjbGFzcz0nJz5MT1dfREFURV8xMl9UT18xOE08L3RkPjx0
+ZCBjbGFzcz0nJz4zNTc0NjYxNjAxNDk2PC90ZD48dGQgY2xhc3M9Jyc+R2VsIHThuq9tIEjhu691
+IEPGoSBQaMOhcCBMZSBQZXRpdCBNYXJzZWlsbGFpcyBOaGnhu4F1IE3DuWkgSMawxqFuZyAyNTBt
+bCwgVGjGoW0gTMOidSDigKY8L3RkPjx0ZCBjbGFzcz0nbnVtJz4zLDQ3NzwvdGQ+PHRkIGNsYXNz
+PSdudW0nPjIsODk5PC90ZD48dGQgY2xhc3M9J251bSc+NTc4PC90ZD48dGQgY2xhc3M9J251bSc+
+MSw5ODM8L3RkPjx0ZCBjbGFzcz0nbnVtJz41Ny4wMyU8L3RkPjx0ZCBjbGFzcz0nbnVtJz4yMDI3
+LTA5LTE3PC90ZD48dGQgY2xhc3M9J251bSc+xJDGsGEgdsOgbyBr4bq/IGhv4bqhY2ggxJHhuql5
+IHThu5NuIHbDoCB0aGVvIGTDtWkgdHJvbmcgYsOhbyBjw6FvIHR14bqnbi48L3RkPjwvdHI+PHRy
+Pjx0ZCBjbGFzcz0nJz48c3BhbiBjbGFzcz0nYmFkZ2UgcDInPlAyPC9zcGFuPjwvdGQ+PHRkIGNs
+YXNzPScnPkxPV19EQVRFXzEyX1RPXzE4TTwvdGQ+PHRkIGNsYXNzPScnPjM1NzQ2NjE3NTMzODY8
+L3RkPjx0ZCBjbGFzcz0nJz5T4buvYSB04bqvbSBUaGnDqm4gTmhpw6puIFBow6FwIExlIFBldGl0
+IE1hcnNlaWxsYWlzIE5oaeG7gXUgTcO5aSBIxrDGoW5nIEThu4t1IE5o4bq5IENob+KApjwvdGQ+
+PHRkIGNsYXNzPSdudW0nPjIsNDk5PC90ZD48dGQgY2xhc3M9J251bSc+MiwwNzM8L3RkPjx0ZCBj
+bGFzcz0nbnVtJz40MjY8L3RkPjx0ZCBjbGFzcz0nbnVtJz4xLDUxMzwvdGQ+PHRkIGNsYXNzPSdu
+dW0nPjYwLjU0JTwvdGQ+PHRkIGNsYXNzPSdudW0nPjIwMjctMTAtMjE8L3RkPjx0ZCBjbGFzcz0n
+bnVtJz7EkMawYSB2w6BvIGvhur8gaG/huqFjaCDEkeG6qXkgdOG7k24gdsOgIHRoZW8gZMO1aSB0
+cm9uZyBiw6FvIGPDoW8gdHXhuqduLjwvdGQ+PC90cj48dHI+PHRkIGNsYXNzPScnPjxzcGFuIGNs
+YXNzPSdiYWRnZSBwMic+UDI8L3NwYW4+PC90ZD48dGQgY2xhc3M9Jyc+TE9XX0RBVEVfMTJfVE9f
+MThNPC90ZD48dGQgY2xhc3M9Jyc+MzU3NDY2MTU3NDc1MjwvdGQ+PHRkIGNsYXNzPScnPkThuqd1
+IFjhuqMgSOG7r3UgQ8ahIETGsOG7oW5nIOG6qG0gTGUgUGV0aXQgTWFyc2VpbGxhaXMgROG7q2Eg
+RMaw4buhbmcg4bqobSwgVGjGoW0gTMOidSAtIFBow7kg4oCmPC90ZD48dGQgY2xhc3M9J251bSc+
+MSw1MzY8L3RkPjx0ZCBjbGFzcz0nbnVtJz4xLDIyMjwvdGQ+PHRkIGNsYXNzPSdudW0nPjMxNDwv
+dGQ+PHRkIGNsYXNzPSdudW0nPjEsMjIyPC90ZD48dGQgY2xhc3M9J251bSc+NzkuNTYlPC90ZD48
+dGQgY2xhc3M9J251bSc+MjAyNi0xMS0xMDwvdGQ+PHRkIGNsYXNzPSdudW0nPsSQxrBhIHbDoG8g
+a+G6vyBob+G6oWNoIMSR4bqpeSB04buTbiB2w6AgdGhlbyBkw7VpIHRyb25nIGLDoW8gY8OhbyB0
+deG6p24uPC90ZD48L3RyPjx0cj48dGQgY2xhc3M9Jyc+PHNwYW4gY2xhc3M9J2JhZGdlIHAyJz5Q
+Mjwvc3Bhbj48L3RkPjx0ZCBjbGFzcz0nJz5MT1dfREFURV8xMl9UT18xOE08L3RkPjx0ZCBjbGFz
+cz0nJz4zNTc0NjYxMTkyODcxPC90ZD48dGQgY2xhc3M9Jyc+U+G7r2EgVOG6r20vR2VsIFThuq9t
+IFBow6FwIExlIFBldGl0IE1hcnNlaWxsYWlzIFRoacOqbiBOaGnDqm4gMjUwbWwgLSBT4buvYSBU
+4bqvbSBMxrB14oCmPC90ZD48dGQgY2xhc3M9J251bSc+MSw2MDM8L3RkPjx0ZCBjbGFzcz0nbnVt
+Jz41NTk8L3RkPjx0ZCBjbGFzcz0nbnVtJz4xLDA0NDwvdGQ+PHRkIGNsYXNzPSdudW0nPjEsMDQ0
+PC90ZD48dGQgY2xhc3M9J251bSc+NjUuMTMlPC90ZD48dGQgY2xhc3M9J251bSc+MjAyNy0xMi0x
+NjwvdGQ+PHRkIGNsYXNzPSdudW0nPsSQxrBhIHbDoG8ga+G6vyBob+G6oWNoIMSR4bqpeSB04buT
+biB2w6AgdGhlbyBkw7VpIHRyb25nIGLDoW8gY8OhbyB0deG6p24uPC90ZD48L3RyPjx0cj48dGQg
+Y2xhc3M9Jyc+PHNwYW4gY2xhc3M9J2JhZGdlIHAyJz5QMjwvc3Bhbj48L3RkPjx0ZCBjbGFzcz0n
+Jz5MT1dfREFURV8xMl9UT18xOE08L3RkPjx0ZCBjbGFzcz0nJz4zNTc0NjYxNjA4MjczPC90ZD48
+dGQgY2xhc3M9Jyc+R2VsIHThuq9tIEjhu691IEPGoSBQaMOhcCBMZSBQZXRpdCBNYXJzZWlsbGFp
+cyBOaGnhu4F1IE3DuWkgSMawxqFuZyAyNTBtbCwgVGjGoW0gTMOidSDigKY8L3RkPjx0ZCBjbGFz
+cz0nbnVtJz4yLDk4MDwvdGQ+PHRkIGNsYXNzPSdudW0nPjEsOTQyPC90ZD48dGQgY2xhc3M9J251
+bSc+MSwwMzg8L3RkPjx0ZCBjbGFzcz0nbnVtJz44MzY8L3RkPjx0ZCBjbGFzcz0nbnVtJz4yOC4w
+NSU8L3RkPjx0ZCBjbGFzcz0nbnVtJz4yMDI3LTA5LTMwPC90ZD48dGQgY2xhc3M9J251bSc+xJDG
+sGEgdsOgbyBr4bq/IGhv4bqhY2ggxJHhuql5IHThu5NuIHbDoCB0aGVvIGTDtWkgdHJvbmcgYsOh
+byBjw6FvIHR14bqnbi48L3RkPjwvdHI+PHRyPjx0ZCBjbGFzcz0nJz48c3BhbiBjbGFzcz0nYmFk
+Z2UgcDInPlAyPC9zcGFuPjwvdGQ+PHRkIGNsYXNzPScnPkxPV19EQVRFXzEyX1RPXzE4TTwvdGQ+
+PHRkIGNsYXNzPScnPjM1NzQ2NjE2NTUwMTc8L3RkPjx0ZCBjbGFzcz0nJz5HZWwgVOG6r20gTGUg
+UGV0aXQgTWFyc2VpbGxhaXMgRMaw4buhbmcg4bqobSwgROG7i3UgTmjhurkgQ2hvIERhIE5o4bqh
+eSBD4bqjbSBW4bubaSBDaGnhur90IOKApjwvdGQ+PHRkIGNsYXNzPSdudW0nPjMsNDIwPC90ZD48
+dGQgY2xhc3M9J251bSc+Miw5MjY8L3RkPjx0ZCBjbGFzcz0nbnVtJz40OTQ8L3RkPjx0ZCBjbGFz
+cz0nbnVtJz42NTU8L3RkPjx0ZCBjbGFzcz0nbnVtJz4xOS4xNSU8L3RkPjx0ZCBjbGFzcz0nbnVt
+Jz4yMDI3LTA3LTMxPC90ZD48dGQgY2xhc3M9J251bSc+xJDGsGEgdsOgbyBr4bq/IGhv4bqhY2gg
+xJHhuql5IHThu5NuIHbDoCB0aGVvIGTDtWkgdHJvbmcgYsOhbyBjw6FvIHR14bqnbi48L3RkPjwv
+dHI+PHRyPjx0ZCBjbGFzcz0nJz48c3BhbiBjbGFzcz0nYmFkZ2UgcDInPlAyPC9zcGFuPjwvdGQ+
+PHRkIGNsYXNzPScnPkxPV19EQVRFXzEyX1RPXzE4TTwvdGQ+PHRkIGNsYXNzPScnPjM1NzQ2NjE3
+MDE4Njg8L3RkPjx0ZCBjbGFzcz0nJz5T4buvYSBU4bqvbS9HZWwgVOG6r20gUGjDoXAgTGUgUGV0
+aXQgTWFyc2VpbGxhaXMgQ2hp4bq/dCBYdeG6pXQgVGhpw6puIE5oacOqbiA2NTBtbCAtIOKApjwv
+dGQ+PHRkIGNsYXNzPSdudW0nPjg1ODwvdGQ+PHRkIGNsYXNzPSdudW0nPjY0NzwvdGQ+PHRkIGNs
+YXNzPSdudW0nPjIxMTwvdGQ+PHRkIGNsYXNzPSdudW0nPjU4NjwvdGQ+PHRkIGNsYXNzPSdudW0n
+PjY4LjMwJTwvdGQ+PHRkIGNsYXNzPSdudW0nPjIwMjctMDQtMjM8L3RkPjx0ZCBjbGFzcz0nbnVt
+Jz7EkMawYSB2w6BvIGvhur8gaG/huqFjaCDEkeG6qXkgdOG7k24gdsOgIHRoZW8gZMO1aSB0cm9u
+ZyBiw6FvIGPDoW8gdHXhuqduLjwvdGQ+PC90cj48dHI+PHRkIGNsYXNzPScnPjxzcGFuIGNsYXNz
+PSdiYWRnZSBwMic+UDI8L3NwYW4+PC90ZD48dGQgY2xhc3M9Jyc+TE9XX0RBVEVfMTJfVE9fMThN
+PC90ZD48dGQgY2xhc3M9Jyc+MzU3NDY2MTU2ODg2NzwvdGQ+PHRkIGNsYXNzPScnPkdlbCB04bqv
+bSBI4buvdSBDxqEgUGjDoXAgTGUgUGV0aXQgTWFyc2VpbGxhaXMgTmhp4buBdSBNw7lpIEjGsMah
+bmcgMjUwbWwsIFRoxqFtIEzDonUg4oCmPC90ZD48dGQgY2xhc3M9J251bSc+NCwyMTc8L3RkPjx0
+ZCBjbGFzcz0nbnVtJz4zLDY2MTwvdGQ+PHRkIGNsYXNzPSdudW0nPjU1NjwvdGQ+PHRkIGNsYXNz
+PSdudW0nPjQ4MzwvdGQ+PHRkIGNsYXNzPSdudW0nPjExLjQ1JTwvdGQ+PHRkIGNsYXNzPSdudW0n
+PjIwMjctMTAtMTQ8L3RkPjx0ZCBjbGFzcz0nbnVtJz7EkMawYSB2w6BvIGvhur8gaG/huqFjaCDE
+keG6qXkgdOG7k24gdsOgIHRoZW8gZMO1aSB0cm9uZyBiw6FvIGPDoW8gdHXhuqduLjwvdGQ+PC90
+cj48dHI+PHRkIGNsYXNzPScnPjxzcGFuIGNsYXNzPSdiYWRnZSBwMic+UDI8L3NwYW4+PC90ZD48
+dGQgY2xhc3M9Jyc+TE9XX0RBVEVfMTJfVE9fMThNPC90ZD48dGQgY2xhc3M9Jyc+MzU3NDY2MTMx
+OTMwODwvdGQ+PHRkIGNsYXNzPScnPlPhu69hIFThuq9tL0dlbCBU4bqvbSBQaMOhcCBMZSBQZXRp
+dCBNYXJzZWlsbGFpcyBUaGnDqm4gTmhpw6puIDI1MG1sIC0gU+G7r2EgVOG6r20gTMawdeKApjwv
+dGQ+PHRkIGNsYXNzPSdudW0nPjMsMTEwPC90ZD48dGQgY2xhc3M9J251bSc+MiwzNzU8L3RkPjx0
+ZCBjbGFzcz0nbnVtJz43MzU8L3RkPjx0ZCBjbGFzcz0nbnVtJz40Mjc8L3RkPjx0ZCBjbGFzcz0n
+bnVtJz4xMy43MyU8L3RkPjx0ZCBjbGFzcz0nbnVtJz4yMDI3LTEyLTEzPC90ZD48dGQgY2xhc3M9
+J251bSc+xJDGsGEgdsOgbyBr4bq/IGhv4bqhY2ggxJHhuql5IHThu5NuIHbDoCB0aGVvIGTDtWkg
+dHJvbmcgYsOhbyBjw6FvIHR14bqnbi48L3RkPjwvdHI+PHRyPjx0ZCBjbGFzcz0nJz48c3BhbiBj
+bGFzcz0nYmFkZ2UgcDInPlAyPC9zcGFuPjwvdGQ+PHRkIGNsYXNzPScnPkxPV19EQVRFXzEyX1RP
+XzE4TTwvdGQ+PHRkIGNsYXNzPScnPjM1NzQ2NjE2NTUwMzE8L3RkPjx0ZCBjbGFzcz0nJz5T4buv
+YSB04bqvbSBUaGnDqm4gTmhpw6puIFBow6FwIExlIFBldGl0IE1hcnNlaWxsYWlzIE5oaeG7gXUg
+TcO5aSBIxrDGoW5nIEThu4t1IE5o4bq5IENob+KApjwvdGQ+PHRkIGNsYXNzPSdudW0nPjQsMzM2
+PC90ZD48dGQgY2xhc3M9J251bSc+Myw3MjQ8L3RkPjx0ZCBjbGFzcz0nbnVtJz42MTI8L3RkPjx0
+ZCBjbGFzcz0nbnVtJz4zNjc8L3RkPjx0ZCBjbGFzcz0nbnVtJz44LjQ2JTwvdGQ+PHRkIGNsYXNz
+PSdudW0nPjIwMjctMTEtMTU8L3RkPjx0ZCBjbGFzcz0nbnVtJz7EkMawYSB2w6BvIGvhur8gaG/h
+uqFjaCDEkeG6qXkgdOG7k24gdsOgIHRoZW8gZMO1aSB0cm9uZyBiw6FvIGPDoW8gdHXhuqduLjwv
+dGQ+PC90cj48dHI+PHRkIGNsYXNzPScnPjxzcGFuIGNsYXNzPSdiYWRnZSBwMic+UDI8L3NwYW4+
+PC90ZD48dGQgY2xhc3M9Jyc+TE9XX0RBVEVfMTJfVE9fMThNPC90ZD48dGQgY2xhc3M9Jyc+MzU3
+NDY2MTU3NDY0NjwvdGQ+PHRkIGNsYXNzPScnPkThuqd1IGfhu5lpIExlIFBldGl0IE1hcnNlaWxs
+YWlzIEzDoG0gU+G6oWNoIFPDonUgQ2hvIFTDs2MgQuG6v3QgROG6p3UgVuG7m2kgQ2hp4bq/dCBY
+deG6pXQg4oCmPC90ZD48dGQgY2xhc3M9J251bSc+MSw2MjE8L3RkPjx0ZCBjbGFzcz0nbnVtJz4x
+LDEzNjwvdGQ+PHRkIGNsYXNzPSdudW0nPjQ4NTwvdGQ+PHRkIGNsYXNzPSdudW0nPjM0OTwvdGQ+
+PHRkIGNsYXNzPSdudW0nPjIxLjUzJTwvdGQ+PHRkIGNsYXNzPSdudW0nPjIwMjctMTEtMTE8L3Rk
+Pjx0ZCBjbGFzcz0nbnVtJz7EkMawYSB2w6BvIGvhur8gaG/huqFjaCDEkeG6qXkgdOG7k24gdsOg
+IHRoZW8gZMO1aSB0cm9uZyBiw6FvIGPDoW8gdHXhuqduLjwvdGQ+PC90cj48dHI+PHRkIGNsYXNz
+PScnPjxzcGFuIGNsYXNzPSdiYWRnZSBwMic+UDI8L3NwYW4+PC90ZD48dGQgY2xhc3M9Jyc+TE9X
+X0RBVEVfMTJfVE9fMThNPC90ZD48dGQgY2xhc3M9Jyc+MzU3NDY2MTc2MDY1MDwvdGQ+PHRkIGNs
+YXNzPScnPkThuqd1IEfhu5lpIFBow6FwIExlIFBldGl0IE1hcnNlaWxsYWlzIFPhuqFjaCBHw6B1
+IDIgSW4gMSBUaW5oIEThuqd1IELhuqFjIEjDoCBI4buvdSBDxqEg4oCmPC90ZD48dGQgY2xhc3M9
+J251bSc+MSw1NDA8L3RkPjx0ZCBjbGFzcz0nbnVtJz4xLDIzMjwvdGQ+PHRkIGNsYXNzPSdudW0n
+PjMwODwvdGQ+PHRkIGNsYXNzPSdudW0nPjMwODwvdGQ+PHRkIGNsYXNzPSdudW0nPjIwLjAwJTwv
+dGQ+PHRkIGNsYXNzPSdudW0nPjIwMjctMTAtMDg8L3RkPjx0ZCBjbGFzcz0nbnVtJz7EkMawYSB2
+w6BvIGvhur8gaG/huqFjaCDEkeG6qXkgdOG7k24gdsOgIHRoZW8gZMO1aSB0cm9uZyBiw6FvIGPD
+oW8gdHXhuqduLjwvdGQ+PC90cj48dHI+PHRkIGNsYXNzPScnPjxzcGFuIGNsYXNzPSdiYWRnZSBw
+Mic+UDI8L3NwYW4+PC90ZD48dGQgY2xhc3M9Jyc+TE9XX0RBVEVfMTJfVE9fMThNPC90ZD48dGQg
+Y2xhc3M9Jyc+MzU3NDY2MTU3MzYxODwvdGQ+PHRkIGNsYXNzPScnPkdlbCBS4butYSBUYXkgSOG7
+r3UgQ8ahIExlIFBldGl0IE1hcnNlaWxsYWlzIFbhu5tpIENoaeG6v3QgWHXhuqV0IEzDoSDDlCBM
+aXUgMjkwbWw8L3RkPjx0ZCBjbGFzcz0nbnVtJz4zMDE8L3RkPjx0ZCBjbGFzcz0nbnVtJz4xOTY8
+L3RkPjx0ZCBjbGFzcz0nbnVtJz4xMDU8L3RkPjx0ZCBjbGFzcz0nbnVtJz4zMDE8L3RkPjx0ZCBj
+bGFzcz0nbnVtJz4xMDAuMDAlPC90ZD48dGQgY2xhc3M9J251bSc+MjAyNy0xMS0yODwvdGQ+PHRk
+IGNsYXNzPSdudW0nPsSQxrBhIHbDoG8ga+G6vyBob+G6oWNoIMSR4bqpeSB04buTbiB2w6AgdGhl
+byBkw7VpIHRyb25nIGLDoW8gY8OhbyB0deG6p24uPC90ZD48L3RyPjx0cj48dGQgY2xhc3M9Jyc+
+PHNwYW4gY2xhc3M9J2JhZGdlIHAyJz5QMjwvc3Bhbj48L3RkPjx0ZCBjbGFzcz0nJz5MT1dfREFU
+RV8xMl9UT18xOE08L3RkPjx0ZCBjbGFzcz0nJz4zNTc0NjYxNTc1MjA5PC90ZD48dGQgY2xhc3M9
+Jyc+TeG6t3QgTuG6oSBExrDhu6FuZyBUw7NjIExlIFBldGl0IE1hcnNlaWxsYWlzIDRpbjEgQ2hp
+4bq/dCBYdeG6pXQgTsaw4bubYyBE4burYSBI4buvdSBDxqEsIETGsOKApjwvdGQ+PHRkIGNsYXNz
+PSdudW0nPjQwMzwvdGQ+PHRkIGNsYXNzPSdudW0nPjEyMjwvdGQ+PHRkIGNsYXNzPSdudW0nPjI4
+MTwvdGQ+PHRkIGNsYXNzPSdudW0nPjI4MTwvdGQ+PHRkIGNsYXNzPSdudW0nPjY5LjczJTwvdGQ+
+PHRkIGNsYXNzPSdudW0nPjIwMjctMTAtMjE8L3RkPjx0ZCBjbGFzcz0nbnVtJz7EkMawYSB2w6Bv
+IGvhur8gaG/huqFjaCDEkeG6qXkgdOG7k24gdsOgIHRoZW8gZMO1aSB0cm9uZyBiw6FvIGPDoW8g
+dHXhuqduLjwvdGQ+PC90cj48dHI+PHRkIGNsYXNzPScnPjxzcGFuIGNsYXNzPSdiYWRnZSBwMic+
+UDI8L3NwYW4+PC90ZD48dGQgY2xhc3M9Jyc+TE9XX0RBVEVfMTJfVE9fMThNPC90ZD48dGQgY2xh
+c3M9Jyc+MzU3NDY2MTU3NDA0MjwvdGQ+PHRkIGNsYXNzPScnPkThuqd1IEfhu5lpIFBow6FwIExl
+IFBldGl0IE1hcnNlaWxsYWlzIFPhuqFjaCBHw6B1IDIgSW4gMSBUaW5oIEThuqd1IELhuqFjIEjD
+oCBI4buvdSBDxqEg4oCmPC90ZD48dGQgY2xhc3M9J251bSc+MSwzNjc8L3RkPjx0ZCBjbGFzcz0n
+bnVtJz4xLDExOTwvdGQ+PHRkIGNsYXNzPSdudW0nPjI0ODwvdGQ+PHRkIGNsYXNzPSdudW0nPjI0
+ODwvdGQ+PHRkIGNsYXNzPSdudW0nPjE4LjE0JTwvdGQ+PHRkIGNsYXNzPSdudW0nPjIwMjctMTAt
+MDk8L3RkPjx0ZCBjbGFzcz0nbnVtJz7EkMawYSB2w6BvIGvhur8gaG/huqFjaCDEkeG6qXkgdOG7
+k24gdsOgIHRoZW8gZMO1aSB0cm9uZyBiw6FvIGPDoW8gdHXhuqduLjwvdGQ+PC90cj48dHI+PHRk
+IGNsYXNzPScnPjxzcGFuIGNsYXNzPSdiYWRnZSBwMic+UDI8L3NwYW4+PC90ZD48dGQgY2xhc3M9
+Jyc+TE9XX0RBVEVfMTJfVE9fMThNPC90ZD48dGQgY2xhc3M9Jyc+MzU3NDY2MTU3MzYwMTwvdGQ+
+PHRkIGNsYXNzPScnPkdlbCBS4butYSBUYXkgSOG7r3UgQ8ahIExlIFBldGl0IE1hcnNlaWxsYWlz
+IFRoacOqbiBOaGnDqm4gROG7i3UgTmjhurkgTMOgbmggVMOtbmggQuG6o2/igKY8L3RkPjx0ZCBj
+bGFzcz0nbnVtJz4yMzc8L3RkPjx0ZCBjbGFzcz0nbnVtJz4xNDM8L3RkPjx0ZCBjbGFzcz0nbnVt
+Jz45NDwvdGQ+PHRkIGNsYXNzPSdudW0nPjIzNzwvdGQ+PHRkIGNsYXNzPSdudW0nPjEwMC4wMCU8
+L3RkPjx0ZCBjbGFzcz0nbnVtJz4yMDI3LTExLTI4PC90ZD48dGQgY2xhc3M9J251bSc+xJDGsGEg
+dsOgbyBr4bq/IGhv4bqhY2ggxJHhuql5IHThu5NuIHbDoCB0aGVvIGTDtWkgdHJvbmcgYsOhbyBj
+w6FvIHR14bqnbi48L3RkPjwvdHI+PC90Ym9keT48L3RhYmxlPjwvZGl2PgogIDwvc2VjdGlvbj4K
+CiAgPHNlY3Rpb24+CiAgICA8aDI+xJDGoW4gTeG6q3U8L2gyPgogICAgPHAgY2xhc3M9Im11dGVk
+Ij5E4buvIGxp4buHdSBow6BuZyBt4bqrdSBuZ8OgeSAxMi8wNyBsw6AgMC4gTVREIGNo4buJIGPD
+syBUaWtUb2sgdGhlbyBwYWNrYWdlLjwvcD4KICAgIDxkaXYgY2xhc3M9J3RhYmxlLXdyYXAnPjx0
+YWJsZSBjbGFzcz0ndGFibGUnPjx0aGVhZD48dHI+PHRoPlBo4bqhbSB2aTwvdGg+PHRoPlPhu5Eg
+xJHGoW4gbeG6q3U8L3RoPjx0aD5RdHkgbeG6q3U8L3RoPjx0aD5HacOhIHbhu5FuL2ltcGFjdCBt
+4bqrdTwvdGg+PHRoPlThu7cgbOG7hyB0csOqbiBOZXQgU2FsZXM8L3RoPjwvdHI+PC90aGVhZD48
+dGJvZHk+PHRyPjx0ZCBjbGFzcz0nJz5OZ8OgeSAxMi8wNzwvdGQ+PHRkIGNsYXNzPSdudW0nPjA8
+L3RkPjx0ZCBjbGFzcz0nbnVtJz4wPC90ZD48dGQgY2xhc3M9J251bSc+MDwvdGQ+PHRkIGNsYXNz
+PSdudW0nPmtow7RuZyBjw7MgdHJvbmcgcGFja2FnZTwvdGQ+PC90cj48dHI+PHRkIGNsYXNzPScn
+Pk1URCAyMDI2LTA3LTAxIC0gMjAyNi0wNy0xMjwvdGQ+PHRkIGNsYXNzPSdudW0nPjI8L3RkPjx0
+ZCBjbGFzcz0nbnVtJz4yPC90ZD48dGQgY2xhc3M9J251bSc+MTI3LDk2NTwvdGQ+PHRkIGNsYXNz
+PSdudW0nPmtow7RuZyBjw7MgdHJvbmcgcGFja2FnZTwvdGQ+PC90cj48L3Rib2R5PjwvdGFibGU+
+PC9kaXY+CiAgPC9zZWN0aW9uPgoKICA8c2VjdGlvbiBjbGFzcz0iY3JpdGljYWwiPgogICAgPGgy
+PkFjdGlvbiBMaXN0IEjDtG0gTmF5PC9oMj4KICAgIDxkaXYgY2xhc3M9J3RhYmxlLXdyYXAnPjx0
+YWJsZSBjbGFzcz0ndGFibGUgc21hbGwnPjx0aGVhZD48dHI+PHRoPlByaW9yaXR5PC90aD48dGg+
+VuG6pW4gxJHhu4E8L3RoPjx0aD5Lw6puaC9TS1U8L3RoPjx0aD5C4bqxbmcgY2jhu6luZzwvdGg+
+PHRoPk93bmVyIMSR4buBIHh14bqldDwvdGg+PHRoPkRlYWRsaW5lPC90aD48dGg+SMOgbmggxJHh
+u5luZyBj4bqnbiBsw6BtPC90aD48L3RyPjwvdGhlYWQ+PHRib2R5Pjx0cj48dGQgY2xhc3M9Jyc+
+UDE8L3RkPjx0ZCBjbGFzcz0nJz5OSEFOSCBs4buXIGRvIEFkcy9EUyB2xrDhu6N0IG5nxrDhu6Fu
+ZyBEaWdpdGFsPC90ZD48dGQgY2xhc3M9Jyc+TkhBTkg8L3RkPjx0ZCBjbGFzcz0nJz5BZHMgNiwz
+MTgsMzE2OyBOZXQgU2FsZXMgMywxODQsMDAwOyBBZHMvRFMgMTk4LjQ0JTsgUHJvZml0IC00LDYx
+NiwyODA8L3RkPjx0ZCBjbGFzcz0nJz5TYWxlcyArIEZpbmFuY2U8L3RkPjx0ZCBjbGFzcz0nJz5I
+w7RtIG5heSAxNjowMDwvdGQ+PHRkIGNsYXNzPScnPlThuqFtIGThu6tuZyBjYW1wYWlnbi9TS1Ug
+a2jDtG5nIGNo4bupbmcgbWluaCDEkcaw4bujYyBjb250cmlidXRpb24gbWFyZ2luIGTGsMahbmc7
+IGNo4buJIGdp4buvIG5nw6JuIHPDoWNoIHJlbWFya2V0aW5nL1NLVSBiw6FuIGPDsyBsw6NpLjwv
+dGQ+PC90cj48dHI+PHRkIGNsYXNzPScnPlAxPC90ZD48dGQgY2xhc3M9Jyc+TWFyZ2luIHRvw6Bu
+IGPDtG5nIHR5IGTGsOG7m2kgbmfGsOG7oW5nIDUlPC90ZD48dGQgY2xhc3M9Jyc+QWxsIGNoYW5u
+ZWxzPC90ZD48dGQgY2xhc3M9Jyc+UHJvZml0IE1hcmdpbiA0LjcyJTsgUHJvZml0IDIsNTI4LDg3
+NzwvdGQ+PHRkIGNsYXNzPScnPkNFTyArIEZpbmFuY2U8L3RkPjx0ZCBjbGFzcz0nJz5Iw7RtIG5h
+eTwvdGQ+PHRkIGNsYXNzPScnPkNo4buRdCB0cuG6p24gQWRzL0RTIHRoZW8ga8OqbmggdsOgIHnD
+qnUgY+G6p3UgYsOhbyBjw6FvIGzDo2kgZ+G7mXAgc2F1IGFkcyB0aGVvIFNLVSB0b3AuPC90ZD48
+L3RyPjx0cj48dGQgY2xhc3M9Jyc+UDE8L3RkPjx0ZCBjbGFzcz0nJz5U4buTbiBkYXRlIHRo4bql
+cCBkxrDhu5tpIDEyIHRow6FuZyB2w6Agb3V0LW9mLXN0b2NrPC90ZD48dGQgY2xhc3M9Jyc+SW52
+ZW50b3J5PC90ZD48dGQgY2xhc3M9Jyc+UDEgMTM7IGxvdy1kYXRlIHVuZGVyIDEybSBxdHkgMywy
+NzE7IG91dC1vZi1zdG9jayBTS1UgMjwvdGQ+PHRkIGNsYXNzPScnPlN1cHBseSBDaGFpbiArIFRy
+YWRlIE1hcmtldGluZzwvdGQ+PHRkIGNsYXNzPScnPkjDtG0gbmF5IDE3OjAwPC90ZD48dGQgY2xh
+c3M9Jyc+Q2jhu5F0IGRhbmggc8OhY2ggeOG6oyB04buTbiBsb3ctZGF0ZSB0aGVvIFNLVSwgxJHh
+u5NuZyB0aOG7nWkgeMOhYyBuaOG6rW4gbmjhuq1wL2Lhu48gbGlzdGluZyB24bubaSBTS1UgaOG6
+v3QgaMOgbmcuPC90ZD48L3RyPjx0cj48dGQgY2xhc3M9Jyc+UDI8L3RkPjx0ZCBjbGFzcz0nJz5T
+aG9wZWUgxJFhbmcga8OpbyBkb2FuaCB0aHUgbmjGsG5nIGPhuqduIGdp4buvIGvhu7cgbHXhuq10
+IGFkczwvdGQ+PHRkIGNsYXNzPScnPlNIT1BFRTwvdGQ+PHRkIGNsYXNzPScnPk5ldCBTYWxlcyA0
+MCw5OTAsMDAwOyBQcm9maXQgNSw2MzksNjI5OyBBZHMvRFMgMTYuODYlPC90ZD48dGQgY2xhc3M9
+Jyc+RWNvbTwvdGQ+PHRkIGNsYXNzPScnPkjDtG0gbmF5PC90ZD48dGQgY2xhc3M9Jyc+R2nhu68g
+c2NhbGUgU0tVIHRvcCwga2jDtG5nIHbGsOG7o3QgbmfGsOG7oW5nIEFkcy9EUyAyMCU7IMawdSB0
+acOqbiBTVDAxOTAyLCBTVDY4ODE2LCBTVDAxMTcyLjwvdGQ+PC90cj48dHI+PHRkIGNsYXNzPScn
+PlAyPC90ZD48dGQgY2xhc3M9Jyc+VGlrVG9rIMSRw6MgY+G6o2kgdGhp4buHbiBwcm9maXQgbmjG
+sG5nIHThu7cgbOG7hyBo4buneSBjYW88L3RkPjx0ZCBjbGFzcz0nJz5USUtUT0s8L3RkPjx0ZCBj
+bGFzcz0nJz5Qcm9maXQgMSwwMTEsNjgzOyBDYW5jZWwgcmF0ZSAxOS41MSU7IEFkcy9EUyAxOS4z
+MyU8L3RkPjx0ZCBjbGFzcz0nJz5FY29tICsgT3BzPC90ZD48dGQgY2xhc3M9Jyc+SMO0bSBuYXk8
+L3RkPjx0ZCBjbGFzcz0nJz5HaeG7ryBuZ8OibiBzw6FjaCB0aGVvIG5nxrDhu6FuZywgcsOgIFNL
+VS9vZmZlciBnw6J5IGjhu6d5IHbDoCB04bqtcCB0cnVuZyBTVDAxMTcyIMSRYW5nIGLDoW4gdOG7
+kXQuPC90ZD48L3RyPjwvdGJvZHk+PC90YWJsZT48L2Rpdj4KICA8L3NlY3Rpb24+CgogIDxzZWN0
+aW9uPgogICAgPGgyPk1hcmtldCBCZW5jaG1hcmsgVsOgIELhu5FpIEPhuqNuaCBUaOG7iyBUcsaw
+4budbmc8L2gyPgogICAgPHAgY2xhc3M9Im11dGVkIj5QaOG6p24gbsOgeSBkw7luZyBuZ3Xhu5Nu
+IGPDtG5nIGtoYWkgxJHhu4MgaOG7lyB0cuG7oyBxdXnhur90IMSR4buLbmgsIGtow7RuZyB0aGF5
+IHRo4bq/IHPhu5EgbGnhu4d1IHBhY2thZ2UuPC9wPgogICAgPGRpdiBjbGFzcz0ndGFibGUtd3Jh
+cCc+PHRhYmxlIGNsYXNzPSd0YWJsZSc+PHRoZWFkPjx0cj48dGg+R8OzYyBuaMOsbjwvdGg+PHRo
+PlTDrW4gaGnhu4d1ICZhbXA7IGtodXnhur9uIG5naOG7iyBjaG8gQ0VPPC90aD48dGg+Tmd14buT
+bjwvdGg+PC90cj48L3RoZWFkPjx0Ym9keT48dHI+PHRkIGNsYXNzPScnPlh1IGjGsOG7m25nIG3D
+uWEgYsOhbiBz4bqvcCB04bubaTwvdGQ+PHRkIGNsYXNzPScnPlRow6FuZyA3IHThuqFpIFZp4buH
+dCBOYW0gbsOzbmcg4bqpbSB2w6AgbcawYSBuaGnhu4F1OyDEkWnhu4F1IGtp4buHbiBuw6B5IGjh
+u5cgdHLhu6Mgbmh1IGPhuqd1IHPhuqNuIHBo4bqpbSBsw6BtIHPhuqFjaCwgZOG7i3Ugbmjhurks
+IHRoxqFtIGzDonUgdsOgIGPhuqNtIGdpw6FjIG3DoXQvc+G6oWNoIHNhdSB24bqtbiDEkeG7mW5n
+LiBDRU8gbsOqbiDGsHUgdGnDqm4gdGjDtG5nIMSRaeG7h3Agc3VtbWVyL3JhaW55IHNlYXNvbiBj
+aG8gc+G7r2EgdOG6r20gMjUwbWwvNjUwbWwgdGhheSB2w6wgZ2nhuqNtIGdpw6EgxJHhuqFpIHRy
+w6AuPC90ZD48dGQgY2xhc3M9Jyc+PGEgaHJlZj0naHR0cHM6Ly93d3cudG5rdHJhdmVsLmNvbS9i
+bG9ncy92aWV0bmFtLXdlYXRoZXItaW4tanVseS1zbWFydC10cmF2ZWxlcnMtZ3VpZGUvJz5UTksg
+VHJhdmVsPC9hPjwvdGQ+PC90cj48dHI+PHRkIGNsYXNzPScnPk3hurd0IGLhurFuZyBnacOhPC90
+ZD48dGQgY2xhc3M9Jyc+U2hvcGVlIE1hbGwgTGUgUGV0aXQgTWFyc2VpbGxhaXMgxJFhbmcgaGnh
+u4NuIHRo4buLIHPhu69hIHThuq9tIDI1MG1sIGtob+G6o25nIDE5MCwwMDAgduG7m2kgbeG7qWMg
+Z2nhuqNtIDMwJSwgNjUwbWwga2hv4bqjbmcgMzYwLDAwMCB24bubaSBt4bupYyBnaeG6o20gMzEl
+IHbDoCBxdcOgIHThurduZy4gxJBp4buBdSBuw6B5IGPhu6duZyBj4buRIHZp4buHYyBnaeG7ryBn
+acOhIG5pw6ptIHnhur90IGNhbyBuaMawbmcgY2jhuqF5IHByb21vIGPDsyBraeG7g20gc2/DoXQu
+PC90ZD48dGQgY2xhc3M9Jyc+PGEgaHJlZj0naHR0cHM6Ly9zaG9wZWUudm4vbGVwZXRpdG1hcnNl
+aWxsYWlzdm4nPlNob3BlZSBNYWxsIExlIFBldGl0IE1hcnNlaWxsYWlzPC9hPjwvdGQ+PC90cj48
+dHI+PHRkIGNsYXNzPScnPlPhuqNuIHBo4bqpbSBjw7luZyBsb+G6oWk8L3RkPjx0ZCBjbGFzcz0n
+Jz5Cw6FvIGPDoW8gbmfDoG5oIGJhdGgvc2hvd2VyIFZp4buHdCBOYW0gZOG7sSBiw6FvIHTEg25n
+IHRyxrDhu59uZyBnaWFpIMSRb+G6oW4gMjAyNS0yMDI5LCDEkcaw4bujYyB0aMO6YyDEkeG6qXkg
+YuG7n2kgcGVyc29uYWwgaHlnaWVuZSwgcHJlbWl1bSBiYXRoL3Nob3dlciwgbmF0dXJhbC9zdXN0
+YWluYWJsZSBwcm9kdWN0IHbDoCBlLWNvbW1lcmNlLiDEkMOieSBsw6AgdMOtbiBoaeG7h3UgbsOq
+biBnaeG7ryDEkeG6p3UgdMawIHbDoG8gU0tVIHRoacOqbiBuaGnDqm4vZOG7i3UgbmjhurkgbmjG
+sG5nIHBo4bqjaSBn4bqvbiBuZ8aw4buhbmcgYWRzLjwvdGQ+PHRkIGNsYXNzPScnPjxhIGhyZWY9
+J2h0dHBzOi8vd3d3LjZ3cmVzZWFyY2guY29tL2luZHVzdHJ5LXJlcG9ydC92aWV0bmFtLWJhdGgt
+YW5kLXNob3dlci1wcm9kdWN0cy1tYXJrZXQtMjAyMC0yMDI2Jz42V3Jlc2VhcmNoPC9hPjwvdGQ+
+PC90cj48dHI+PHRkIGNsYXNzPScnPktodSB24buxYyBtdWEgdOG7kXQ8L3RkPjx0ZCBjbGFzcz0n
+Jz5QYWNrYWdlIGtow7RuZyBjw7MgZOG7ryBsaeG7h3UgdsO5bmcgbXVhIHRoZW8gdOG7iW5oL3Ro
+w6BuaDsgdHV5IG5oacOqbiB04buTbiBITiDEkWFuZyAxMTQsNjkyIHbDoCBIQ00gMzAsNDIyLiBL
+aHV54bq/biBuZ2jhu4sgxJFp4buBdSBow6BuaCBsw6Aga2jDtG5nIHN1eSBkaeG7hW4gbmh1IGPh
+uqd1IHbDuW5nLCBtw6AgecOqdSBj4bqndSBFY29tL09wcyBi4buVIHN1bmcgYsOhbyBjw6FvIMSR
+xqFuIHRoZW8ga2h1IHbhu7FjIHRyxrDhu5tjIGtoaSDEkWnhu4F1IGNodXnhu4NuIHThu5NuIGzh
+u5tuLjwvdGQ+PHRkIGNsYXNzPScnPlBhY2thZ2UgSlNPTjwvdGQ+PC90cj48dHI+PHRkIGNsYXNz
+PScnPsSQ4buRaSB0aOG7pyDEkWFuZyBsw6BtIGfDrDwvdGQ+PHRkIGNsYXNzPScnPk5ndeG7k24g
+dGjhu4sgdHLGsOG7nW5nIGNobyB0aOG6pXkgbmjDs20gcGVyc29uYWwgaHlnaWVuZSBj4bqhbmgg
+dHJhbmggYuG7n2kgY8OhYyB04bqtcCDEkW/DoG4gbOG7m24gbmjGsCBVbmlsZXZlciwgUCZhbXA7
+RywgQ29sZ2F0ZS1QYWxtb2xpdmU7IMSRaeG7g20gY+G6oW5oIHRyYW5oIGNow61uaCBsw6AgcGjD
+om4gcGjhu5FpLCBuaeG7gW0gdGluIHPhuqNuIHBo4bqpbSB2w6AgaGnhu4d1IHF14bqjIG1hcmtl
+dGluZy4gQ0VPIG7Dqm4gecOqdSBj4bqndSBiZW5jaG1hcmsgZ2nDoS9wcm9tbyBzw6BuIHRoZW8g
+U0tVIHRvcCB0cm9uZyBuZ8OgeS48L3RkPjx0ZCBjbGFzcz0nJz48YSBocmVmPSdodHRwczovL3d3
+dy5rZW5yZXNlYXJjaC5jb20vaW5kdXN0cnktcmVwb3J0cy92aWV0bmFtLXBlcnNvbmFsLWh5Z2ll
+bmUtbWFya2V0Jz5LZW4gUmVzZWFyY2g8L2E+PC90ZD48L3RyPjwvdGJvZHk+PC90YWJsZT48L2Rp
+dj4KICA8L3NlY3Rpb24+CiAgPGZvb3Rlcj4KICAgIENFTyBDb250cm9sIFRvd2VyIEhUTUwgcmVw
+b3J0IHwgQ3JlYXRlZCBmcm9tIEpTT04gcGFja2FnZSBvbmx5IGZvciBpbnRlcm5hbCBtZXRyaWNz
+IHwgQ3VycmVudCAyMDI2LTA3LTEyIHZzIFByZXZpb3VzIDIwMjYtMDctMTEKICA8L2Zvb3Rlcj4K
+PC9tYWluPgo8L2JvZHk+CjwvaHRtbD4K
+
+--===============3009998217074175803==--
