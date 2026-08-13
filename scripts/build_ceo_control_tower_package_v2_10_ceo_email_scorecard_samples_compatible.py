@@ -1,24 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""Build CEO Control Tower package v2.10 with CEO Email Scorecard and compatible sample_orders TikTok upgrade.
-
-Purpose:
-- Keep the existing package blocks from v2.8 samples, keeping the legacy sample_orders block name.
-- Add `ceo_email_scorecard` using the same logic as send_staff_scorecard_emails.py.
-- Tell the agent to render CEO Scorecard Form from `ceo_email_scorecard.rows`, not from scorecard_by_channel.
-- Tell the agent to hide Discount/Voucher/Return from the analytical scorecard table.
-
-Usage:
-  python scripts/build_ceo_control_tower_package_v2_10_ceo_email_scorecard_samples_compatible.py --date 2026-06-04 --out-dir outbox/packages --store-db
-
-Requirements:
-- scripts/build_ceo_control_tower_package_v2_scorecard.py exists.
-- scripts/build_ceo_control_tower_package_v2_8_samples.py exists if sample_orders block is needed.
-- scripts/send_staff_scorecard_emails.py exists.
-- DB password should be supplied through one of:
-  PGPASSWORD, ETL_DB_PASSWORD, DB_PASSWORD.
-"""
-
 from __future__ import annotations
 
 import argparse
@@ -68,6 +47,24 @@ CEO_EMAIL_REQUIRED_COLUMNS = [
     "ln_con_lai",
 ]
 
+EMPLOYEE_SALES_COLUMNS = [
+    "channel_code",
+    "rank_in_channel",
+    "employee_code",
+    "employee_name",
+    "is_temporary_code",
+    "target_revenue",
+    "mtd_revenue",
+    "daily_revenue",
+    "achievement_pct",
+    "daily_orders",
+    "mtd_orders",
+    "mtd_quantity",
+    "channel_contribution_pct",
+    "mapping_status",
+    "status_note",
+]
+
 
 def ensure_db_env() -> None:
     """Make scripts that read ETL_DB_PASSWORD/DB_PASSWORD work with PGPASSWORD."""
@@ -100,6 +97,17 @@ def json_safe(obj: Any) -> Any:
     if isinstance(obj, (date, datetime)):
         return obj.isoformat()
     return obj
+
+
+def as_float_safe(value: Any) -> float:
+    if value is None:
+        return 0.0
+    if isinstance(value, Decimal):
+        return float(value)
+    try:
+        return float(value)
+    except Exception:
+        return 0.0
 
 
 def normalize_row(row: Dict[str, Any]) -> Dict[str, Any]:
@@ -574,18 +582,238 @@ def fetch_ceo_email_scorecard(report_date: str) -> Dict[str, Any]:
     }
 
 
+def fetch_employee_sales_scorecard(report_date: str) -> Dict[str, Any]:
+    """Fetch MT/GT employee target and sales detail for CEO analysis.
+
+    The target table is the complete employee list. Actual sales from mtgt.sales_lines
+    are joined into it so employees with no sales still appear in the CEO report.
+    """
+    report_dt = parse_report_date(report_date)
+    month_start = report_dt.replace(day=1)
+    warnings: List[str] = []
+
+    conn = connect(cursor_factory=RealDictCursor)
+    cur = conn.cursor()
+    try:
+        has_employees = table_exists(cur, "ops", "sales_employees")
+        has_targets = table_exists(cur, "ops", "monthly_employee_sales_targets")
+        if not has_employees or not has_targets:
+            missing = []
+            if not has_employees:
+                missing.append("ops.sales_employees")
+            if not has_targets:
+                missing.append("ops.monthly_employee_sales_targets")
+            return {
+                "report_date": report_date,
+                "from_date": month_start.isoformat(),
+                "to_date": report_dt.isoformat(),
+                "source": "mtgt.sales_lines + ops.monthly_employee_sales_targets",
+                "scope": "MT/GT employee-level sales MTD and daily",
+                "rows": [],
+                "columns": EMPLOYEE_SALES_COLUMNS,
+                "data_quality": {
+                    "status": "WARN",
+                    "warnings": [f"Missing required target table(s): {', '.join(missing)}."],
+                },
+                "rendering_notes": [
+                    "Do not render an employee table when rows is empty.",
+                    "Create/import ops.sales_employees and ops.monthly_employee_sales_targets first.",
+                ],
+            }
+
+        sql = """
+        WITH params AS (
+            SELECT
+                %s::date AS report_date,
+                date_trunc('month', %s::date)::date AS month_start
+        ),
+
+        actual AS (
+            SELECT
+                s.channel_group AS channel_code,
+                COALESCE(NULLIF(s.employee_code, ''), 'UNASSIGNED') AS employee_code,
+                COALESCE(NULLIF(s.employee_name, ''), 'Chưa gán nhân viên') AS employee_name,
+                SUM(
+                    CASE
+                        WHEN s.line_type <> 'CVC' AND s.sale_date = p.report_date
+                        THEN COALESCE(s.net_revenue, 0)
+                        ELSE 0
+                    END
+                ) AS daily_revenue,
+                SUM(
+                    CASE
+                        WHEN s.line_type <> 'CVC'
+                        THEN COALESCE(s.net_revenue, 0)
+                        ELSE 0
+                    END
+                ) AS mtd_revenue,
+                COUNT(DISTINCT s.document_no) FILTER (
+                    WHERE s.line_type <> 'CVC'
+                      AND s.sale_date = p.report_date
+                ) AS daily_orders,
+                COUNT(DISTINCT s.document_no) FILTER (
+                    WHERE s.line_type <> 'CVC'
+                ) AS mtd_orders,
+                SUM(
+                    CASE
+                        WHEN s.line_type <> 'CVC'
+                        THEN COALESCE(s.quantity, 0)
+                        ELSE 0
+                    END
+                ) AS mtd_quantity
+            FROM mtgt.sales_lines s
+            CROSS JOIN params p
+            WHERE s.sale_date BETWEEN p.month_start AND p.report_date
+              AND s.channel_group IN ('MT', 'GT')
+            GROUP BY
+                s.channel_group,
+                COALESCE(NULLIF(s.employee_code, ''), 'UNASSIGNED'),
+                COALESCE(NULLIF(s.employee_name, ''), 'Chưa gán nhân viên')
+        ),
+
+        target_base AS (
+            SELECT
+                e.employee_id,
+                e.channel_code,
+                e.employee_code,
+                e.employee_name,
+                COALESCE(e.is_temporary_code, false) AS is_temporary_code,
+                COALESCE(t.target_revenue, 0) AS target_revenue
+            FROM ops.monthly_employee_sales_targets t
+            JOIN ops.sales_employees e ON e.employee_id = t.employee_id
+            CROSS JOIN params p
+            WHERE t.target_month = p.month_start
+              AND t.is_enabled = true
+              AND e.is_enabled = true
+              AND e.channel_code IN ('MT', 'GT')
+        ),
+
+        joined AS (
+            SELECT
+                COALESCE(tb.channel_code, a.channel_code) AS channel_code,
+                COALESCE(tb.employee_code, a.employee_code) AS employee_code,
+                COALESCE(tb.employee_name, a.employee_name) AS employee_name,
+                COALESCE(tb.is_temporary_code, false) AS is_temporary_code,
+                COALESCE(tb.target_revenue, 0) AS target_revenue,
+                COALESCE(a.daily_revenue, 0) AS daily_revenue,
+                COALESCE(a.mtd_revenue, 0) AS mtd_revenue,
+                COALESCE(a.daily_orders, 0) AS daily_orders,
+                COALESCE(a.mtd_orders, 0) AS mtd_orders,
+                COALESCE(a.mtd_quantity, 0) AS mtd_quantity,
+                CASE
+                    WHEN a.employee_code IS NULL THEN 'TARGET_NO_SALES'
+                    WHEN tb.employee_code IS NULL THEN 'SALES_NO_TARGET'
+                    WHEN a.employee_code = 'UNASSIGNED' THEN 'UNASSIGNED_SALES'
+                    ELSE 'OK'
+                END AS mapping_status
+            FROM target_base tb
+            FULL OUTER JOIN actual a
+              ON a.channel_code = tb.channel_code
+             AND a.employee_code = tb.employee_code
+        ),
+
+        ranked AS (
+            SELECT
+                j.*,
+                SUM(j.mtd_revenue) OVER (PARTITION BY j.channel_code) AS channel_mtd_revenue,
+                RANK() OVER (
+                    PARTITION BY j.channel_code
+                    ORDER BY j.mtd_revenue DESC, j.employee_name
+                ) AS rank_in_channel
+            FROM joined j
+        )
+
+        SELECT
+            channel_code,
+            rank_in_channel,
+            employee_code,
+            employee_name,
+            is_temporary_code,
+            target_revenue,
+            mtd_revenue,
+            daily_revenue,
+            CASE
+                WHEN target_revenue = 0 THEN NULL
+                ELSE ROUND(mtd_revenue / NULLIF(target_revenue, 0) * 100, 1)
+            END AS achievement_pct,
+            daily_orders,
+            mtd_orders,
+            mtd_quantity,
+            CASE
+                WHEN channel_mtd_revenue = 0 THEN NULL
+                ELSE ROUND(mtd_revenue / NULLIF(channel_mtd_revenue, 0) * 100, 1)
+            END AS channel_contribution_pct,
+            mapping_status,
+            CASE
+                WHEN mapping_status = 'TARGET_NO_SALES' THEN 'Có chỉ tiêu nhưng chưa có doanh số'
+                WHEN mapping_status = 'SALES_NO_TARGET' THEN 'Có doanh số nhưng chưa có chỉ tiêu'
+                WHEN mapping_status = 'UNASSIGNED_SALES' THEN 'Doanh số thiếu mã nhân viên'
+                WHEN is_temporary_code THEN 'Đang dùng mã nhân viên tạm'
+                WHEN target_revenue = 0 THEN 'Chưa giao chỉ tiêu'
+                WHEN mtd_revenue >= target_revenue THEN 'Đạt/vượt chỉ tiêu'
+                WHEN daily_revenue = 0 THEN 'Không phát sinh doanh số ngày'
+                ELSE 'Đang thực hiện'
+            END AS status_note
+        FROM ranked
+        ORDER BY channel_code, rank_in_channel, employee_name;
+        """
+        cur.execute(sql, (report_date, report_date))
+        rows = [normalize_row(r) for r in cur.fetchall()]
+    finally:
+        cur.close()
+        conn.close()
+
+    if not rows:
+        warnings.append("employee_sales_scorecard returned no rows.")
+    if any(r.get("mapping_status") == "SALES_NO_TARGET" for r in rows):
+        warnings.append("Some employees have sales but no monthly target.")
+    if any(r.get("mapping_status") == "TARGET_NO_SALES" for r in rows):
+        warnings.append("Some employees have monthly target but no sales.")
+    if any(r.get("mapping_status") == "UNASSIGNED_SALES" for r in rows):
+        warnings.append("Some sales rows are missing employee_code.")
+    if any(bool(r.get("is_temporary_code")) for r in rows):
+        warnings.append("Some employees are using temporary employee codes.")
+    if any(as_float_safe(r.get("mtd_quantity")) > 1_000_000 for r in rows):
+        warnings.append("Some employee mtd_quantity values look unusually high; check MT/GT quantity ETL.")
+
+    return {
+        "report_date": report_date,
+        "from_date": month_start.isoformat(),
+        "to_date": report_dt.isoformat(),
+        "source": "mtgt.sales_lines + ops.sales_employees + ops.monthly_employee_sales_targets",
+        "scope": "MT/GT employee-level sales MTD and daily",
+        "rows": rows,
+        "columns": EMPLOYEE_SALES_COLUMNS,
+        "data_quality": {
+            "status": "WARN" if warnings else "PASS",
+            "warnings": warnings,
+        },
+        "rendering_notes": [
+            "Render this block immediately after Scorecard theo kênh.",
+            "Use this block for employee-level MT/GT sales detail.",
+            "Do not mix this block into ceo_email_scorecard.rows.",
+            "Do not infer employee performance for Shopee/TikTok/Nhanh from this block.",
+            "If target_revenue is 0 or null, do not say the employee failed KPI.",
+        ],
+    }
+
+
 def apply_rendering_policy(pkg: Dict[str, Any]) -> None:
     pkg.setdefault("metadata", {})["package_variant"] = "v2_10_ceo_email_scorecard_sample_orders_compatible"
     pkg.setdefault("instructions_for_agent", {})
     pkg["instructions_for_agent"].update({
         "ceo_email_scorecard_source": "ceo_email_scorecard.rows",
         "scorecard_analysis_source": "scorecard_by_channel",
+        "employee_sales_scorecard_source": "employee_sales_scorecard.rows",
+        "employee_sales_scorecard_position": "after_scorecard_by_channel",
         "do_not_use_channel_breakdown_legacy": True,
         "do_not_recalculate_ceo_email_scorecard": True,
+        "do_not_recalculate_employee_sales_scorecard": True,
         "hide_scorecard_columns": ["discount_voucher_return"],
         "removed_scorecard_column": "Discount/Voucher/Return",
         "ceo_email_scorecard_columns": CEO_EMAIL_SCORECARD_COLUMNS,
         "ceo_email_scorecard_cost_policy": "Use booking/quang_cao/ty_le_quang_cao_luy_ke directly from ceo_email_scorecard.rows. Booking policy v6: no fixed booking pool; TikTok uses only actual booking_fee.",
+        "employee_sales_scorecard_columns": EMPLOYEE_SALES_COLUMNS,
     })
     pkg["report_rendering_policy"] = {
         "scorecard_by_channel": {
@@ -619,6 +847,18 @@ def apply_rendering_policy(pkg: Dict[str, Any]) -> None:
             "must_use_exact_rows": True,
             "display_columns": CEO_EMAIL_SCORECARD_COLUMNS,
             "note": "Use this block to render the CEO Email Scorecard Form; do not derive it from scorecard_by_channel or recalculate booking/ads ratios. Booking already follows v6 in these rows.",
+        },
+        "employee_sales_scorecard": {
+            "source": "employee_sales_scorecard.rows",
+            "must_use_exact_rows": True,
+            "position": "after_scorecard_by_channel",
+            "title": "Chi tiết doanh số nhân viên theo kênh",
+            "display_columns": EMPLOYEE_SALES_COLUMNS,
+            "note": (
+                "Render this table immediately after Scorecard theo kênh. "
+                "This block currently covers MT/GT employee sales only. "
+                "Do not recalculate from scorecard_by_channel or ceo_email_scorecard."
+            ),
         },
     }
 
@@ -676,6 +916,30 @@ def markdown_scorecard_without_discount(pkg: Dict[str, Any]) -> str:
     return "\n".join(lines) + "\n"
 
 
+def markdown_employee_sales_scorecard(block: Dict[str, Any]) -> str:
+    lines = []
+    lines.append("## Chi tiết doanh số nhân viên theo kênh")
+    lines.append("")
+    dq = block.get("data_quality", {})
+    if dq.get("warnings"):
+        lines.append(f"- Data quality: **{dq.get('status')}**")
+        for warning in dq.get("warnings", []):
+            lines.append(f"- Warning: {warning}")
+        lines.append("")
+    lines.append("| Kênh | Rank | Mã NV | Nhân viên | Mã tạm | Chỉ tiêu | MTD | Ngày | % TH | Đơn ngày | Đơn MTD | Tỷ trọng kênh | Trạng thái |")
+    lines.append("|---|---:|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---|")
+    for r in block.get("rows", []):
+        lines.append(
+            f"| {r.get('channel_code','')} | {r.get('rank_in_channel','')} | {r.get('employee_code','')} | "
+            f"{r.get('employee_name','')} | {'Y' if r.get('is_temporary_code') else ''} | "
+            f"{fmt_money(r.get('target_revenue'))} | {fmt_money(r.get('mtd_revenue'))} | "
+            f"{fmt_money(r.get('daily_revenue'))} | {fmt_pct(r.get('achievement_pct'))} | "
+            f"{fmt_money(r.get('daily_orders'))} | {fmt_money(r.get('mtd_orders'))} | "
+            f"{fmt_pct(r.get('channel_contribution_pct'))} | {r.get('status_note','')} |"
+        )
+    return "\n".join(lines) + "\n"
+
+
 def store_package(pkg: Dict[str, Any], md_path: Path) -> Dict[str, Any]:
     conn = connect(cursor_factory=RealDictCursor)
     cur = conn.cursor()
@@ -723,6 +987,7 @@ def main() -> None:
 
     pkg = build_base_package(args.date)
     pkg["ceo_email_scorecard"] = fetch_ceo_email_scorecard(args.date)
+    pkg["employee_sales_scorecard"] = fetch_employee_sales_scorecard(args.date)
     apply_rendering_policy(pkg)
 
     out_dir = Path(args.out_dir)
@@ -739,8 +1004,10 @@ def main() -> None:
         f"- Data quality: **{pkg.get('data_quality',{}).get('status')}** | can_send: **{pkg.get('data_quality',{}).get('can_send')}**",
         "- CEO Email Scorecard source: **send_staff_scorecard_emails.py**",
         "- Analytical Scorecard: **Discount/Voucher/Return hidden from report rendering**",
+        "- Employee Sales Scorecard: **employee_sales_scorecard.rows rendered after scorecard_by_channel**",
         "",
         markdown_scorecard_without_discount(pkg),
+        markdown_employee_sales_scorecard(pkg["employee_sales_scorecard"]),
         markdown_ceo_email_scorecard(pkg["ceo_email_scorecard"]),
     ]
     md_path.write_text("\n".join(md_parts), encoding="utf-8")
@@ -750,6 +1017,7 @@ def main() -> None:
         "json_path": str(json_path),
         "markdown_path": str(md_path),
         "ceo_email_scorecard_rows": len(pkg["ceo_email_scorecard"]["rows"]),
+        "employee_sales_scorecard_rows": len(pkg["employee_sales_scorecard"]["rows"]),
         "hidden_scorecard_columns": ["discount_voucher_return"],
     }
     if args.store_db:

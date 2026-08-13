@@ -69,10 +69,10 @@ def vi_date(report_date: str) -> str:
 
 def make_text_body(report_date: str, approved_by: str, xlsx_filename: str) -> str:
     return (
-        "Kinh gui anh/chi,\n\n"
-        f"Em gui bao cao Tuan & Thang den ngay {vi_date(report_date)}.\n"
-        f"File Excel chi tiet duoc dinh kem trong email: {xlsx_filename}\n\n"
-        f"Nguoi duyet: {approved_by}\n"
+        "Kính gửi CEO,\n\n"
+        f"Em gửi báo cáo Tuần & Tháng đến ngày {vi_date(report_date)}.\n\n"
+        f"File Excel chi tiết được đính kèm: {xlsx_filename}\n\n"
+        f"Người duyệt: {approved_by}\n"
     )
 
 
@@ -95,15 +95,15 @@ def make_html_body(report_date: str, subject: str, approved_by: str, xlsx_filena
           <tr>
             <td style="background:#152238;color:#ffffff;padding:22px 24px;border-radius:8px 8px 0 0;">
               <h1 style="margin:0;font-size:22px;line-height:1.3;">{safe_subject}</h1>
-              <p style="margin:8px 0 0 0;color:#d8e2f0;font-size:14px;">Ngay bao cao: {safe_date}</p>
+              <p style="margin:8px 0 0 0;color:#d8e2f0;font-size:14px;">Ngày báo cáo: {safe_date}</p>
             </td>
           </tr>
           <tr>
             <td style="padding:22px 24px;font-size:14px;line-height:1.55;">
-              <p style="margin:0 0 12px 0;">Kinh gui anh/chi,</p>
-              <p style="margin:0 0 12px 0;">Em gui bao cao Tuan &amp; Thang den ngay <b>{safe_date}</b>.</p>
-              <p style="margin:0 0 12px 0;"><b>File Excel chi tiet duoc dinh kem:</b> {safe_file}</p>
-              <p style="margin:0;color:#64748b;">Nguoi duyet: {safe_approved_by}</p>
+              <p style="margin:0 0 12px 0;">Kính gửi CEO,</p>
+              <p style="margin:0 0 12px 0;">Em gửi báo cáo Tuần &amp; Tháng đến ngày <b>{safe_date}</b>.</p>
+              <p style="margin:0 0 12px 0;"><b>File Excel chi tiết được đính kèm:</b> {safe_file}</p>
+              <p style="margin:0;color:#64748b;">Người duyệt: {safe_approved_by}</p>
             </td>
           </tr>
         </table>

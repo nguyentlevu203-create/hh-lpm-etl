@@ -42,6 +42,7 @@ DB_CONFIG = {
 OUTBOX = Path(os.getenv("OUTBOX_DIR", "outbox"))
 MAIN_CHANNELS = {"MT", "GT", "DIGITAL", "ECOM"}
 CHILD_CHANNELS = {"SHOPEE", "TIKTOK"}
+EMPLOYEE_DETAIL_SCOPES = {"FULL", "MT", "GT"}
 FIXED_BOOKING_TOTAL_POOL = 0
 FIXED_BOOKING_CHANNEL_COUNT = 5
 FIXED_BOOKING_PER_CHANNEL = FIXED_BOOKING_TOTAL_POOL // FIXED_BOOKING_CHANNEL_COUNT
@@ -462,6 +463,170 @@ def get_scorecard_rows(report_date: str) -> List[Dict[str, Any]]:
     return rows
 
 
+def get_employee_sales_rows(report_date: str) -> List[Dict[str, Any]]:
+    """Return sales-only MT/GT employee details for staff email reporting.
+
+    This table intentionally excludes profit and cost columns. The target tables
+    are the source of the full employee list, so employees with no sales still
+    appear in the report.
+    """
+    sql = r"""
+    WITH table_check AS (
+        SELECT
+            to_regclass('ops.sales_employees') IS NOT NULL AS has_employees,
+            to_regclass('ops.monthly_employee_sales_targets') IS NOT NULL AS has_targets
+    ),
+
+    params AS (
+        SELECT
+            %s::date AS report_date,
+            date_trunc('month', %s::date)::date AS month_start
+    ),
+
+    actual AS (
+        SELECT
+            s.channel_group AS channel_code,
+            COALESCE(NULLIF(BTRIM(s.employee_code), ''), 'UNASSIGNED') AS employee_code,
+            UPPER(COALESCE(NULLIF(BTRIM(s.employee_code), ''), 'UNASSIGNED')) AS employee_code_key,
+            COALESCE(NULLIF(s.employee_name, ''), 'Chưa gán nhân viên') AS employee_name,
+            SUM(
+                CASE
+                    WHEN s.line_type <> 'CVC' AND s.sale_date = p.report_date
+                    THEN COALESCE(s.net_revenue, 0)
+                    ELSE 0
+                END
+            ) AS daily_revenue,
+            SUM(
+                CASE
+                    WHEN s.line_type <> 'CVC'
+                    THEN COALESCE(s.net_revenue, 0)
+                    ELSE 0
+                END
+            ) AS mtd_revenue,
+            COUNT(DISTINCT s.document_no) FILTER (
+                WHERE s.line_type <> 'CVC'
+                  AND s.sale_date = p.report_date
+            ) AS daily_orders,
+            COUNT(DISTINCT s.document_no) FILTER (
+                WHERE s.line_type <> 'CVC'
+            ) AS mtd_orders,
+            SUM(
+                CASE
+                    WHEN s.line_type <> 'CVC'
+                    THEN COALESCE(s.quantity, 0)
+                    ELSE 0
+                END
+            ) AS mtd_quantity
+        FROM mtgt.sales_lines s
+        CROSS JOIN params p
+        CROSS JOIN table_check tc
+        WHERE tc.has_employees
+          AND tc.has_targets
+          AND s.sale_date BETWEEN p.month_start AND p.report_date
+          AND s.channel_group IN ('MT', 'GT')
+        GROUP BY
+            s.channel_group,
+            COALESCE(NULLIF(BTRIM(s.employee_code), ''), 'UNASSIGNED'),
+            UPPER(COALESCE(NULLIF(BTRIM(s.employee_code), ''), 'UNASSIGNED')),
+            COALESCE(NULLIF(s.employee_name, ''), 'Chưa gán nhân viên')
+    ),
+
+    target_base AS (
+        SELECT
+            e.channel_code,
+            BTRIM(e.employee_code) AS employee_code,
+            UPPER(BTRIM(e.employee_code)) AS employee_code_key,
+            e.employee_name,
+            COALESCE(e.is_temporary_code, false) AS is_temporary_code,
+            COALESCE(t.target_revenue, 0) AS target_revenue
+        FROM ops.monthly_employee_sales_targets t
+        JOIN ops.sales_employees e ON e.employee_id = t.employee_id
+        CROSS JOIN params p
+        CROSS JOIN table_check tc
+        WHERE tc.has_employees
+          AND tc.has_targets
+          AND t.target_month = p.month_start
+          AND t.is_enabled = true
+          AND e.is_enabled = true
+          AND e.channel_code IN ('MT', 'GT')
+    ),
+
+    joined AS (
+        SELECT
+            COALESCE(tb.channel_code, a.channel_code) AS channel_code,
+            COALESCE(tb.employee_code, a.employee_code) AS employee_code,
+            COALESCE(tb.employee_name, a.employee_name) AS employee_name,
+            COALESCE(tb.is_temporary_code, false) AS is_temporary_code,
+            COALESCE(tb.target_revenue, 0) AS target_revenue,
+            COALESCE(a.daily_revenue, 0) AS daily_revenue,
+            COALESCE(a.mtd_revenue, 0) AS mtd_revenue,
+            COALESCE(a.daily_orders, 0) AS daily_orders,
+            COALESCE(a.mtd_orders, 0) AS mtd_orders,
+            COALESCE(a.mtd_quantity, 0) AS mtd_quantity,
+            CASE
+                WHEN a.employee_code IS NULL THEN 'TARGET_NO_SALES'
+                WHEN tb.employee_code IS NULL THEN 'SALES_NO_TARGET'
+                WHEN a.employee_code = 'UNASSIGNED' THEN 'UNASSIGNED_SALES'
+                ELSE 'OK'
+            END AS mapping_status
+        FROM target_base tb
+        FULL OUTER JOIN actual a
+          ON a.channel_code = tb.channel_code
+         AND a.employee_code_key = tb.employee_code_key
+    ),
+
+    ranked AS (
+        SELECT
+            j.*,
+            SUM(j.mtd_revenue) OVER (PARTITION BY j.channel_code) AS channel_mtd_revenue,
+            RANK() OVER (
+                PARTITION BY j.channel_code
+                ORDER BY j.mtd_revenue DESC, j.employee_name
+            ) AS rank_in_channel
+        FROM joined j
+    )
+
+    SELECT
+        channel_code,
+        rank_in_channel,
+        employee_code,
+        employee_name,
+        is_temporary_code,
+        target_revenue,
+        mtd_revenue,
+        daily_revenue,
+        CASE
+            WHEN target_revenue = 0 THEN NULL
+            ELSE ROUND(mtd_revenue / NULLIF(target_revenue, 0) * 100, 1)
+        END AS achievement_pct,
+        daily_orders,
+        mtd_orders,
+        mtd_quantity,
+        CASE
+            WHEN channel_mtd_revenue = 0 THEN NULL
+            ELSE ROUND(mtd_revenue / NULLIF(channel_mtd_revenue, 0) * 100, 1)
+        END AS channel_contribution_pct,
+        mapping_status,
+        CASE
+            WHEN mapping_status = 'TARGET_NO_SALES' THEN 'Có chỉ tiêu nhưng chưa có doanh số'
+            WHEN mapping_status = 'SALES_NO_TARGET' THEN 'Có doanh số nhưng chưa có chỉ tiêu'
+            WHEN mapping_status = 'UNASSIGNED_SALES' THEN 'Doanh số thiếu mã nhân viên'
+            WHEN is_temporary_code THEN 'Đang dùng mã nhân viên tạm'
+            WHEN target_revenue = 0 THEN 'Chưa giao chỉ tiêu'
+            WHEN mtd_revenue >= target_revenue THEN 'Đạt/vượt chỉ tiêu'
+            WHEN daily_revenue = 0 THEN 'Không phát sinh doanh số ngày'
+            ELSE 'Đang thực hiện'
+        END AS status_note
+    FROM ranked
+    ORDER BY channel_code, rank_in_channel, employee_name;
+    """
+    try:
+        return fetch_all(sql, [report_date, report_date])
+    except Exception as exc:
+        print(f"WARN cannot fetch employee sales rows: {exc}", file=sys.stderr)
+        return []
+
+
 def make_total_row(rows: List[Dict[str, Any]], detailed: bool) -> Dict[str, Any]:
     main = [r for r in rows if str(r.get("channel_code", "")).upper() in MAIN_CHANNELS]
     total: Dict[str, Any] = {
@@ -504,6 +669,15 @@ def filter_rows_by_scope(rows: List[Dict[str, Any]], scope: str) -> List[Dict[st
     return []
 
 
+def filter_employee_rows_by_scope(rows: List[Dict[str, Any]], scope: str) -> List[Dict[str, Any]]:
+    scope = str(scope or "").upper()
+    if scope == "FULL":
+        return [r for r in rows if str(r.get("channel_code", "")).upper() in {"MT", "GT"}]
+    if scope in {"MT", "GT"}:
+        return [r for r in rows if str(r.get("channel_code", "")).upper() == scope]
+    return []
+
+
 def css_block() -> str:
     return """
     <style>
@@ -528,6 +702,7 @@ def css_block() -> str:
       .left { text-align: left !important; }
       .center { text-align: center !important; }
       .note { color: #666; font-size: 12px; margin-top: 12px; }
+      .sub-title { font-weight: bold; margin: 18px 0 8px 0; }
     </style>
     """
 
@@ -628,10 +803,77 @@ def render_rows(rows: List[Dict[str, Any]], detailed: bool) -> str:
     return "\n".join(out)
 
 
-def render_email_html(report_date: str, recipient: Dict[str, Any], rows: List[Dict[str, Any]], detailed: bool) -> str:
+def render_employee_header() -> str:
+    return """
+      <tr>
+        <th class="h-yellow">Kênh</th>
+        <th class="h-yellow">Rank</th>
+        <th class="h-yellow">Nhân viên</th>
+        <th class="h-blue">Chỉ tiêu tháng</th>
+        <th class="h-blue">Tổng thực hiện tới ngày</th>
+        <th class="h-pink">Doanh số ngày</th>
+        <th class="h-blue">% thực hiện</th>
+        <th class="h-pink">Số đơn ngày</th>
+        <th class="h-blue">Số đơn lũy kế</th>
+        <th class="h-blue">Số lượng lũy kế</th>
+        <th class="h-blue">Tỷ trọng trong kênh</th>
+        <th class="h-green">Trạng thái</th>
+      </tr>
+    """
+
+
+def render_employee_rows(rows: List[Dict[str, Any]]) -> str:
+    out: List[str] = []
+    for r in rows:
+        status = str(r.get("status_note") or "")
+        if r.get("is_temporary_code"):
+            status = f"{status}; mã tạm" if status else "Đang dùng mã nhân viên tạm"
+        cells = [
+            f"<td class=\"center\">{html.escape(str(r.get('channel_code') or ''))}</td>",
+            f"<td>{html.escape(str(r.get('rank_in_channel') or ''))}</td>",
+            f"<td class=\"left\">{html.escape(str(r.get('employee_name') or ''))}</td>",
+            f"<td>{html.escape(fmt_money(r.get('target_revenue'), dash_zero=False))}</td>",
+            f"<td>{html.escape(fmt_money(r.get('mtd_revenue'), dash_zero=False))}</td>",
+            f"<td>{html.escape(fmt_money(r.get('daily_revenue'), dash_zero=True))}</td>",
+            f"<td>{html.escape(fmt_percent(r.get('achievement_pct'), dash_empty=True))}</td>",
+            f"<td>{html.escape(fmt_money(r.get('daily_orders'), dash_zero=True))}</td>",
+            f"<td>{html.escape(fmt_money(r.get('mtd_orders'), dash_zero=True))}</td>",
+            f"<td>{html.escape(fmt_money(r.get('mtd_quantity'), dash_zero=True))}</td>",
+            f"<td>{html.escape(fmt_percent(r.get('channel_contribution_pct'), dash_empty=True))}</td>",
+            f"<td class=\"left\">{html.escape(status)}</td>",
+        ]
+        out.append("<tr>" + "".join(cells) + "</tr>")
+    return "\n".join(out)
+
+
+def render_employee_sales_section(rows: List[Dict[str, Any]]) -> str:
+    if not rows:
+        return ""
+    return f"""
+  <p class="sub-title">Chi tiết doanh số nhân viên MT/GT</p>
+  <table class="scorecard">
+    <thead>
+      {render_employee_header()}
+    </thead>
+    <tbody>
+      {render_employee_rows(rows)}
+    </tbody>
+  </table>
+  <p class="note">Bảng nhân viên chỉ hiển thị doanh số/chỉ tiêu/số đơn/số lượng, không hiển thị chi phí hoặc lợi nhuận.</p>
+"""
+
+
+def render_email_html(
+    report_date: str,
+    recipient: Dict[str, Any],
+    rows: List[Dict[str, Any]],
+    detailed: bool,
+    employee_rows: List[Dict[str, Any]] | None = None,
+) -> str:
     title = "Báo cáo doanh số LPM"
     if detailed:
         title = "Báo cáo doanh số & chi phí LPM"
+    employee_section = render_employee_sales_section(employee_rows or [])
     return f"""
 <!doctype html>
 <html>
@@ -650,6 +892,7 @@ def render_email_html(report_date: str, recipient: Dict[str, Any], rows: List[Di
       {render_rows(rows, detailed)}
     </tbody>
   </table>
+  {employee_section}
   <p class="report-footer">Trân Trọng!</p>
 </body>
 </html>
@@ -691,6 +934,7 @@ def main() -> int:
         return 0
 
     score_rows = get_scorecard_rows(report_date)
+    employee_sales_rows = get_employee_sales_rows(report_date)
     OUTBOX.mkdir(parents=True, exist_ok=True)
 
     sent_count = 0
@@ -701,7 +945,8 @@ def main() -> int:
                 print(f"SKIP {rec.get('email')}: no rows for scope={rec.get('report_scope')}")
                 continue
             detailed = bool(rec.get("can_view_profit")) or str(rec.get("recipient_type", "")).lower() == "ceo"
-            html_body = render_email_html(report_date, rec, scope_rows, detailed)
+            employee_scope_rows = filter_employee_rows_by_scope(employee_sales_rows, rec.get("report_scope"))
+            html_body = render_email_html(report_date, rec, scope_rows, detailed, employee_scope_rows)
             subject = f"Bao cao doanh so LPM ngay {vi_date(report_date)}"
             if detailed:
                 subject = f"Bao cao doanh so va chi phi LPM ngay {vi_date(report_date)}"
@@ -710,11 +955,11 @@ def main() -> int:
                 path = OUTBOX / f"preview_{safe_file_part(str(rec.get('email')))}_{report_date}.html"
                 path.write_text(html_body, encoding="utf-8")
                 log_send(report_date, rec, "dry_run", None)
-                print(f"DRY RUN wrote {path} scope={rec.get('report_scope')} detailed={detailed} rows={len(scope_rows)}")
+                print(f"DRY RUN wrote {path} scope={rec.get('report_scope')} detailed={detailed} rows={len(scope_rows)} employee_rows={len(employee_scope_rows)}")
             else:
                 send_email(str(rec.get("email")), subject, html_body)
                 log_send(report_date, rec, "success", None)
-                print(f"SENT {rec.get('email')} scope={rec.get('report_scope')} detailed={detailed} rows={len(scope_rows)}")
+                print(f"SENT {rec.get('email')} scope={rec.get('report_scope')} detailed={detailed} rows={len(scope_rows)} employee_rows={len(employee_scope_rows)}")
             sent_count += 1
         except Exception as exc:
             log_send(report_date, rec, "failed", str(exc))
