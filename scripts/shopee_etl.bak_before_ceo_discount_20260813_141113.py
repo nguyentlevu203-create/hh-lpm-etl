@@ -1,0 +1,816 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""Shopee ETL for DuLieu production schema.
+
+Writes only to shopee.* tables and reads COGS from dim.product_costs.
+"""
+from __future__ import annotations
+
+import os
+import re
+import sys
+import gc
+import time
+import traceback
+from dataclasses import dataclass
+from datetime import date, datetime
+from pathlib import Path
+from typing import Dict, Iterable, List, Optional, Tuple
+
+import pandas as pd
+from psycopg2.extras import execute_values, Json
+
+sys.path.append(str(Path(__file__).resolve().parents[1]))
+from etl_common import (
+    assert_production_schema,
+    archive_file,
+    begin_batch,
+    clean_code,
+    connect,
+    find_col,
+    finish_batch,
+    get_input_files,
+    load_cost_map,
+    json_safe,
+    log_import_error,
+    lookup_unit_cost,
+    money_series,
+    parse_date,
+    parse_datetime,
+    read_smart_table,
+    row_to_json,
+    safe_num,
+    safe_text,
+)
+
+SHOPEE_ETL_VERSION = "v4.11.3_windows_locked_file_archive_retry"
+
+BASE_IN = Path(os.getenv("SHOPEE_BASE_IN", "data/Shopee"))
+BASE_OUT = Path(os.getenv("SHOPEE_BASE_OUT", "processed/Shopee"))
+DIRS = {
+    "orders": "1_orders",
+    "affiliate": "2_affiliate",
+    "settlement": "3_settlement",
+    "ads": "4_ads",
+}
+RETURN_FEE_CANCELLED = float(os.getenv("SHOPEE_RETURN_FEE_CANCELLED", "30000"))
+
+# Production rule requested by owner:
+# shopee.order_items.seller_sku MUST come only from the Shopee export column
+# named exactly "SKU phân loại hàng" after harmless header whitespace cleanup.
+# Never fall back to "SKU sản phẩm", "sku", barcode, or any fuzzy SKU column.
+SHOPEE_SELLER_SKU_HEADER = "SKU phân loại hàng"
+
+
+SHOPEE_ADS_COST_HEADER = "Chi phí"
+
+
+def split_shopee_combo_sku(raw_sku: object) -> List[str]:
+    """Split Shopee seller_sku bundles by the literal plus sign.
+
+    Examples:
+        DG37429+DX74752+1 BÁNH-XP+TUICOGAI-63
+        -> ["DG37429", "DX74752", "1 BÁNH-XP", "TUICOGAI-63"]
+
+    The function intentionally preserves Vietnamese accents, hyphens, and
+    inner spaces. It only trims each component with clean_code(), matching the
+    keys loaded from dim.product_costs.
+    """
+    sku = clean_code(raw_sku)
+    if not sku:
+        return []
+    return [clean_code(part) for part in str(sku).split("+") if clean_code(part)]
+
+
+def missing_shopee_combo_cogs_parts(raw_sku: object, costs: Dict[str, float]) -> List[str]:
+    """Return SKU components that are missing from dim.product_costs."""
+    return [part for part in split_shopee_combo_sku(raw_sku) if part not in costs]
+
+
+def lookup_shopee_combo_unit_cogs_strict(raw_sku: object, costs: Dict[str, float]) -> float:
+    """Return unit COGS for a normal SKU or a plus-delimited combo SKU.
+
+    Production rule:
+    - A normal SKU uses its own unit COGS from dim.product_costs.
+    - A combo SKU like A+B+C uses SUM(unit COGS of A, B, C).
+    - If any component is missing, stop ETL instead of silently using 0.
+    """
+    parts = split_shopee_combo_sku(raw_sku)
+    if not parts:
+        return 0.0
+    missing = [part for part in parts if part not in costs]
+    if missing:
+        raise ValueError(
+            "Thiếu giá vốn Shopee cho mã con trong SKU ghép. "
+            f"seller_sku='{clean_code(raw_sku)}', missing={missing}, parts={parts}"
+        )
+    return float(sum(safe_num(costs.get(part, 0.0)) for part in parts))
+
+
+def find_exact_header(columns: Iterable[object], required_name: str) -> str:
+    """Return a column whose header matches required_name exactly after harmless
+    Excel whitespace/BOM cleanup. This intentionally does NOT use fuzzy matching,
+    accent stripping, case folding, or keyword search.
+    """
+    target = " ".join(str(required_name).replace("\ufeff", " ").replace("\n", " ").split())
+    for col in columns:
+        normalized = " ".join(str(col).replace("\ufeff", " ").replace("\n", " ").split())
+        if normalized == target:
+            return col
+    available = ", ".join(str(c) for c in columns)
+    raise ValueError(f"Thiếu cột bắt buộc '{required_name}'. Các cột hiện có: {available}")
+
+
+def has_real_text(value: object) -> bool:
+    # Return True only when a cell has a real non-empty value.
+    # Values like NaN/None/null/NaT are treated as empty.
+    if value is None:
+        return False
+    s = str(value).strip()
+    if not s:
+        return False
+    if s.lower() in {"nan", "none", "null", "nat"}:
+        return False
+    return True
+
+
+def clean_shopee_order_id(value: object, max_len: int = 255) -> str:
+    """Clean Shopee order IDs without treating embedded E as scientific notation.
+
+    Shopee order IDs can be alphanumeric, for example 26062516E60491. The
+    shared clean_code() helper intentionally converts Excel scientific numeric
+    text, but that would misread this valid Shopee ID as 26062516 * 10^60491.
+    """
+    if value is None:
+        return ""
+    try:
+        if pd.isna(value):
+            return ""
+    except Exception:
+        pass
+
+    if hasattr(value, "item") and not isinstance(value, (str, bytes)):
+        try:
+            value = value.item()
+        except Exception:
+            pass
+
+    text = str(value)
+    text = text.replace("\ufeff", "").replace("\u200b", "")
+    text = text.replace("\xa0", " ")
+    text = text.replace("\r", " ").replace("\n", " ").replace("\t", " ")
+    text = text.strip()
+
+    if text.upper() in {"", "NAN", "NONE", "NULL", "NAT"}:
+        return ""
+    if re.fullmatch(r"[+-]?\d+\.0", text):
+        text = text[:-2]
+    return text[:max_len]
+
+
+def is_shopee_gift_row(product_name: object, price: object) -> bool:
+    """Return True for Shopee gift/accessory giveaway rows.
+
+    Production rule for Gross Sales:
+    - Gross Sales in shopee.orders must be calculated only from main products.
+    - Gift rows are excluded even if they appear in the same order export.
+    - A row is considered gift when price <= 0 or the product name clearly says
+      quà tặng/gift/bông tắm/túi/lược/kệ/găng tay.
+    """
+    name = safe_text(product_name, 500).lower()
+    price_num = safe_num(price)
+    gift_keywords = (
+        "quà tặng", "qua tang", "gift",
+        "bông tắm", "bong tam",
+        "túi", "tui",
+        "lược", "luoc",
+        "kệ", "ke trung bay",
+        "găng tay", "gang tay",
+    )
+    return price_num <= 0 or any(k in name for k in gift_keywords)
+
+
+def find_optional_exact_header(columns: Iterable[object], required_name: str) -> Optional[object]:
+    # Find a header by exact visible text after harmless Excel cleanup.
+    # This intentionally does NOT use fuzzy matching.
+    target = " ".join(str(required_name).replace("\ufeff", " ").replace("\n", " ").split())
+    for col in columns:
+        normalized = " ".join(str(col).replace("\ufeff", " ").replace("\n", " ").split())
+        if normalized == target:
+            return col
+    return None
+
+
+def find_shopee_seller_sku_column(df: pd.DataFrame) -> str:
+    target = " ".join(SHOPEE_SELLER_SKU_HEADER.split())
+    for col in df.columns:
+        if " ".join(str(col).replace("\ufeff", " ").replace("\n", " ").split()) == target:
+            return col
+    available = ", ".join(str(c) for c in df.columns)
+    raise ValueError(
+        f"Thiếu cột bắt buộc '{SHOPEE_SELLER_SKU_HEADER}' trong file Shopee orders. "
+        "Không được tự động lấy cột SKU khác vì sẽ sai seller_sku. "
+        f"Các cột hiện có: {available}"
+    )
+
+
+@dataclass
+class ProcessedFile:
+    path: Path
+    kind: str
+
+
+def ensure_dirs() -> None:
+    for d in DIRS.values():
+        (BASE_IN / d).mkdir(parents=True, exist_ok=True)
+        (BASE_OUT / d).mkdir(parents=True, exist_ok=True)
+
+
+def list_input_files(kind: str) -> List[Path]:
+    return get_input_files(BASE_IN / DIRS[kind])
+
+
+def build_shop_label(filename: str) -> str:
+    """Build a stable Shopee shop label from the file name.
+
+    Production rule:
+    - If the filename contains an explicit shop token, return that canonical shop.
+    - Generic exports such as Order.all.20260412_20260511.xlsx contain no shop token,
+      so they default to SHOPMALL instead of leaking ORDER.ALL... into the DB.
+    - Ads/settlement/affiliate generic file names also default to SHOPMALL unless
+      a shop token is present.
+    """
+    raw = str(filename)
+    name_no_ext = re.sub(r"\.(xlsx|xls|csv)$", "", raw, flags=re.I)
+    lower = name_no_ext.lower()
+
+    if re.search(r"shop\s*mall|shopmall|mall", lower, flags=re.I):
+        return "SHOPMALL"
+    if re.search(r"sữa\s*chua|sua\s*chua|suachua|bl[eé]dina|bledina", lower, flags=re.I):
+        return "SUA_CHUA"
+    if re.search(r"đại\s*l[yý]|dai\s*ly|daily|dai_ly", lower, flags=re.I):
+        return "DAI_LY"
+
+    label = re.sub(
+        r"chi_tiet_don_hang|chi tiết đơn hàng|don_hang|đơn hàng|orders?|order\.?all|sellerconversionreport|income|vn|da_phat_hanh|đã phát hành|settlement|affiliate|ads|quang_cao|quảng cáo|\d{8}|\d{4}[-_]\d{1,2}[-_]\d{1,2}|\d{1,2}[-_]\d{1,2}[-_]\d{4}",
+        "",
+        name_no_ext,
+        flags=re.I,
+    )
+    label = label.strip(" _-.()")
+    if not label or label.lower() in {"all", "order", "orders", "income", "sellerconversionreport"}:
+        return "SHOPMALL"
+    return re.sub(r"\s+", "_", label).upper()
+
+
+def extract_date_from_filename(path: Path) -> Optional[date]:
+    m = re.search(r"\d{4}[-_]\d{1,2}[-_]\d{1,2}|\d{1,2}[-_]\d{1,2}[-_]\d{4}", path.name)
+    if not m:
+        return None
+    return parse_date(m.group().replace("_", "-"))
+
+
+def process_affiliate_files() -> Tuple[Dict[str, float], List[ProcessedFile]]:
+    aff_map: Dict[str, float] = {}
+    processed: List[ProcessedFile] = []
+    for path in list_input_files("affiliate"):
+        df = read_smart_table(path, ["mã đơn", "ma don", "order id", "chi phí", "commission"])
+        if df.empty:
+            continue
+        c_id = find_col(df.columns, ["mã đơn", "ma don", "order id"])
+        c_val = find_col(df.columns, ["chi phí(₫)", "chi phi", "chi phí", "commission", "cost"])
+        if not c_id or not c_val:
+            print(f"⚠️ Bỏ qua affiliate {path.name}: thiếu cột mã đơn hoặc chi phí")
+            continue
+        df["mid"] = df[c_id].map(clean_shopee_order_id)
+        grouped = df.groupby("mid")[c_val].apply(lambda x: money_series(x).sum()).to_dict()
+        for oid, val in grouped.items():
+            if oid:
+                aff_map[oid] = safe_num(val)
+        processed.append(ProcessedFile(path, "affiliate"))
+        print(f"✅ Shopee affiliate {path.name}: {len(grouped)} mã đơn")
+    return aff_map, processed
+
+
+def process_settlement_files() -> Tuple[Dict[str, float], List[dict], List[ProcessedFile]]:
+    pay_map: Dict[str, float] = {}
+    settlement_rows: List[dict] = []
+    processed: List[ProcessedFile] = []
+    for path in list_input_files("settlement"):
+        df = read_smart_table(path, ["đơn hàng / sản phẩm", "don hang / san pham", "mã đơn hàng", "tong tien da thanh toan", "tổng tiền đã thanh toán"])
+        if df.empty:
+            continue
+        loai_col = find_col(df.columns, ["đơn hàng / sản phẩm", "don hang / san pham"], exact="Đơn hàng / Sản phẩm")
+        c_id = find_col(df.columns, ["mã đơn hàng", "ma don hang", "order id"], exact="Mã đơn hàng")
+        p_col = find_col(df.columns, ["tổng tiền đã thanh toán", "tong tien da thanh toan", "settlement", "payout"])
+        if not c_id or not p_col:
+            print(f"⚠️ Bỏ qua settlement {path.name}: thiếu mã đơn hoặc payout")
+            continue
+        if loai_col:
+            df = df[df[loai_col].astype(str).str.strip().str.lower().isin(["order", "đơn hàng", "don hang"])].copy()
+        df["mid"] = df[c_id].map(clean_shopee_order_id)
+        grouped = df.groupby("mid")[p_col].apply(lambda x: money_series(x).sum()).to_dict()
+        settlement_date = extract_date_from_filename(path) or datetime.now().date()
+        shop_label = build_shop_label(path.name)
+        for oid, val in grouped.items():
+            if oid:
+                val = safe_num(val)
+                pay_map[oid] = val
+                settlement_rows.append({
+                    "external_order_id": oid,
+                    "settlement_date": settlement_date,
+                    "shop_label": shop_label,
+                    "payout_amount": val,
+                    "source_file": path.name,
+                })
+        processed.append(ProcessedFile(path, "settlement"))
+        print(f"✅ Shopee settlement {path.name}: {len(grouped)} mã đơn")
+    return pay_map, settlement_rows, processed
+
+
+def require_columns(df: pd.DataFrame, columns: Iterable[Optional[str]]) -> None:
+    for col in columns:
+        if col and col not in df.columns:
+            df[col] = "0"
+
+
+def process_order_files(aff_map: Dict[str, float], pay_map: Dict[str, float]) -> Tuple[List[dict], List[ProcessedFile]]:
+    order_map: Dict[Tuple[str, str], dict] = {}
+    processed: List[ProcessedFile] = []
+    for path in list_input_files("orders"):
+        df = read_smart_table(path, ["mã đơn", "ma don", "order id", "ngày đặt", "sku", "giá gốc"])
+        if df.empty:
+            continue
+        shop_label = build_shop_label(path.name)
+        c_id = find_col(df.columns, ["mã đơn", "ma don", "order id"]) or "Mã đơn hàng"
+        c_st = find_col(df.columns, ["trạng thái", "trang thai", "status"]) or "Trạng Thái Đơn Hàng"
+        c_dt = find_col(df.columns, ["ngày đặt", "ngay dat", "order creation", "order date", "created time"]) or "Ngày đặt hàng"
+        c_sku = find_shopee_seller_sku_column(df)
+        c_fix = find_col(df.columns, ["phí cố định", "phi co dinh", "fixed fee"]) or "Phí cố định"
+        c_svc = find_col(df.columns, ["phí dịch vụ", "phi dich vu", "service fee"]) or "Phí Dịch Vụ"
+        c_pay = find_col(df.columns, ["Phí xử lý giao dịch","phí thanh toán", "phi thanh toan", "payment fee"]) or "Phí thanh toán"
+        c_paid = find_col(df.columns, ["người mua thanh toán", "buyer paid", "customer paid"]) or "Tổng số tiền người mua thanh toán"
+        c_voucher = find_col(df.columns, ["mã giảm giá của shop", "shop voucher", "voucher shop"]) or "Mã giảm giá của Shop"
+        c_price = find_col(df.columns, ["giá gốc", "gia goc", "original price"]) or "Giá gốc"
+        c_qty = find_col(df.columns, ["số lượng", "so luong", "quantity"]) or "Số lượng"
+        c_subsidy = find_col(df.columns, ["người bán trợ giá", "nguoi ban tro gia", "seller subsidy"]) or "Tổng số tiền được người bán trợ giá"
+        c_name = find_col(df.columns, ["tên sản phẩm", "ten san pham", "product name"]) or "Tên sản phẩm"
+        c_package_code = find_optional_exact_header(df.columns, "Mã Kiện Hàng")
+
+        require_columns(df, [c_id, c_st, c_dt, c_sku, c_fix, c_svc, c_pay, c_paid, c_voucher, c_price, c_qty, c_subsidy, c_name])
+        df["is_cancelled_row"] = df[c_st].astype(str).str.contains("đã hủy|da huy|cancel|cancelled", case=False, na=False)
+        if c_package_code is not None:
+            df["__has_package_code_row"] = df[c_package_code].map(has_real_text)
+        else:
+            df["__has_package_code_row"] = False
+
+        count = 0
+        for oid, group in df.groupby(c_id, dropna=False):
+            oid_clean = clean_shopee_order_id(oid)
+            if not oid_clean:
+                continue
+            is_cancelled = bool(group["is_cancelled_row"].any())
+            has_package_code = bool(group["__has_package_code_row"].any())
+            price_series = money_series(group[c_price])
+            qty_series = money_series(group[c_qty])
+            main_product_mask = ~group.apply(lambda row: is_shopee_gift_row(row.get(c_name, ""), row.get(c_price, 0)), axis=1)
+
+            # IMPORTANT - minimal patch policy:
+            # Keep the OLD Shopee PnL calculation unchanged.
+            # The new Gross Sales column is the ONLY new output.
+            # - old total_gross_all_rows is still used for seller_revenue.
+            # - gross_sales_main_products is stored separately in shopee.orders.gross_sales.
+            # This prevents changing seller_revenue / est_payout / fees behavior.
+            total_gross_all_rows = safe_num((price_series * qty_series).sum())
+            total_gross_main_products = safe_num((price_series[main_product_mask] * qty_series[main_product_mask]).sum())
+            gross_sales = 0.0 if is_cancelled else total_gross_main_products
+
+            # Preserve OLD logic exactly: do not exclude gift rows from seller_revenue,
+            # and do not zero seller_subsidy/shop_voucher before rev_before_cancel.
+            seller_subsidy = safe_num(money_series(group[c_subsidy]).sum())
+            shop_voucher = safe_num(money_series(group[c_voucher]).sum())
+            rev_before_cancel = safe_num(total_gross_all_rows - seller_subsidy - shop_voucher)
+            seller_revenue = 0.0 if is_cancelled else rev_before_cancel
+            customer_paid = 0.0 if is_cancelled else safe_num(money_series(group[c_paid]).max())
+            fixed_fee = 0.0 if is_cancelled else safe_num(money_series(group[c_fix]).max())
+            service_fee = 0.0 if is_cancelled else safe_num(money_series(group[c_svc]).max())
+            payment_fee = 0.0 if is_cancelled else safe_num(money_series(group[c_pay]).max())
+            affiliate_amount = 0.0 if is_cancelled else safe_num(aff_map.get(oid_clean, 0.0))
+            return_fee = RETURN_FEE_CANCELLED if (is_cancelled and has_package_code) else 0.0
+            return_fee_rule = (
+                "cancelled_with_package_code_30000"
+                if is_cancelled and has_package_code
+                else "cancelled_without_package_code_0"
+                if is_cancelled
+                else "not_cancelled_0"
+            )
+            est_payout = safe_num(seller_revenue - fixed_fee - service_fee - payment_fee - affiliate_amount - return_fee)
+            payout_real = safe_num(pay_map.get(oid_clean, 0.0))
+            payout_actual = payout_real if payout_real != 0 else est_payout
+            payout_source = "settlement" if payout_real != 0 else "estimated"
+            order_time = parse_datetime(group.iloc[0].get(c_dt, ""))
+            raw_order = row_to_json(group.iloc[0])
+            if isinstance(raw_order, dict):
+                raw_order["has_package_code"] = bool(has_package_code)
+                raw_order["package_code_source_column"] = str(c_package_code) if c_package_code is not None else None
+                raw_order["return_fee_rule"] = return_fee_rule
+
+            items = []
+            for _, item in group.iterrows():
+                qty = int(max(safe_num(item.get(c_qty, 1)), 0))
+                if qty == 0:
+                    continue
+                seller_sku_exact = clean_code(item.get(c_sku, ""))
+                items.append({
+                    "name": safe_text(item.get(c_name, ""), 500),
+                    # MUST map exactly from Excel column "SKU phân loại hàng".
+                    # clean_code only trims boundary/invisible Excel noise and converts numeric cells to plain text.
+                    # It does NOT remove accents, hyphens, inner spaces, or change case.
+                    "sku": seller_sku_exact,
+                    "seller_sku_source_column": c_sku,
+                    "sku_parts": split_shopee_combo_sku(seller_sku_exact),
+                    "qty": qty,
+                    "is_gift": is_shopee_gift_row(item.get(c_name, ""), item.get(c_price, 0)),
+                    "raw": row_to_json(item),
+                })
+
+            order_map[(oid_clean, shop_label)] = {
+                "ext_id": oid_clean,
+                "time": order_time,
+                "date": order_time.date() if order_time else None,
+                "status": safe_text(group.iloc[0].get(c_st, ""), 200),
+                "is_cancelled": is_cancelled,
+                "shop_label": shop_label,
+                "gross_sales": gross_sales,
+                "seller_discount": seller_subsidy,
+                "platform_voucher": shop_voucher,
+                "seller_revenue": seller_revenue,
+                "customer_paid": customer_paid,
+                "fixed_fee": fixed_fee,
+                "service_fee": service_fee,
+                "payment_fee": payment_fee,
+                "affiliate_amount": affiliate_amount,
+                "return_fee": return_fee,
+                "est_payout": est_payout,
+                "payout_actual": payout_actual,
+                "payout_source": payout_source,
+                "items": items,
+                "source_file": path.name,
+                "raw": raw_order,
+            }
+            count += 1
+        processed.append(ProcessedFile(path, "orders"))
+        print(f"✅ Shopee orders {path.name}: {count} đơn, shop={shop_label}")
+    return list(order_map.values()), processed
+
+
+def process_ads_files() -> Tuple[List[dict], List[ProcessedFile]]:
+    """Load Shopee ads using the owner-approved production rule.
+
+    Rule:
+    - ads_date is taken ONLY from the filename, e.g. shopmall_2026-05-08.csv
+      means 2026-05-08, i.e. 8 May 2026.
+    - cost_vnd is the SUM of the Excel/CSV column named exactly "Chi phí".
+    - Never use in-file date columns such as "Ngày bắt đầu"/"Ngày kết thúc".
+    - Never sum CPC/CPM or other derived cost columns.
+    """
+    ads_by_key: Dict[Tuple[date, str], float] = {}
+    processed: List[ProcessedFile] = []
+    for path in list_input_files("ads"):
+        ads_date = extract_date_from_filename(path)
+        if not ads_date:
+            raise ValueError(
+                f"File Shopee ads '{path.name}' thiếu ngày trên tên file. "
+                "Tên file phải có dạng shopmall_YYYY-MM-DD hoặc shopmall_YYYY_MM_DD."
+            )
+
+        df = read_smart_table(path, [SHOPEE_ADS_COST_HEADER])
+        if df.empty:
+            raise ValueError(f"File Shopee ads '{path.name}' không có dữ liệu.")
+
+        c_cost = find_exact_header(df.columns, SHOPEE_ADS_COST_HEADER)
+        shop_label = build_shop_label(path.name)
+        raw_cost = money_series(df[c_cost]).sum()
+        ads_by_key[(ads_date, shop_label)] = ads_by_key.get((ads_date, shop_label), 0.0) + safe_num(raw_cost)
+        processed.append(ProcessedFile(path, "ads"))
+        print(
+            f"✅ Shopee ads {path.name}: date={ads_date}, shop={shop_label}, "
+            f"column='{SHOPEE_ADS_COST_HEADER}', cost={safe_num(raw_cost):,.0f}"
+        )
+
+    rows = [
+        {
+            "ads_date": d,
+            "shop_label": label,
+            "cost_vnd": cost,
+            "source_rule": "filename_date_exact_column_Chi_phi",
+        }
+        for (d, label), cost in ads_by_key.items()
+    ]
+    return rows, processed
+
+
+def load_to_db(order_rows: List[dict], settlement_rows: List[dict], ads_rows: List[dict]) -> None:
+    conn = connect()
+    cur = conn.cursor()
+    batch_id = None
+    rows_error = 0
+    try:
+        batch_id = begin_batch(cur, "SHOPEE", "shopee_etl", "multiple_files", None)
+        costs = load_cost_map(cur)
+
+        valid_orders = []
+        for idx, r in enumerate(order_rows, start=1):
+            if not r["ext_id"]:
+                rows_error += 1
+                log_import_error(cur, batch_id, "SHOPEE", "shopee.orders", r.get("source_file"), idx, "MISSING_ORDER_ID", "Thiếu mã đơn hàng.", r.get("raw"))
+                continue
+            if r["date"] is None:
+                rows_error += 1
+                log_import_error(cur, batch_id, "SHOPEE", "shopee.orders", r.get("source_file"), idx, "MISSING_ORDER_DATE", "Thiếu ngày đơn hàng.", r.get("raw"))
+                continue
+            valid_orders.append(r)
+
+        if valid_orders:
+            db_rows = [
+                (
+                    r["ext_id"], r["time"], r["date"], r["status"], bool(r["is_cancelled"]), r["shop_label"],
+                    safe_num(r.get("gross_sales", 0.0)),
+                    safe_num(r["seller_revenue"]), safe_num(r["customer_paid"]), safe_num(r["fixed_fee"]),
+                    safe_num(r["service_fee"]), safe_num(r["payment_fee"]), safe_num(r["affiliate_amount"]),
+                    safe_num(r["return_fee"]), safe_num(r["est_payout"]), safe_num(r["payout_actual"]),
+                    r["payout_source"], batch_id, r.get("source_file"), Json(json_safe(r.get("raw", {}))),
+                )
+                for r in valid_orders
+            ]
+            returned = execute_values(
+                cur,
+                """
+                INSERT INTO shopee.orders(
+                    external_order_id, order_time, order_date, status, is_cancelled, shop_label,
+                    gross_sales, seller_revenue, customer_paid, fixed_fee, service_fee, payment_fee,
+                    affiliate_amount, return_fee, est_payout, payout_actual, payout_source,
+                    batch_id, source_file, raw_payload
+                ) VALUES %s
+                ON CONFLICT (external_order_id, shop_label) DO UPDATE SET
+                    order_time = EXCLUDED.order_time,
+                    order_date = EXCLUDED.order_date,
+                    status = EXCLUDED.status,
+                    is_cancelled = EXCLUDED.is_cancelled,
+                    gross_sales = EXCLUDED.gross_sales,
+                    seller_revenue = EXCLUDED.seller_revenue,
+                    customer_paid = EXCLUDED.customer_paid,
+                    fixed_fee = EXCLUDED.fixed_fee,
+                    service_fee = EXCLUDED.service_fee,
+                    payment_fee = EXCLUDED.payment_fee,
+                    affiliate_amount = EXCLUDED.affiliate_amount,
+                    return_fee = EXCLUDED.return_fee,
+                    est_payout = EXCLUDED.est_payout,
+                    payout_actual = EXCLUDED.payout_actual,
+                    payout_source = EXCLUDED.payout_source,
+                    batch_id = EXCLUDED.batch_id,
+                    source_file = EXCLUDED.source_file,
+                    raw_payload = EXCLUDED.raw_payload,
+                    updated_at = now()
+                RETURNING external_order_id, shop_label, id
+                """,
+                db_rows,
+                fetch=True,
+                page_size=1000,
+            )
+            mapping = {(str(ext), str(label)): int(internal_id) for ext, label, internal_id in returned}
+            if mapping:
+                cur.execute("DELETE FROM shopee.order_items WHERE order_id = ANY(%s)", (list(mapping.values()),))
+
+            missing_cogs_rows = []
+            for r in valid_orders:
+                if bool(r.get("is_cancelled", False)):
+                    continue
+                for line_no, item in enumerate(r["items"], start=1):
+                    sku = item.get("sku", "")
+                    if not sku:
+                        continue
+                    missing_parts = missing_shopee_combo_cogs_parts(sku, costs)
+                    if missing_parts:
+                        missing_cogs_rows.append({
+                            "external_order_id": r["ext_id"],
+                            "shop_label": r["shop_label"],
+                            "line_no": line_no,
+                            "seller_sku": sku,
+                            "sku_parts": split_shopee_combo_sku(sku),
+                            "missing_parts": missing_parts,
+                            "source_file": r.get("source_file"),
+                            "raw": item.get("raw", {}),
+                        })
+
+            if missing_cogs_rows:
+                for err in missing_cogs_rows[:200]:
+                    rows_error += 1
+                    log_import_error(
+                        cur, batch_id, "SHOPEE", "shopee.order_items",
+                        err.get("source_file"), err.get("line_no"),
+                        "MISSING_COMBO_SKU_COGS",
+                        (
+                            "Thiếu giá vốn cho mã Shopee hoặc mã con trong SKU ghép. "
+                            f"order={err['external_order_id']}, sku={err['seller_sku']}, "
+                            f"missing={err['missing_parts']}"
+                        ),
+                        json_safe(err),
+                    )
+                examples = "; ".join(
+                    f"order={e['external_order_id']} sku={e['seller_sku']} missing={e['missing_parts']}"
+                    for e in missing_cogs_rows[:5]
+                )
+                raise ValueError(
+                    f"Shopee thiếu giá vốn cho {len(missing_cogs_rows)} dòng item. "
+                    f"Ví dụ: {examples}. Hãy bổ sung các mã thiếu vào dim.product_costs rồi chạy lại."
+                )
+
+            item_values = []
+            for r in valid_orders:
+                order_id = mapping.get((r["ext_id"], r["shop_label"]))
+                if not order_id:
+                    continue
+                for line_no, item in enumerate(r["items"], start=1):
+                    sku = item.get("sku", "")
+
+                    # Excel-compatible rule requested by owner:
+                    # cancelled Shopee orders must have COGS = 0.
+                    # We keep the item rows, quantity, and seller_sku for audit,
+                    # but force unit_cogs to 0 so every downstream SQL using
+                    # SUM(quantity * unit_cogs) matches the Excel rule:
+                    #     IF(order_status = "đã hủy", 0, unit_cost) * quantity
+                    unit_cogs = 0.0 if bool(r.get("is_cancelled", False)) else lookup_shopee_combo_unit_cogs_strict(sku, costs)
+
+                    item_values.append((
+                        order_id, line_no, item.get("name", ""), sku or None, None,
+                        int(item.get("qty", 0)), 0.0, bool(item.get("is_gift", False)),
+                        unit_cogs, batch_id, r.get("source_file"), Json(json_safe(item.get("raw", {}))),
+                    ))
+            if item_values:
+                execute_values(
+                    cur,
+                    """
+                    INSERT INTO shopee.order_items(
+                        order_id, line_no, product_name, seller_sku, barcode,
+                        quantity, price, is_gift, unit_cogs,
+                        batch_id, source_file, raw_payload
+                    ) VALUES %s
+                    """,
+                    item_values,
+                    page_size=1000,
+                )
+
+        # Store Shopee financial gross/discount/voucher in the Control Tower extra table.
+        # This keeps shopee.orders.gross_sales as requested and also feeds scorecard_by_channel,
+        # which already prefers shopee.order_financials_extra when available.
+        if valid_orders:
+            fin_extra_values = [
+                (
+                    r["ext_id"], r["shop_label"], r["date"],
+                    safe_num(r.get("gross_sales", 0.0)),
+                    safe_num(r.get("seller_discount", 0.0)),
+                    safe_num(r.get("platform_voucher", 0.0)),
+                    r.get("source_file"),
+                )
+                for r in valid_orders if r.get("date") is not None
+            ]
+            if fin_extra_values:
+                execute_values(
+                    cur,
+                    """
+                    INSERT INTO shopee.order_financials_extra(
+                        external_order_id, shop_label, order_date, gross_sales,
+                        seller_discount, platform_voucher, source_file
+                    ) VALUES %s
+                    ON CONFLICT (external_order_id, shop_label) DO UPDATE SET
+                        order_date = EXCLUDED.order_date,
+                        gross_sales = EXCLUDED.gross_sales,
+                        seller_discount = EXCLUDED.seller_discount,
+                        platform_voucher = EXCLUDED.platform_voucher,
+                        source_file = EXCLUDED.source_file,
+                        updated_at = now()
+                    """,
+                    fin_extra_values,
+                    page_size=1000,
+                )
+
+        if settlement_rows:
+            settlement_values = [
+                (r["external_order_id"], r["settlement_date"], r["shop_label"], safe_num(r["payout_amount"]), r.get("source_file"), batch_id, Json(json_safe(r)))
+                for r in settlement_rows if r.get("external_order_id") and r.get("settlement_date")
+            ]
+            if settlement_values:
+                execute_values(
+                    cur,
+                    """
+                    INSERT INTO shopee.settlements(
+                        external_order_id, settlement_date, shop_label, payout_amount, source_file, batch_id, raw_payload
+                    ) VALUES %s
+                    ON CONFLICT (external_order_id, settlement_date, shop_label) DO UPDATE SET
+                        payout_amount = EXCLUDED.payout_amount,
+                        source_file = EXCLUDED.source_file,
+                        batch_id = EXCLUDED.batch_id,
+                        raw_payload = EXCLUDED.raw_payload
+                    """,
+                    settlement_values,
+                    page_size=1000,
+                )
+
+        if ads_rows:
+            ads_values = [(r["ads_date"], r["shop_label"], safe_num(r["cost_vnd"]), batch_id, Json(json_safe(r))) for r in ads_rows if r.get("ads_date")]
+            if ads_values:
+                execute_values(
+                    cur,
+                    """
+                    INSERT INTO shopee.ads_costs(ads_date, shop_label, cost_vnd, batch_id, raw_payload)
+                    VALUES %s
+                    ON CONFLICT (ads_date, shop_label) DO UPDATE SET
+                        cost_vnd = EXCLUDED.cost_vnd,
+                        batch_id = EXCLUDED.batch_id,
+                        raw_payload = EXCLUDED.raw_payload,
+                        updated_at = now()
+                    """,
+                    ads_values,
+                    page_size=1000,
+                )
+
+        finish_batch(cur, batch_id, "success", rows_read=len(order_rows) + len(settlement_rows) + len(ads_rows), rows_loaded=len(valid_orders) + len(settlement_rows) + len(ads_rows), rows_error=rows_error)
+        conn.commit()
+        print(f"✅ Shopee DB load: orders={len(valid_orders)}, settlements={len(settlement_rows)}, ads={len(ads_rows)}, errors={rows_error}, batch_id={batch_id}")
+    except Exception as e:
+        conn.rollback()
+        if batch_id:
+            try:
+                cur = conn.cursor()
+                finish_batch(cur, batch_id, "failed", rows_read=len(order_rows), rows_loaded=0, rows_error=rows_error, error_message=str(e)[:2000])
+                conn.commit()
+            except Exception:
+                conn.rollback()
+        traceback.print_exc()
+        raise
+    finally:
+        cur.close()
+        conn.close()
+
+
+def archive_file_with_retry(src: Path, dest_folder: Path, attempts: int = 8, delay_seconds: float = 1.5) -> Path:
+    """Move processed files with Windows-friendly retry when Excel still holds a lock."""
+    dest_folder.mkdir(parents=True, exist_ok=True)
+    dest = dest_folder / src.name
+    if dest.exists():
+        stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        dest = dest_folder / f"{src.stem}_{stamp}{src.suffix}"
+
+    last_error: Optional[PermissionError] = None
+    for attempt in range(1, attempts + 1):
+        try:
+            gc.collect()
+            src.replace(dest)
+            return dest
+        except PermissionError as exc:
+            last_error = exc
+            if attempt < attempts:
+                print(
+                    f"⏳ File đang bị Windows khóa, thử lại {attempt}/{attempts}: {src.name}"
+                )
+                time.sleep(delay_seconds)
+                continue
+            break
+        except OSError:
+            return archive_file(src, dest_folder)
+
+    raise PermissionError(
+        "Không thể chuyển file sang processed vì Windows đang khóa file. "
+        f"Hãy đóng Excel/Preview Pane/OneDrive sync đang mở file rồi chạy lại: {src}"
+    ) from last_error
+
+
+def move_processed_files(files: List[ProcessedFile]) -> None:
+    for pf in files:
+        archive_file_with_retry(pf.path, BASE_OUT / DIRS[pf.kind])
+
+
+def main() -> int:
+    print(f"🚀 Shopee ETL {SHOPEE_ETL_VERSION}")
+    assert_production_schema()
+    ensure_dirs()
+    processed_files: List[ProcessedFile] = []
+    try:
+        aff_map, aff_files = process_affiliate_files()
+        pay_map, settlement_rows, settlement_files = process_settlement_files()
+        order_rows, order_files = process_order_files(aff_map, pay_map)
+        ads_rows, ads_files = process_ads_files()
+        processed_files.extend(aff_files + settlement_files + order_files + ads_files)
+        load_to_db(order_rows, settlement_rows, ads_rows)
+        move_processed_files(processed_files)
+        print("✅ DONE Shopee ETL production")
+        return 0
+    except Exception:
+        print("❌ Shopee ETL failed. Files were NOT moved to processed.")
+        traceback.print_exc()
+        return 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
