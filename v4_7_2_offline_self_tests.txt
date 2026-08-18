@@ -1,0 +1,21 @@
+=== v4.7 builder ===
+SELF-TEST PASSED
+Target total leaf policy: 4.13b fixture PASS
+SKU sold/gift + inventory join fixture: PASS
+No future inventory / no lot-attribution inference contract: PASS
+=== v4.7 validator ===
+SELF-TEST PASSED
+=== v4.7.1 builder ===
+SELF-TEST PASSED
+Top20 sold-qty ranking: PASS
+Inventory sum across expiry dates: PASS
+NHANH/SHOPEE/TIKTOK inventory sales mapping: PASS
+=== v4.7.1 validator ===
+SELF-TEST PASSED
+=== v4.7.2 builder ===
+SELF-TEST PASSED
+Top20 MTD sold ranking + SKU-first stock mapping: PASS
+All-lot stock total on Top20: PASS
+Expiry-alert-only inventory sheet source: PASS
+=== v4.7.2 validator ===
+SELF-TEST PASSED
