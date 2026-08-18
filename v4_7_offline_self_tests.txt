@@ -1,0 +1,109 @@
+CEO Daily P&L v4.7 offline QA
+Run UTC: 2026-08-18T02:58:18Z
+
+== py_compile ==
+PASS
+
+== scripts/build_ceo_daily_pnl_package_v4_6.py --self-test ==
+SELF-TEST PASSED
+{
+  "SHOPEE": {
+    "cancelled_statuses_exact": [
+      "Đã hủy"
+    ],
+    "normalization": "Unicode/case-insensitive + trim/collapse whitespace; exact phrase only",
+    "returns_refunds": "NOT_CANCELLED"
+  },
+  "TIKTOK": {
+    "cancelled_statuses_exact": [
+      "Canceled"
+    ],
+    "normalization": "Unicode/case-insensitive + trim/collapse whitespace; exact phrase only",
+    "returns_refunds": "NOT_CANCELLED"
+  },
+  "NHANH": {
+    "cancelled_statuses_exact": [
+      "Đã hủy",
+      "Hệ Thống hủy",
+      "Khách hủy",
+      "HVC hủy"
+    ],
+    "normalization": "outer trim only; exact source text",
+    "return_statuses_exact_not_cancelled": [
+      "Đang hoàn",
+      "Xác nhận hoàn",
+      "Đã hoàn"
+    ],
+    "failed_statuses_exact_not_cancelled": [
+      "Thất bại"
+    ],
+    "successful_status_exact_informational": "Thành công",
+    "success_orders_compatibility": "success_orders means non-cancelled for cross-channel reconciliation; successful_orders_exact is literal Thành công"
+  }
+}
+
+== scripts/validate_ceo_daily_pnl_package_v4_6.py --self-test ==
+SELF-TEST PASSED
+
+== scripts/build_ceo_daily_pnl_package_v4_6_1.py --self-test ==
+SELF-TEST PASSED
+{
+  "SHOPEE": {
+    "cancelled_statuses_exact": [
+      "Đã hủy"
+    ],
+    "normalization": "Unicode NFC + case-insensitive + trim/collapse whitespace; exact phrase only; no accent folding/substrings",
+    "returns_refunds": "NOT_CANCELLED"
+  },
+  "TIKTOK": {
+    "cancelled_statuses_exact": [
+      "Canceled"
+    ],
+    "normalization": "Unicode NFC + case-insensitive + trim/collapse whitespace; exact phrase only; no accent folding/substrings",
+    "returns_refunds": "NOT_CANCELLED"
+  },
+  "NHANH": {
+    "cancelled_statuses_exact": [
+      "Đã hủy",
+      "Hệ Thống hủy",
+      "Khách hủy",
+      "HVC hủy"
+    ],
+    "normalization": "Unicode NFC + case-insensitive + trim/collapse whitespace; exact normalized phrase only; no accent folding/substrings",
+    "return_statuses_exact_not_cancelled": [
+      "Đang hoàn",
+      "Xác nhận hoàn",
+      "Đã hoàn"
+    ],
+    "failed_statuses_exact_not_cancelled": [
+      "Thất bại"
+    ],
+    "successful_status_exact_informational": "Thành công",
+    "success_orders_compatibility": "success_orders means non-cancelled orders for cross-channel reconciliation; successful_orders_exact is literal Thành công"
+  }
+}
+Zero-fill + metadata cleanup contract: PASS
+
+== scripts/validate_ceo_daily_pnl_package_v4_6_1.py --self-test ==
+SELF-TEST PASSED
+
+== scripts/build_ceo_daily_pnl_package_v4_7.py --self-test ==
+SELF-TEST PASSED
+Target total leaf policy: 4.13b fixture PASS
+SKU sold/gift + inventory join fixture: PASS
+No future inventory / no lot-attribution inference contract: PASS
+
+== scripts/validate_ceo_daily_pnl_package_v4_7.py --self-test ==
+SELF-TEST PASSED
+
+== tools/apply_ceo_daily_pnl_v4_6_upgrade.py --self-test ==
+SELF-TEST PASSED
+Shopee=exact Đã hủy; TikTok=exact Canceled; Nhanh=exact cancel whitelist; returns/failure separate.
+
+== tools/apply_ceo_daily_pnl_v4_6_1_upgrade.py --self-test ==
+SELF-TEST PASSED
+v4.6.1 Nhanh classifier: NFC + case-insensitive + trim/collapse + exact phrase; no accent folding/substrings.
+
+== tools/check_ceo_daily_pnl_v4_7_repo.py --self-test ==
+SELF-TEST PASSED
+

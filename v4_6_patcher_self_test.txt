@@ -1,0 +1,2 @@
+SELF-TEST PASSED
+Shopee=exact Đã hủy; TikTok=exact Canceled; Nhanh=exact cancel whitelist; returns/failure separate.

@@ -1,0 +1,36 @@
+SELF-TEST PASSED
+{
+  "SHOPEE": {
+    "cancelled_statuses_exact": [
+      "Đã hủy"
+    ],
+    "normalization": "Unicode/case-insensitive + trim/collapse whitespace; exact phrase only",
+    "returns_refunds": "NOT_CANCELLED"
+  },
+  "TIKTOK": {
+    "cancelled_statuses_exact": [
+      "Canceled"
+    ],
+    "normalization": "Unicode/case-insensitive + trim/collapse whitespace; exact phrase only",
+    "returns_refunds": "NOT_CANCELLED"
+  },
+  "NHANH": {
+    "cancelled_statuses_exact": [
+      "Đã hủy",
+      "Hệ Thống hủy",
+      "Khách hủy",
+      "HVC hủy"
+    ],
+    "normalization": "outer trim only; exact source text",
+    "return_statuses_exact_not_cancelled": [
+      "Đang hoàn",
+      "Xác nhận hoàn",
+      "Đã hoàn"
+    ],
+    "failed_statuses_exact_not_cancelled": [
+      "Thất bại"
+    ],
+    "successful_status_exact_informational": "Thành công",
+    "success_orders_compatibility": "success_orders means non-cancelled for cross-channel reconciliation; successful_orders_exact is literal Thành công"
+  }
+}
