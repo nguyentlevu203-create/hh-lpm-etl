@@ -1,0 +1,7 @@
+# If inventory 2026-08-17 is already imported:
+.\run_daily_pnl_v4_7_1.ps1 `
+  -ReportDate "2026-08-17" `
+  -CompareMode "previous_day"
+
+# Expected output:
+outbox\packages\ceo_daily_pnl_package_v4_7_1_2026-08-17.json

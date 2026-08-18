@@ -1,0 +1,17 @@
+# 1) CHECK ONLY
+.\install_ceo_daily_pnl_v4_7.ps1
+
+# 2) APPLY
+.\install_ceo_daily_pnl_v4_7.ps1 -Apply
+
+# 3) READ-ONLY DB SOURCE AUDIT
+psql -h localhost -p 5433 -U postgres -d DuLieu -v report_date="2026-08-14" -f .\sql\audit_ceo_daily_pnl_v4_7_sources.sql
+
+# 4) LOAD INVENTORY (do not use the old --build-package switch)
+python .\scripts\run_daily_inventory_pipeline.py --date "2026-08-14"
+
+# 5) BUILD + VALIDATE CEO v4.7
+.\run_daily_pnl_v4_7.ps1 -ReportDate "2026-08-14" -CompareMode "previous_day"
+
+# Or run inventory + v4.7 package together:
+.\run_daily_inventory_and_ceo_v4_7.ps1 -ReportDate "2026-08-14" -CompareMode "previous_day"

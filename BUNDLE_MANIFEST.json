@@ -1,0 +1,18 @@
+{
+  "version": "v4.7.2",
+  "package_version_int": 472,
+  "base": "v4.7.1",
+  "scope": [
+    "All GT/MT customers with current-MTD transactions",
+    "Top 20 SKU per channel by MTD sold quantity",
+    "SKU-first inventory mapping and total stock across all lots/expiry dates",
+    "Expiry/date-alert-only source for 06_Ton_kho_Can_date"
+  ],
+  "no_change": [
+    "P&L waterfall",
+    "No EBITDA rule",
+    "Cancellation/status semantics",
+    "Monthly target logic",
+    "Inventory import and snapshot resolution"
+  ]
+}
