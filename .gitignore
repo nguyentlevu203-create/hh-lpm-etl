@@ -1,0 +1,7 @@
+processed/
+outbox/
+__pycache__/
+*.pyc
+backups/*.dump
+.venv/
+.sixth/

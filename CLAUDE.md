@@ -47,6 +47,13 @@ in `api/routers/ceo.py`, never inside a channel ETL script.
 - **Weekly/monthly CEO Growth package builder (current):**
   `scripts/build_ceo_growth_package_v3_3_week_month.py`, emailed via
   `scripts/send_ceo_growth_week_month_excel_report.py`.
+- **CEO Daily P&L package builder (current):** `scripts/build_ceo_daily_pnl_package_v4_7_3.py` (HF1),
+  validated by `scripts/validate_ceo_daily_pnl_package_v4_7_3.py`, run via `run_daily_pnl_v4_7_3.ps1` /
+  `run_daily_inventory_and_ceo_v4_7_3.ps1`, contract documented in `docs/CEO_DAILY_PNL_V4_7_3_CONTRACT.md`.
+  It is an additive layer on the validated v4.6.1 financial/status contract (unchanged waterfall, no
+  EBITDA) plus target progress, prior-month/prior-MTD full P&L, all-SKU sold/gift facts, inventory
+  snapshot/lot/HSD data and the seven-sheet Excel render contract. Sent individually per recipient via
+  `scripts/send_ceo_daily_excel_individual.py` (see `config/ceo_daily_email_recipients.csv`).
 - **FastAPI entry point:** `main.py` → `api/main.py` (uvicorn, `0.0.0.0:8000`).
 
 Neither the CEO Control Tower package/report nor the weekly/monthly package/report is wired into
@@ -56,24 +63,32 @@ scheduled daily.
 ## Current vs legacy
 
 **CEO Control Tower package builder chain** (all in `scripts/`):
-`build_ceo_control_tower_package.py` (v1, dead) →
 `build_ceo_control_tower_package_v2_scorecard.py` (legacy standalone, but **still imported as a dependency
 module** by v2_10 via `importlib` — do not delete) →
 `build_ceo_control_tower_package_v2_8_samples.py` (same status: legacy standalone, load-bearing importlib
 dependency of v2_10) →
-`build_ceo_control_tower_package_v2_9_ceo_email_scorecard.py` (fully superseded, dead) →
 **`build_ceo_control_tower_package_v2_10_ceo_email_scorecard_samples_compatible.py` = CURRENT**, confirmed
 by `outbox/packages/ceo_control_tower_package_v2_10_*` being the only daily package output present.
+(v1 `build_ceo_control_tower_package.py` and v2_9 `..._v2_9_ceo_email_scorecard.py` were fully superseded,
+unreferenced anywhere else, and deleted during the 2026-08-19 repo cleanup — restorable from git history
+if ever needed.)
 
-**Weekly/monthly sender:** `scripts/send_ceo_growth_week_month_excel_report.py` = current;
-`scripts/send_ceo_growth_week_month_report.py` = legacy near-duplicate (6-line cosmetic diff only).
+**Weekly/monthly sender:** `scripts/send_ceo_growth_week_month_excel_report.py` = current. (The legacy
+non-Excel near-duplicate `send_ceo_growth_week_month_report.py` and the orphaned Google-OAuth sender
+`send_ceo_growth_report_gmail.py` — unreferenced anywhere, no `credentials.json`/`token.json` in the repo —
+were both deleted during the 2026-08-19 repo cleanup.)
 
-**Orphaned dead code:** `scripts/send_ceo_growth_report_gmail.py` — the only sender using Google OAuth
-(`InstalledAppFlow`) instead of SMTP+app-password; nothing references it, and no `credentials.json`/
-`token.json` exists in the repo to even run it.
+**CEO Daily P&L builder chain** (all in `scripts/`): `build_ceo_daily_pnl_package_v4_0.py` →
+`v4_1` → `v4_5` → `v4_6` → `v4_6_1` (financial/status contract baseline, still the authoritative source the
+v4.7.x layer rebuilds prior periods from) → `v4_7` → `v4_7_1` → `v4_7_2` →
+**`v4_7_3` (HF1) = CURRENT**, confirmed by `outbox/packages/ceo_daily_pnl_package_v4_7_3_*` being the
+newest daily package output present. Each `v4_7*` step is purely additive on top of v4.6.1's P&L waterfall
+— see `docs/CEO_DAILY_PNL_V4_7_3_CONTRACT.md` and the sibling `docs/CEO_DAILY_PNL_V4_7_*_CONTRACT.md` files
+for what each step added. Do not skip straight to editing v4.6/v4.6.1 business logic without checking
+whether the same concept was layered again in v4.7.x.
 
-> **Do not edit v1, v2_9, the non-excel week/month sender, or the gmail-oauth sender unless the user
-> explicitly asks to work on legacy code.** Default to the CURRENT files listed above.
+> **Do not edit dead/legacy files listed above unless the user explicitly asks to work on legacy code.**
+> Default to the CURRENT files listed above.
 
 **TikTok patch scripts are historical, one-shot, already-applied:** `tools/apply_tiktok_v4_12_brand_group_from_filename.py`
 and `tools/apply_tiktok_v4_14_partner_commission.py` are regex-based source patchers that already rewrote
@@ -170,8 +185,10 @@ Reference only — read the cited lines before touching related logic, do not "s
 - **Package-builder version drift**: multiple versioned copies of the same builder coexist (see Current vs
   legacy). Always verify current-production status against `outbox/` output evidence, not filename version
   numbers alone, before editing.
-- **No `.gitignore`**: `processed/`, `outbox/`, most of `data/`, and `__pycache__/*.pyc` are all tracked in
-  git, and a GitHub `origin` remote is configured. Do not reflexively `git add -A`/`git add .`.
+- **`.gitignore` added 2026-08-19**: `processed/`, `outbox/`, `__pycache__/`, `*.pyc` and `backups/*.dump`
+  are now ignored going forward (they were previously tracked in git, generating most of `.git`'s size).
+  `data/` remains intentionally tracked (small, reference/audit value). Still do not reflexively
+  `git add -A`/`git add .` — review `git status` before staging.
 
 ## Security rules
 
@@ -218,3 +235,30 @@ in that turn:
 - Git history rewriting (`rebase -i`, `filter-repo`, force-push, etc.)
 - `git push`
 - Production deployment
+
+<!-- CEO_DAILY_PNL_V4_6_STATUS_CONTRACT -->
+## CEO Daily P&L v4.6 status contract
+
+- Shopee cancelled: only exact normalized `Đã hủy`.
+- TikTok cancelled: only exact normalized `Canceled`.
+- Nhanh cancelled: exact trimmed `Đã hủy`, `Hệ Thống hủy`, `Khách hủy`, `HVC hủy`.
+- Nhanh return statuses `Đang hoàn`, `Xác nhận hoàn`, `Đã hoàn` are NOT cancellation; `Thất bại` is also NOT cancellation.
+- Keep Nhanh +25,000 shipping rule only for exact `Đã hoàn`.
+- Nhanh parent daily P&L and the seven exact leaf labels are both required in the v4.6 CEO package.
+- Do not rerun the v4.5 single-literal exact-cancel patcher against v4.6 files.
+<!-- /CEO_DAILY_PNL_V4_6_STATUS_CONTRACT -->
+
+<!-- CEO_DAILY_PNL_V4_6_1_CLEANUP_CONTRACT -->
+## CEO Daily P&L v4.6.1 cleanup contract
+
+- Keep v4.6 financial waterfall unchanged: Gross -> Net Sales -> GM1 -> CM1 -> CM2 -> Profit. No EBITDA.
+- Shopee cancelled: exact normalized `Đã hủy` only.
+- TikTok cancelled: exact normalized `Canceled` only.
+- Nhanh cancellation uses Unicode NFC + case-insensitive + trim/collapse whitespace, then exact phrase matching against `Đã hủy`, `Hệ Thống hủy`, `Khách hủy`, `HVC hủy`. No accent folding, fuzzy matching or substring matching.
+- Therefore `Hệ Thống hủy`, `Hệ thống hủy`, and whitespace/case variants are equivalent; `Đã huỷ` is not silently converted to `Đã hủy`.
+- Nhanh return statuses `Đang hoàn`, `Xác nhận hoàn`, `Đã hoàn` and failed status `Thất bại` are not cancelled. +25,000 shipping remains for normalized-exact `Đã hoàn` only.
+- Cancel-like diagnostics must use whole tokens; `Đang chuyển` must never be flagged merely because it contains the substring `huy` across letters.
+- On no-sales/no-source rows used in tables/charts, applicable numeric KPIs are 0; true N/A remains null.
+- `success_orders` is a cross-channel non-cancelled compatibility field. For Nhanh literal `Thành công`, use `successful_orders_exact`. Never label Nhanh `success_orders` as literal `Đơn thành công`.
+- Use v4.6.1 builder/validator for new CEO packages; keep v4.6 only for rollback.
+<!-- /CEO_DAILY_PNL_V4_6_1_CLEANUP_CONTRACT -->

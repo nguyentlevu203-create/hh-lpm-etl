@@ -1,0 +1,5 @@
+SELF-TEST PASSED
+Previous-MTD period bounds: PASS
+31-day calendar clamp: PASS
+Daily coverage guard: PASS
+Additive reconciliation helper: PASS

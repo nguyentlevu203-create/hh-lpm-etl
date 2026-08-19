@@ -1,0 +1,5 @@
+SELF-TEST PASSED
+Same-period calendar clamp: PASS
+Date-series guard: PASS
+1 VND reconciliation tolerance: PASS
+Profit last-line / no-EBITDA line guard: PASS

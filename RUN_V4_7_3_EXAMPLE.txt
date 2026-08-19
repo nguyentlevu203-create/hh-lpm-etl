@@ -1,0 +1,10 @@
+# From repository root
+python .\scripts\build_ceo_daily_pnl_package_v4_7_3.py --self-test
+python .\scripts\validate_ceo_daily_pnl_package_v4_7_3.py --self-test
+
+.\run_daily_pnl_v4_7_3.ps1 `
+  -ReportDate "2026-08-18" `
+  -CompareMode "previous_day"
+
+# Expected package
+outbox\packages\ceo_daily_pnl_package_v4_7_3_2026-08-18.json

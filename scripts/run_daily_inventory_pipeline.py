@@ -11,7 +11,7 @@ This wrapper runs:
   1) import_reorder_alert_rules.py, optional
   2) inventory_daily_filter.py for HN with --rerun
   3) inventory_daily_filter.py for HCM with --rerun
-  4) build_ceo_control_tower_package.py, optional
+  4) build_ceo_control_tower_package_v2_10_ceo_email_scorecard_samples_compatible.py, optional
 
 Important:
 - --rerun replaces the same snapshot_date + warehouse safely through staging + commit.
@@ -120,7 +120,7 @@ def main() -> int:
     if args.build_package:
         cmd = [
             py,
-            "scripts/build_ceo_control_tower_package.py",
+            "scripts/build_ceo_control_tower_package_v2_10_ceo_email_scorecard_samples_compatible.py",
             "--date",
             args.date,
             "--out-dir",

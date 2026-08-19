@@ -1,0 +1,13 @@
+SELF-TEST PASSED
+Previous-MTD period bounds: PASS
+31-day calendar clamp: PASS
+Daily coverage guard: PASS
+Additive reconciliation helper: PASS
+SELF-TEST PASSED
+Same-period calendar clamp: PASS
+Date-series guard: PASS
+1 VND reconciliation tolerance: PASS
+Profit last-line / no-EBITDA line guard: PASS
+SYNTHETIC POSTPROCESS INTEGRATION: PASS
+SYNTHETIC VALIDATOR INTEGRATION: PASS
+PY_COMPILE: PASS
