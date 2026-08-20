@@ -1,0 +1,11 @@
+v4.7.4 OFFLINE REGRESSION TEST — source package 2026-08-18
+Builder self-test: PASS
+Validator self-test: PASS
+Full inherited validator chain v4.7.4 -> v4.7.3 -> v4.7.2 -> v4.7.1 -> v4.7 -> v4.6.1 -> v4.6 -> v4.5: PASS
+Alias approved mappings: 102
+Top20 identity mapping coverage: {"GT": 1.0, "MT": 1.0, "NHANH": 1.0, "SHOPEE": 1.0, "TIKTOK": 1.0}
+All-sales push mapping coverage: {"GT": 1.0, "MT": 1.0, "NHANH": 0.9967897271268058, "SHOPEE": 0.6899946780202235, "TIKTOK": 0.7595704948646125}
+Unresolved sales SKU summary rows: 48
+Shopee gift_qty_mtd (legacy source package before ETL reimport): 1118.0
+Shopee gift_cogs_mtd: 7889000.0
+Important: offline test validates package enrichment only; Shopee ETL patch must be applied + source orders re-imported to correct missing normal-product gifts.

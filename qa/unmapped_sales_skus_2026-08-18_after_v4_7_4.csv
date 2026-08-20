@@ -1,0 +1,49 @@
+﻿channel,sku,source_skus,product_name,sold_qty_mtd,gift_qty_mtd,total_push_qty_mtd,mapping_status
+NHANH,BONGTAM-KM,,BONGTAM-KM,0.0,3.0,3.0,UNMAPPED
+NHANH,TUICOGAI-62,TUICOGAI-62,Túi đựng quà 8/3 hình cô gái (25x21x9 ) - ĐA 62 - TO,0.0,1.0,1.0,UNMAPPED
+SHOPEE,BONG TAM HQ,BONG TAM HQ,[QUÀ TẶNG KHÔNG BÁN] Bông Tạo Bọt Kì Cọ Tẩy Da Chết Màu Ngẫu Nhiên,0.0,1079.0,1079.0,UNMAPPED
+SHOPEE,681810_mod681810,681810_mod681810,[QUÀ TẶNG KHÔNG BÁN] Bông Tạo Bọt Kì Cọ Tẩy Da Chết Màu Ngẫu Nhiên,0.0,30.0,30.0,UNMAPPED
+SHOPEE,Túi quai nhựa,Túi quai nhựa,Túi đưng quà quai nhựa,0.0,3.0,3.0,UNMAPPED
+SHOPEE,681724_hoa_cam_9109,681724_hoa_cam_9109,Sữa Tắm Thơm Lâu Le Petit Marseillais Gel 92% Thiên Nhiên Da Nhạy Cảm Nhiều Mùi Hương 650ml,3.0,0.0,3.0,UNMAPPED
+SHOPEE,681736_huogthog_bachda_1356,681736_huogthog_bachda_1356,Sữa Tắm Nam 4 in 1 92% Thiên Nhiên Le Petit Marseillais Nhiều Mùi Hương 250ml,3.0,0.0,3.0,UNMAPPED
+SHOPEE,681737_daotrang_xuandao1240,681737_daotrang_xuandao1240,Sữa Tắm Thiên Nhiên 92% Le Petit Marseillais Nhiều Mùi Hương 250ml,3.0,0.0,3.0,UNMAPPED
+SHOPEE,DG37429+DX74752+1 BÁNH-XP+TUICOGAI-63,DG37429+DX74752+1 BÁNH-XP+TUICOGAI-63,[DEAL 8/3] Combo Dầu Gội-Xả Thiên Nhiên Chăm Sóc Tóc Le Petit Marseillais Mềm Mượt 250ML + 200ML,3.0,0.0,3.0,UNMAPPED_BUNDLE_COMPONENTS
+SHOPEE,681724_dua_6999,681724_dua_6999,Sữa Tắm Thơm Lâu Le Petit Marseillais Gel 92% Thiên Nhiên Da Nhạy Cảm Nhiều Mùi Hương 650ml,2.0,0.0,2.0,UNMAPPED
+SHOPEE,681724_hoa_tiare_8816,681724_hoa_tiare_8816,Sữa Tắm Thơm Lâu Le Petit Marseillais Gel 92% Thiên Nhiên Da Nhạy Cảm Nhiều Mùi Hương 650ml,2.0,0.0,2.0,UNMAPPED
+SHOPEE,681724_thong_bach_dan_1902,681724_thong_bach_dan_1902,Sữa Tắm Thơm Lâu Le Petit Marseillais Gel 92% Thiên Nhiên Da Nhạy Cảm Nhiều Mùi Hương 650ml,2.0,0.0,2.0,UNMAPPED
+SHOPEE,681736_go_cam_argan_1431,681736_go_cam_argan_1431,Sữa Tắm Nam 4 in 1 92% Thiên Nhiên Le Petit Marseillais Nhiều Mùi Hương 250ml,2.0,0.0,2.0,UNMAPPED
+SHOPEE,681736_tuyettung_duogxi1172,681736_tuyettung_duogxi1172,Sữa Tắm Nam 4 in 1 92% Thiên Nhiên Le Petit Marseillais Nhiều Mùi Hương 250ml,2.0,0.0,2.0,UNMAPPED
+SHOPEE,681739_mod681739,681739_mod681739,Sữa Tắm 92% Thiên Nhiên Le Petit Marseillais Dịu Nhẹ Sữa Vani Hữu Cơ 650ml 0557,2.0,0.0,2.0,UNMAPPED
+SHOPEE,681724_cam_buoi_hong_1868,681724_cam_buoi_hong_1868,Sữa Tắm Thơm Lâu Le Petit Marseillais Gel 92% Thiên Nhiên Da Nhạy Cảm Nhiều Mùi Hương 650ml,1.0,0.0,1.0,UNMAPPED
+SHOPEE,681724_vani_0557,681724_vani_0557,Sữa Tắm Thơm Lâu Le Petit Marseillais Gel 92% Thiên Nhiên Da Nhạy Cảm Nhiều Mùi Hương 650ml,1.0,0.0,1.0,UNMAPPED
+SHOPEE,681725_hanh_nhan_argan8485,681725_hanh_nhan_argan8485,Kem Dưỡng Tay 24h Thiên Nhiên Le Petit Marseillais Nhiều Mùi Hương 75ml,1.0,0.0,1.0,UNMAPPED
+SHOPEE,681726_mam_xoi_bong_0442,681726_mam_xoi_bong_0442,Dầu Gội Trẻ Em 2in1 94% Thiên Nhiên Le Petit Marseillais Giúp Gỡ Rối Tóc Nhiều Mùi Hương 300ml,1.0,0.0,1.0,UNMAPPED
+SHOPEE,681726_qua_dao_mo_0435,681726_qua_dao_mo_0435,Dầu Gội Trẻ Em 2in1 94% Thiên Nhiên Le Petit Marseillais Giúp Gỡ Rối Tóc Nhiều Mùi Hương 300ml,1.0,0.0,1.0,UNMAPPED
+SHOPEE,681728_mod681728,681728_mod681728,Combo Dầu Gội-Xả Dừa Thiên Nhiên Chăm Sóc Tóc Le Petit Marseillais Mềm Mượt 250ML + 200ML - DG37429+DX74752,1.0,0.0,1.0,UNMAPPED
+SHOPEE,681729_hoa_cam_0965,681729_hoa_cam_0965,Hộp 4 Bánh Xà Phòng Thiên Nhiên Le Petit Marseillais Dịu Nhẹ Lành Tính Nhiều Mùi Hương 4x100g,1.0,0.0,1.0,UNMAPPED
+SHOPEE,681730_tra_xanhdetox_7467,681730_tra_xanhdetox_7467,Dầu Gội Thiên Nhiên Le Petit Marseillais Hữu Cơ Nhiều Mùi Hương 250ml,1.0,0.0,1.0,UNMAPPED
+SHOPEE,681732_mod681732,681732_mod681732,Dầu Gội Thiên Nhiên 2in1 97% Sạch Gàu Le Petit Marseillais Chiết Xuất Bạc Hà Hữu Cơ 250ml 4042,1.0,0.0,1.0,UNMAPPED
+SHOPEE,681734_hoa_hanh_nhan_5055,681734_hoa_hanh_nhan_5055,Sữa Tắm Dưỡng Ẩm 98% Thiên Nhiên Le Petit Marseillais Hữu Cơ Nhiều Mùi Hương Thơm 400ml,1.0,0.0,1.0,UNMAPPED
+SHOPEE,681734_hoa_thanh_cuc_5017,681734_hoa_thanh_cuc_5017,Sữa Tắm Dưỡng Ẩm 98% Thiên Nhiên Le Petit Marseillais Hữu Cơ Nhiều Mùi Hương Thơm 400ml,1.0,0.0,1.0,UNMAPPED
+SHOPEE,681737_bac_ha_2871,681737_bac_ha_2871,Sữa Tắm Thiên Nhiên 92% Le Petit Marseillais Nhiều Mùi Hương 250ml,1.0,0.0,1.0,UNMAPPED
+SHOPEE,681737_bong_anh_tuc_5434,681737_bong_anh_tuc_5434,Sữa Tắm Thiên Nhiên 92% Le Petit Marseillais Nhiều Mùi Hương 250ml,1.0,0.0,1.0,UNMAPPED
+SHOPEE,681737_hanh_nhan_0892,681737_hanh_nhan_0892,Sữa Tắm Thiên Nhiên 92% Le Petit Marseillais Nhiều Mùi Hương 250ml,1.0,0.0,1.0,UNMAPPED
+SHOPEE,681737_luu_9308,681737_luu_9308,Sữa Tắm Thiên Nhiên 92% Le Petit Marseillais Nhiều Mùi Hương 250ml,1.0,0.0,1.0,UNMAPPED
+SHOPEE,681737_mam_xoi_mau_don_8441,681737_mam_xoi_mau_don_8441,Sữa Tắm Thiên Nhiên 92% Le Petit Marseillais Nhiều Mùi Hương 250ml,1.0,0.0,1.0,UNMAPPED
+SHOPEE,681737_muoi_bien_4463,681737_muoi_bien_4463,Sữa Tắm Thiên Nhiên 92% Le Petit Marseillais Nhiều Mùi Hương 250ml,1.0,0.0,1.0,UNMAPPED
+SHOPEE,681737_xoai_chanh_day_9622,681737_xoai_chanh_day_9622,Sữa Tắm Thiên Nhiên 92% Le Petit Marseillais Nhiều Mùi Hương 250ml,1.0,0.0,1.0,UNMAPPED
+SHOPEE,681742_oai_huong_0644,681742_oai_huong_0644,Gel Rửa Tay Thiên Nhiên 92% Le Petit Marseillais Dịu Nhẹ Lành Tính Bảo Vệ Da Nhiều Mùi Hương 300ml,1.0,0.0,1.0,UNMAPPED
+SHOPEE,681746_mod681746,681746_mod681746,Gel Tắm 92% Thiên Nhiên Le Petit Marseillais Dịu Nhẹ Lựu Hữu Cơ 250ml 9308,1.0,0.0,1.0,UNMAPPED
+SHOPEE,681748_hatmodhahnhandar8054,681748_hatmodhahnhandar8054,Sữa Dưỡng Thể Body Lotion Thiên Nhiên Le Petit Marseillais Hữu Cơ Nhiều Mùi Hương 250ml,1.0,0.0,1.0,UNMAPPED
+SHOPEE,681774_mod681774,681774_mod681774,Gel Tắm 92% Thiên Nhiên Le Petit Marseillais Dịu Nhẹ Xoài Hữu Cơ & Chanh Dây 250ml 9622,1.0,0.0,1.0,UNMAPPED
+SHOPEE,681796_mod681796,681796_mod681796,Dầu Gội Trẻ Em 2in1 94% Thiên Nhiên Le Petit Marseillais Giúp Gỡ Rối Tóc Chiết Xuất Quả Mâm Xôi & Bông 300ml 0442,1.0,0.0,1.0,UNMAPPED
+SHOPEE,681799_mod681799,681799_mod681799,Dầu Gội Nam Sạch Gàu 97% Thiên Nhiên Le Petit Marseillais Chiết Xuất Tinh Dầu Chanh Vàng 250ml 4035,1.0,0.0,1.0,UNMAPPED
+SHOPEE,681802_mod681802,681802_mod681802,"Kem Dưỡng Tay 24h Thiên Nhiên Le Petit Marseillais Chiết Xuất Bơ Hạt Mỡ, Lô Hội, Sắp Ong 75ml 4768",1.0,0.0,1.0,UNMAPPED
+SHOPEE,681808_mod681808,681808_mod681808,Gel Tắm 92% Thiên Nhiên Le Petit Marseillais Dịu Nhẹ Thông Hữu Cơ Và Bạch Đàn Biển Hữu Cơ 650ml 1902,1.0,0.0,1.0,UNMAPPED
+SHOPEE,681809_mod681809,681809_mod681809,Dầu Gội Phục Hồi Tóc 98% Thiên Nhiên Le Petit Marseillais Chiết Xuất Táo & Oliu Hữu Cơ 300ml 1372,1.0,0.0,1.0,UNMAPPED
+SHOPEE,DG37467+DX74752+1 BÁNH-XP+TUICOGAI-63,DG37467+DX74752+1 BÁNH-XP+TUICOGAI-63,[DEAL 8/3] Combo Dầu Gội-Xả Thiên Nhiên Chăm Sóc Tóc Le Petit Marseillais Mềm Mượt 250ML + 200ML,1.0,0.0,1.0,UNMAPPED_BUNDLE_COMPONENTS
+SHOPEE,DG60650+DX74752+1 BÁNH-XP+TUICOGAI-63,DG60650+DX74752+1 BÁNH-XP+TUICOGAI-63,[DEAL 8/3] Combo Dầu Gội-Xả Thiên Nhiên Chăm Sóc Tóc Le Petit Marseillais Mềm Mượt 250ML + 200ML,1.0,0.0,1.0,UNMAPPED_BUNDLE_COMPONENTS
+SHOPEE,681788_dua_7429_xa_4752,681788_dua_7429_xa_4752,Combo Dầu Gội Xả Thiên Nhiên Chăm Sóc Tóc Le Petit Marseillais Mềm Mượt,0.0,0.0,0.0,UNMAPPED
+SHOPEE,681800_mod681800,681800_mod681800,"Kem Dưỡng Tay 24h Thiên Nhiên Le Petit Marseillais Chiết Xuất Bơ Hạt Mỡ, Hạnh Nhân & Dầu Argan 75ml 8485",0.0,0.0,0.0,UNMAPPED
+SHOPEE,ST53379+DG90442+1 BÁNH-XP+TUICOGAI-62,ST53379+DG90442+1 BÁNH-XP+TUICOGAI-62,[DEAL 8/3] COMBO Dầu Gội Cho Bé 300ML + Sữa Tắm Cho Mẹ 400ML Thiên Nhiên Le Petit Marseillais Hữu Cơ,0.0,0.0,0.0,UNMAPPED_BUNDLE_COMPONENTS
+TIKTOK,BONG TAM HQ,BONG TAM HQ,[Quà tặng không bán] Bông Tắm Tạo Bọt Mềm Mịn,0.0,515.0,515.0,UNMAPPED
