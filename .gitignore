@@ -5,3 +5,37 @@ __pycache__/
 backups/*.dump
 .venv/
 .sixth/
+logs/
+
+# Secrets — never commit real credentials, only .env.example
+.env
+.env.*
+!.env.example
+
+# Generated per-release evidence/log files — regenerate, do not track new ones.
+# The current release's own copies (e.g. SHA256SUMS_v4_7_4.txt) are tracked
+# explicitly as release evidence; this only stops the pattern from reaccumulating.
+RUN_V4_*_EXAMPLE.txt
+*_self_test.txt
+*_offline_self_tests.txt
+
+# Stray output location — real drafts belong under outbox/email_drafts/ (already ignored above)
+docs/email_drafts/
+
+# Runtime raw data — daily channel exports and inventory snapshots. These are
+# operational inputs/outputs, not source-of-truth config; only the sibling
+# */2_master_data/, */8_master_data/, and data/inventory/rules/ dirs are
+# tracked as CONFIG_SOURCE_OF_TRUTH (see docs/PRODUCTION_CLEANUP_INVENTORY.md).
+data/inventory/daily/
+data/mt_gt/1_sales_ledger/
+data/nhanh/
+data/Shopee/
+data/tiktok/1_orders/
+data/tiktok/2_affiliate_creator/
+data/tiktok/3_affiliate_partner/
+data/tiktok/4_settlement_paid/
+data/tiktok/5_settlement_unpaid/
+data/tiktok/6_ads_product/
+data/tiktok/7_ads_live/
+data/tiktok/9_live_in_house/
+data/tiktok/10_live_teaser/

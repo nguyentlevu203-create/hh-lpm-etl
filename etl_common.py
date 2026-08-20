@@ -25,10 +25,20 @@ import pandas as pd
 import psycopg2
 from psycopg2.extras import RealDictCursor, Json
 
+def _require_db_password() -> str:
+    value = os.getenv("ETL_DB_PASSWORD")
+    if not value:
+        raise RuntimeError(
+            "Missing ETL_DB_PASSWORD environment variable. Set it in your environment "
+            "or .env (see .env.example) before running any ETL script."
+        )
+    return value
+
+
 DB_CONFIG = {
     "dbname": os.getenv("ETL_DB_NAME", "DuLieu"),
     "user": os.getenv("ETL_DB_USER", "postgres"),
-    "password": os.getenv("ETL_DB_PASSWORD", "Vu123"),
+    "password": _require_db_password(),
     "host": os.getenv("ETL_DB_HOST", "localhost"),
     "port": os.getenv("ETL_DB_PORT", "5433"),
 }
