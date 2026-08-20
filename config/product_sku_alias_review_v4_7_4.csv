@@ -1,0 +1,17 @@
+﻿source_row,left_code,right_code,classification,reason
+103,3041091221988,Date ngắn 9 tháng,EXCLUDED_NOTE,"Cột mã chứa ghi chú, không phải alias SKU"
+104,3041091221940,Bỏ mã,EXCLUDED_NOTE,"Cột mã chứa ghi chú, không phải alias SKU"
+105,3041091397430,Bỏ mã,EXCLUDED_NOTE,"Cột mã chứa ghi chú, không phải alias SKU"
+106,HŨ-SC46955,,UNPAIRED_REVIEW,Mã không có EAN/mã ngắn đối ứng trong file nguồn
+107,LUOCJARY,,UNPAIRED_REVIEW,Mã không có EAN/mã ngắn đối ứng trong file nguồn
+108,luoc6k,,UNPAIRED_REVIEW,Mã không có EAN/mã ngắn đối ứng trong file nguồn
+109,Luoc,,UNPAIRED_REVIEW,Mã không có EAN/mã ngắn đối ứng trong file nguồn
+110,1 BÁNH-XP,1 BÁNH-XP,SELF_ALIAS_REVIEW,Mã phụ kiện/quà tự ánh xạ; chỉ dùng exact inventory identifier nếu DB đã có
+111,BONG TAM HQ,BONG TAM HQ,SELF_ALIAS_REVIEW,Mã phụ kiện/quà tự ánh xạ; chỉ dùng exact inventory identifier nếu DB đã có
+112,Túi quai nhựa,Túi quai nhựa,SELF_ALIAS_REVIEW,Mã phụ kiện/quà tự ánh xạ; chỉ dùng exact inventory identifier nếu DB đã có
+113,TUIDUNGMYPHAM-S,TUIDUNGMYPHAM-S,SELF_ALIAS_REVIEW,Mã phụ kiện/quà tự ánh xạ; chỉ dùng exact inventory identifier nếu DB đã có
+114,TUICOGAI-63,TUICOGAI-63,SELF_ALIAS_REVIEW,Mã phụ kiện/quà tự ánh xạ; chỉ dùng exact inventory identifier nếu DB đã có
+115,TUICOGAI-62,TUICOGAI-62,SELF_ALIAS_REVIEW,Mã phụ kiện/quà tự ánh xạ; chỉ dùng exact inventory identifier nếu DB đã có
+116,2000000000015,,EAN_ONLY_REVIEW,Có EAN nhưng chưa có mã ngắn đối ứng
+117,BONGTAM-KM,,UNPAIRED_REVIEW,Mã không có EAN/mã ngắn đối ứng trong file nguồn
+119,GANGTAYJARY,,UNPAIRED_REVIEW,Mã không có EAN/mã ngắn đối ứng trong file nguồn
