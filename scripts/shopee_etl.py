@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import os
 import re
+import unicodedata
 import sys
 import gc
 import time
@@ -64,6 +65,16 @@ SHOPEE_SELLER_SKU_HEADER = "SKU phân loại hàng"
 
 SHOPEE_ADS_COST_HEADER = "Chi phí"
 
+
+SHOPEE_CANCELLED_STATUS_EXACT_V46 = "đã hủy"
+
+def normalize_shopee_status_v46(value: object) -> str:
+    """Harmless normalization only; exact Shopee cancellation match."""
+    raw = safe_text(value, 200)
+    return re.sub(r"\s+", " ", unicodedata.normalize("NFC", raw)).strip().casefold()
+
+def is_shopee_cancelled_status_v46(value: object) -> bool:
+    return normalize_shopee_status_v46(value) == SHOPEE_CANCELLED_STATUS_EXACT_V46
 
 def split_shopee_combo_sku(raw_sku: object) -> List[str]:
     """Split Shopee seller_sku bundles by the literal plus sign.
@@ -358,7 +369,7 @@ def process_order_files(aff_map: Dict[str, float], pay_map: Dict[str, float]) ->
         c_package_code = find_optional_exact_header(df.columns, "Mã Kiện Hàng")
 
         require_columns(df, [c_id, c_st, c_dt, c_sku, c_fix, c_svc, c_pay, c_paid, c_voucher, c_price, c_qty, c_subsidy, c_name])
-        df["is_cancelled_row"] = df[c_st].astype(str).str.contains("đã hủy|da huy|cancel|cancelled", case=False, na=False)
+        df["is_cancelled_row"] = df[c_st].map(is_shopee_cancelled_status_v46)
         if c_package_code is not None:
             df["__has_package_code_row"] = df[c_package_code].map(has_real_text)
         else:
