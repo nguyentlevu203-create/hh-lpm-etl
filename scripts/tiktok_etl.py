@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import os
 import re
+import unicodedata
 import sys
 import traceback
 from datetime import date
@@ -85,6 +86,16 @@ TIKTOK_PLATFORM_FEE_NEW = {
     "SUA_CHUA": 0.150,
 }
 
+
+TIKTOK_CANCELLED_STATUS_EXACT_V46 = "canceled"
+
+def normalize_tiktok_status_v46(value: object) -> str:
+    """Harmless normalization only; exact TikTok cancellation match."""
+    raw = safe_text(value, 200)
+    return re.sub(r"\s+", " ", unicodedata.normalize("NFC", raw)).strip().casefold()
+
+def is_tiktok_cancelled_status_v46(value: object) -> bool:
+    return normalize_tiktok_status_v46(value) == TIKTOK_CANCELLED_STATUS_EXACT_V46
 
 def get_tiktok_platform_fee_rate(order_date: object, brand_group: object) -> float:
     """Return TikTok fixed/platform fee rate by order date and brand.
@@ -620,7 +631,7 @@ def process_orders(costs: Dict[str, float], cat_map: Dict[str, str]) -> Tuple[pd
     # Unknown/unmapped filenames default to LPM via extract_shop_label().
     df_o["brand_group"] = df_o["__shop_label"].map(brand_group_from_shop_label)
     df_o["order_status"] = df_o[co["status"]].map(lambda x: safe_text(x, 200)) if co["status"] else "Unknown"
-    df_o["is_cancelled"] = df_o["order_status"].str.contains("hủy|huỷ|cancel", case=False, na=False)
+    df_o["is_cancelled"] = df_o["order_status"].map(is_tiktok_cancelled_status_v46)
     if co["shipped_time"]:
         df_o["has_shipped_time"] = df_o[co["shipped_time"]].map(has_tiktok_shipped_time)
         df_o["shipped_time_source_column"] = str(co["shipped_time"])
