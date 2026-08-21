@@ -1,18 +1,38 @@
 {
-  "version": "v4.7.2",
-  "package_version_int": 472,
-  "base": "v4.7.1",
-  "scope": [
-    "All GT/MT customers with current-MTD transactions",
-    "Top 20 SKU per channel by MTD sold quantity",
-    "SKU-first inventory mapping and total stock across all lots/expiry dates",
-    "Expiry/date-alert-only source for 06_Ton_kho_Can_date"
+  "release": "v4.7.4",
+  "title": "Product Mapping + Gift + Inventory Push",
+  "base": "v4.7.3 HF1",
+  "source_mapping": "MÃ SKU.xlsx",
+  "approved_alias_pairs": 102,
+  "review_rows": 16,
+  "files": [
+    "README_v4_7_4.md",
+    "config/bundle_component_map_v4_7_4.csv",
+    "config/product_sku_alias_master_v4_7_4.csv",
+    "config/product_sku_alias_review_v4_7_4.csv",
+    "config/shopee_promotion_gift_rules_v4_7_4.csv",
+    "docs/CEO_DAILY_PNL_V4_7_4_CONTRACT.md",
+    "install_ceo_daily_pnl_v4_7_4.ps1",
+    "qa/unmapped_sales_skus_2026-08-18_after_v4_7_4.csv",
+    "qa/v4_7_4_offline_test_summary.txt",
+    "run_daily_pnl_v4_7_4.ps1",
+    "scripts/apply_shopee_gift_patch_v4_7_4.py",
+    "scripts/build_ceo_daily_pnl_package_v4_7_3.py",
+    "scripts/build_ceo_daily_pnl_package_v4_7_4.py",
+    "scripts/export_unmapped_sales_skus_v4_7_4.py",
+    "scripts/import_product_sku_aliases_v4_7_4.py",
+    "scripts/shopee_gift_classifier_v4_7_4.py",
+    "scripts/validate_ceo_daily_pnl_package_v4_7_3.py",
+    "scripts/validate_ceo_daily_pnl_package_v4_7_4.py",
+    "sql/audit_v4_7_4_product_mapping_and_gift.sql"
   ],
-  "no_change": [
-    "P&L waterfall",
-    "No EBITDA rule",
-    "Cancellation/status semantics",
-    "Monthly target logic",
-    "Inventory import and snapshot resolution"
-  ]
+  "qa": {
+    "python_compile": "PASS",
+    "builder_self_test": "PASS",
+    "validator_self_test": "PASS",
+    "gift_classifier_self_test": "PASS",
+    "alias_master_self_test": "PASS",
+    "offline_2026_08_18_enrichment": "PASS",
+    "full_inherited_validator_chain": "PASS"
+  }
 }

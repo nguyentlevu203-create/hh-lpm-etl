@@ -47,13 +47,19 @@ in `api/routers/ceo.py`, never inside a channel ETL script.
 - **Weekly/monthly CEO Growth package builder (current):**
   `scripts/build_ceo_growth_package_v3_3_week_month.py`, emailed via
   `scripts/send_ceo_growth_week_month_excel_report.py`.
-- **CEO Daily P&L package builder (current):** `scripts/build_ceo_daily_pnl_package_v4_7_3.py` (HF1),
-  validated by `scripts/validate_ceo_daily_pnl_package_v4_7_3.py`, run via `run_daily_pnl_v4_7_3.ps1` /
-  `run_daily_inventory_and_ceo_v4_7_3.ps1`, contract documented in `docs/CEO_DAILY_PNL_V4_7_3_CONTRACT.md`.
-  It is an additive layer on the validated v4.6.1 financial/status contract (unchanged waterfall, no
-  EBITDA) plus target progress, prior-month/prior-MTD full P&L, all-SKU sold/gift facts, inventory
-  snapshot/lot/HSD data and the seven-sheet Excel render contract. Sent individually per recipient via
+- **CEO Daily P&L package builder (current):** `scripts/build_ceo_daily_pnl_package_v4_7_4.py`,
+  validated by `scripts/validate_ceo_daily_pnl_package_v4_7_4.py`, run via `run_daily_pnl_v4_7_4.ps1`,
+  contract documented in `docs/CEO_DAILY_PNL_V4_7_4_CONTRACT.md`. Adds product mapping (short-SKU/EAN
+  alias identity), Shopee gift classification, and inventory push visibility on top of the v4.7.3 (HF1)
+  layer, which itself is additive on the validated v4.6.1 financial/status contract (unchanged waterfall,
+  no EBITDA) — see "Current vs legacy" below for the full chain. Sent individually per recipient via
   `scripts/send_ceo_daily_excel_individual.py` (see `config/ceo_daily_email_recipients.csv`).
+  ⚠️ **v4.7.4 gift-classification prerequisite not yet applied**: `scripts/apply_shopee_gift_patch_v4_7_4.py`
+  has not been run against `scripts/shopee_etl.py` (confirmed by `docs/PRODUCTION_CLEANUP_INVENTORY.md` —
+  the patch's precondition text is absent from both HEAD and the working tree, and
+  `scripts/shopee_gift_classifier_v4_7_4.py` is not imported anywhere). Until that patch is applied,
+  v4.7.4's Shopee gift fields will not reflect real gift classification. Do not treat the patcher as
+  "already applied, safe legacy."
 - **FastAPI entry point:** `main.py` → `api/main.py` (uvicorn, `0.0.0.0:8000`).
 
 Neither the CEO Control Tower package/report nor the weekly/monthly package/report is wired into
@@ -78,14 +84,24 @@ non-Excel near-duplicate `send_ceo_growth_week_month_report.py` and the orphaned
 `send_ceo_growth_report_gmail.py` — unreferenced anywhere, no `credentials.json`/`token.json` in the repo —
 were both deleted during the 2026-08-19 repo cleanup.)
 
-**CEO Daily P&L builder chain** (all in `scripts/`): `build_ceo_daily_pnl_package_v4_0.py` →
-`v4_1` → `v4_5` → `v4_6` → `v4_6_1` (financial/status contract baseline, still the authoritative source the
-v4.7.x layer rebuilds prior periods from) → `v4_7` → `v4_7_1` → `v4_7_2` →
-**`v4_7_3` (HF1) = CURRENT**, confirmed by `outbox/packages/ceo_daily_pnl_package_v4_7_3_*` being the
-newest daily package output present. Each `v4_7*` step is purely additive on top of v4.6.1's P&L waterfall
-— see `docs/CEO_DAILY_PNL_V4_7_3_CONTRACT.md` and the sibling `docs/CEO_DAILY_PNL_V4_7_*_CONTRACT.md` files
-for what each step added. Do not skip straight to editing v4.6/v4.6.1 business logic without checking
-whether the same concept was layered again in v4.7.x.
+**CEO Daily P&L builder chain** (all in `scripts/`): `build_ceo_daily_pnl_package_v4_5.py` (chain root;
+earlier `v4_0`/`v4_1` are confirmed dead per `docs/PRODUCTION_CLEANUP_INVENTORY.md` — not loaded by
+anything current) → `v4_6` → `v4_6_1` (financial/status contract baseline, still the authoritative source
+the v4.7.x layer rebuilds prior periods from) → `v4_7` → `v4_7_1` → `v4_7_2` → `v4_7_3` (HF1) →
+**`v4_7_4` = CURRENT**, confirmed by `BUNDLE_MANIFEST.json`'s `"release": "v4.7.4"`. The builder/validator
+chain is an `importlib`-loaded cascade — `v4_7_4` loads `v4_7_3` loads `v4_7_2` ... down to `v4_5`
+(builder) / `v4_6` (validator, no earlier link) — every intermediate file is load-bearing; do not delete
+any link without first flattening the chain (see `docs/PRODUCTION_CLEANUP_INVENTORY.md`'s high-risk-phase
+notes). Each `v4_7*` step is purely additive on top of v4.6.1's P&L waterfall — see
+`docs/CEO_DAILY_PNL_V4_7_4_CONTRACT.md` and the sibling `docs/CEO_DAILY_PNL_V4_7_*_CONTRACT.md` files for
+what each step added. Do not skip straight to editing v4.6/v4.6.1 business logic without checking whether
+the same concept was layered again in v4.7.x/v4.7.4.
+
+⚠️ `scripts/shopee_etl.py`, `nhanh_etl.py`, `tiktok_etl.py` currently have **uncommitted working-tree
+changes** (exact-cancel/gross-all-status logic from `tools/apply_marketplace_exact_cancel_patch_v4_5.py` /
+`tools/apply_shopee_gross_all_status_patch_v4_1.py`) not yet in the `origin/main` HEAD blob. A fresh clone
+today would run the *older* committed behavior, not what's on this machine. Resolve (commit the
+working-tree state, after review) before relying on "fresh clone = current production."
 
 > **Do not edit dead/legacy files listed above unless the user explicitly asks to work on legacy code.**
 > Default to the CURRENT files listed above.
@@ -147,9 +163,11 @@ Reference only — read the cited lines before touching related logic, do not "s
 - **`control_tower.*` / `mart.*`** — reporting view layer on top of the raw schemas, built incrementally
   by `hh_growth_week_month_views_v3_0.sql` and `sql/migrations/*.sql`. The *base* schema/views these
   depend on are not tracked in this repo (see Known architectural risks).
-- **Environment-variable inconsistency**: DB config is defined twice, each with its own hardcoded fallback
-  default — `etl_common.py:28-34` (ETL/write path) and `api/database.py:5-11` (API/read path). There is no
-  single source of truth; changing DB config requires updating both.
+- **Environment-variable inconsistency**: DB config is defined twice — `etl_common.py:28-38` (ETL/write
+  path) and `api/database.py:5-19` (API/read path). Non-secret values (`dbname`/`user`/`host`/`port`) each
+  keep their own hardcoded fallback default; `password` has no fallback in either (see Security rules) and
+  raises if `ETL_DB_PASSWORD` is unset. There is no single source of truth; changing DB config requires
+  updating both. See `.env.example` for the full set of variables either path can read.
 
 ## Reporting architecture
 
@@ -178,26 +196,38 @@ Reference only — read the cited lines before touching related logic, do not "s
 - **Missing dependency lock/requirements**: no `requirements.txt`/`pyproject.toml`/lockfile.
   Dependencies (`pandas`, `psycopg2`, `openpyxl`, `fastapi`, `uvicorn`, plus Google API client libs used
   only by the orphaned gmail-oauth sender) are installed ad hoc.
-- **Windows machine coupling**: `run_daily_all.ps1:3` hardcodes
-  `cd C:\Users\ADMIN\Downloads\ETL_production_v3_exact_codes`, which does not match this repo's checkout
-  path; `scripts/shopee_etl.py:757-786` has Windows-file-lock archive-retry logic, confirming production
-  runs on Windows.
+- **Windows machine coupling**: `scripts/shopee_etl.py:757-786` has Windows-file-lock archive-retry logic,
+  confirming production runs on Windows. (`run_daily_all.ps1` / `run_preview_email.ps1` no longer hardcode
+  a checkout path — as of the 2026-08-20 production-cleanup pass they use `$PSScriptRoot` instead; see
+  Security rules for the credential side of that same cleanup.)
 - **Package-builder version drift**: multiple versioned copies of the same builder coexist (see Current vs
   legacy). Always verify current-production status against `outbox/` output evidence, not filename version
   numbers alone, before editing.
 - **`.gitignore` added 2026-08-19**: `processed/`, `outbox/`, `__pycache__/`, `*.pyc` and `backups/*.dump`
   are now ignored going forward (they were previously tracked in git, generating most of `.git`'s size).
-  `data/` remains intentionally tracked (small, reference/audit value). Still do not reflexively
-  `git add -A`/`git add .` — review `git status` before staging.
+  Still do not reflexively `git add -A`/`git add .` — review `git status` before staging.
+- **`data/` tracking narrowed 2026-08-20**: only source-of-truth config/master files stay tracked —
+  `data/*/2_master_data/` (mt_gt), `data/tiktok/8_master_data/`, `data/inventory/rules/`, plus
+  `"Giá nhập 25.06.2026.xlsx"`. Raw per-channel runtime exports and `data/inventory/daily/` snapshots are
+  now gitignored (previously-committed inventory snapshots were `git rm --cached`, kept on disk). See
+  `docs/PRODUCTION_CLEANUP_INVENTORY.md` for the full file-by-file classification this was based on.
 
 ## Security rules
 
+- As of the 2026-08-20 production-cleanup pass, `run_daily_all.ps1`, `run_preview_email.ps1`,
+  `etl_common.py`, and `api/database.py` no longer hardcode any DB/SMTP secret — they read
+  `ETL_DB_PASSWORD`/`SMTP_USER`/`SMTP_PASSWORD` etc. from the environment only (see `.env.example` for the
+  full variable list) and fail closed with a clear error if unset. **Those same 4 files still carry the
+  old hardcoded DB password and Gmail App Password in git history** (multiple prior commits, already
+  pushed to `origin/main`) — history was not rewritten (rebase/filter-repo/force-push are out of scope
+  without explicit authorization). Treat both secrets as compromised: **manual rotation of the Postgres
+  password and the Gmail App Password is still required**, independent of any code cleanup.
 - Never expose, print, or repeat any committed secret value (DB password, SMTP password, API keys) found
-  anywhere in this repo, including in `run_daily_all.ps1` / `run_preview_email.ps1` and the hardcoded
-  fallback defaults in `etl_common.py` / `api/database.py`. Reference them by file/line only.
-- Never add new credentials to source files. Use environment variables; do not hardcode secrets as a
-  "temporary" measure.
-- Never commit a `.env` file or any file containing credentials.
+  anywhere in this repo or its git history. Reference them by file/line (or commit hash) only.
+- Never add new credentials to source files. Use environment variables via `.env` (see `.env.example`); do
+  not hardcode secrets as a "temporary" measure.
+- Never commit a `.env` file or any file containing credentials. (`.env`/`.env.*` are gitignored;
+  `.env.example` is the only tracked template, with no real values.)
 - Never expose production DB credentials in logs, error messages, commit messages, or chat output.
 - Never send emails (real or dry-run) unless the user explicitly instructs it for that turn.
 - Never connect to or mutate the production database while doing analysis/audit work — read schema/data
@@ -212,7 +242,8 @@ Before making any modification:
 1. Read this `CLAUDE.md`.
 2. Run `git status`.
 3. Identify the current production implementation (see "Current vs legacy") — don't edit a legacy/dead
-   file by mistake.
+   file by mistake. For a full file-by-file classification with dependency evidence, see
+   `docs/PRODUCTION_CLEANUP_INVENTORY.md`.
 4. Trace which business rules are impacted (see "Critical business rules").
 5. Produce a plan before editing.
 6. Make the smallest safe change that satisfies the request.
