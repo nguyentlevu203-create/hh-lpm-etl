@@ -39,3 +39,17 @@ data/tiktok/6_ads_product/
 data/tiktok/7_ads_live/
 data/tiktok/9_live_in_house/
 data/tiktok/10_live_teaser/
+
+# Generated QA output, editor/OS/tooling cruft — not source of truth, never track.
+qa/generated/
+.pytest_cache/
+.ruff_cache/
+.coverage
+venv/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+~$*.xlsx
