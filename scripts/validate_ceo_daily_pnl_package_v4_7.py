@@ -227,10 +227,11 @@ def validate_package(p: Mapping[str, Any]) -> List[str]:
         if row.get("near_date_pushed_qty") is not None:
             errors.append(f"sku_inventory_summary[{idx}] near_date_pushed_qty must remain null in v4.7 without lot attribution")
 
-    # Enrichment must never add EBITDA back.
-    serialized = json.dumps(p, ensure_ascii=False).lower()
-    if "ebitda" in serialized:
-        errors.append("EBITDA is forbidden in v4.7")
+    # EBITDA hard gate is already enforced by the inherited v4.6 validator
+    # using a recursive KEY check for the actual metric name ``ebitda``.
+    # Do not scan arbitrary string values here: the v4.7 Excel contract itself
+    # intentionally contains the policy key ``forbid_ebitda = true``, and a
+    # whole-package text scan would therefore reject every valid v4.7 package.
 
     return list(dict.fromkeys(errors))
 
