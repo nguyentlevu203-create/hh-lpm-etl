@@ -127,6 +127,20 @@ Reference only — read the cited lines before touching related logic, do not "s
   load** rather than defaulting to 0 — `scripts/shopee_etl.py:90-107,585-627`.
 - **TikTok fee logic**: platform fee rate depends on brand AND an exact date cutoff (2026-05-08) —
   `scripts/tiktok_etl.py:78-107`.
+- **TikTok Voucher Extra Program (VXP) fee**: base service fee is **5%** of `fee_base_item`, brand-agnostic
+  — `scripts/tiktok_etl.py:1052` (`f_vxp = round(fee_base_item * 0.05, 0)`). Source: TikTok Shop Vietnam
+  policy, current 2026 policy, confirmed by business owner 2026-08-21. Policy also states a **maximum of
+  50,000 VND per product**, but **that cap is not implemented in code today** — `fee_base_item` is summed
+  to the *order* level before this calculation runs (`scripts/tiktok_etl.py:683,691`), so there is currently
+  no per-product granularity to cap against. VXP is zeroed only when `is_cancelled` is true (exact
+  normalized `"canceled"`); there is no separate "successfully completed" eligibility gate, and no distinct
+  handling for a post-completion "Returned"/"Refunded" status if TikTok exports use one. The VXP base
+  (`fee_base_item = price*qty - disc_num`) also inherits whatever risk exists in resolving the discount
+  column that produces `disc_num` — a pending, not-yet-committed change narrows that column resolution from
+  a fuzzy keyword match to an exact `"SKU Seller Discount"` header, which reduces (does not eliminate) the
+  risk of a platform-funded discount incorrectly shrinking the VXP base; not yet in this repo's committed
+  code. Do not treat the 50,000 VND cap as enforced; do not add "completed-only" eligibility without an
+  explicit owner decision.
 - **TikTok booking rule (v4.21.1)**: booking fee applies only when exactly one creator maps via the exact
   header `"Tên người dùng nhà sáng tạo"` AND content type is exactly `"Phát trực tiếp"`; 0 or >1 mapped
   creators → booking = 0 — `scripts/tiktok_etl.py:678-691,832-846`.
