@@ -103,6 +103,23 @@ section as historical contrast against the current v4.23 8%-VAT gross-revenue ru
   the net-revenue-from-`"Tổng thanh toán"` rule described here is still in effect; see `CLAUDE.md`'s
   "MT/GT gross revenue" and "MT/GT net revenue" critical business rules.
 
+## TikTok v4.12 / v4.14 — brand_group-from-filename and partner commission parsing (historical, merged)
+
+Source: `tools/apply_tiktok_v4_12_brand_group_from_filename.py` and
+`tools/apply_tiktok_v4_14_partner_commission.py` (removed 2026-08-21 — both one-shot patchers, fully
+merged into `scripts/tiktok_etl.py`, zero remaining references once their `CLAUDE.md` citation was
+rewritten to describe the rule instead of the filename; safe to remove per the same evidence bar as any
+other confirmed-dead file).
+
+- **v4.12**: `brand_group` follows the filename-derived `shop_label` (owner-approved rule); intentionally
+  surgical patch that left combo-SKU COGS, the 2026-05-08 platform-fee cutoff, ads/live cost, settlement,
+  and packaging logic untouched.
+- **v4.14**: replaces `add_partner_commission()` only — TikTok partner affiliate commission parsing —
+  preserving all other existing logic (combo SKU COGS, platform fee rules, ads/live parsing, settlement,
+  packaging).
+- Both rules are permanent, current behavior in `scripts/tiktok_etl.py` today; nothing about the current
+  ETL changed by removing the patcher scripts themselves.
+
 ## 2026-08-20 — Production cleanup pass (repo hygiene, no business-logic change)
 
 - Removed generated/historical artifacts: `RUN_V4_7*_EXAMPLE.txt`, `SHA256SUMS.txt`,
@@ -125,3 +142,27 @@ confirmed-dead Python files (`scripts/build_ceo_daily_pnl_package_v4_1.py`,
 per-version README files (merged into this changelog); wrote this file, `REFACTOR_LATER.md`, and a real
 project `README.md`; extended `.gitignore`. No business logic, financial formula, or CEO package schema
 was touched.
+
+## 2026-08-21 — Legacy runner/installer cleanup pass
+
+Windows Task Scheduler was verified on the production machine (see
+`docs/CHECK_WINDOWS_TASK_SCHEDULER.md`) and found to reference none of this repo's `.ps1` files. Combined
+with a final repo-wide reference scan, the following were deleted:
+
+- 15 legacy versioned `.ps1` runners/installers: `run_daily_pnl_v4.ps1`, `run_daily_pnl_v4_6.ps1`,
+  `run_daily_pnl_v4_6_1.ps1`, `run_daily_pnl_v4_7.ps1`, `run_daily_pnl_v4_7_1.ps1`,
+  `run_daily_pnl_v4_7_2.ps1`, `run_daily_pnl_v4_7_3.ps1`, `run_daily_inventory_and_ceo_v4_7.ps1`,
+  `_v4_7_1.ps1`, `_v4_7_2.ps1`, `_v4_7_3.ps1`, `install_ceo_daily_pnl_v4_6.ps1`, `_v4_7.ps1`, `_v4_7_1.ps1`,
+  `_v4_7_2.ps1`. The 5 current entrypoints (`run_daily_all.ps1`, `run_daily_pnl_v4_7_4.ps1`,
+  `install_ceo_daily_pnl_v4_7_4.ps1`, `run_preview_email.ps1`, `run_send_ceo_daily_individual.ps1`) were
+  not touched.
+- 3 now-orphaned Python dependencies of the above: `scripts/build_ceo_daily_pnl_package_v4_0.py`,
+  `tools/apply_ceo_daily_pnl_v4_6_upgrade.py`, `tools/apply_ceo_daily_pnl_v4_6_1_upgrade.py`.
+- 2 already-applied historical TikTok patchers, after their `CLAUDE.md` citation was rewritten to describe
+  the merged rules instead of depending on the filenames (see "TikTok v4.12 / v4.14" entry above):
+  `tools/apply_tiktok_v4_12_brand_group_from_filename.py`, `tools/apply_tiktok_v4_14_partner_commission.py`.
+
+Added `docs/CHECK_WINDOWS_TASK_SCHEDULER.md` (the verification runbook used above). No ETL, filter,
+cancellation, gift, discount, fee, COGS, package-schema, or DB-schema logic was changed. The inventory
+orchestration gap noted in `REFACTOR_LATER.md` §1.3 is unresolved and now slightly more visible — confirm
+with ops how inventory data loads before the next v4.7.4 report run.

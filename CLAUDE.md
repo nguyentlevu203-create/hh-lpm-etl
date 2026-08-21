@@ -106,11 +106,12 @@ working-tree state, after review) before relying on "fresh clone = current produ
 > **Do not edit dead/legacy files listed above unless the user explicitly asks to work on legacy code.**
 > Default to the CURRENT files listed above.
 
-**TikTok patch scripts are historical, one-shot, already-applied:** `tools/apply_tiktok_v4_12_brand_group_from_filename.py`
-and `tools/apply_tiktok_v4_14_partner_commission.py` are regex-based source patchers that already rewrote
-`scripts/tiktok_etl.py` in place (their target code is already present in the current file). **Do not
-rerun them** — they match exact prior source text; rerunning against already-patched code will either
-raise `RuntimeError` (safe no-op) or, if surrounding code has since changed, corrupt the file.
+**Two TikTok rules were originally delivered as one-shot source patches, now fully merged into
+`scripts/tiktok_etl.py`** — brand_group follows filename-derived shop_label, and partner affiliate
+commission parsing lives in `add_partner_commission()`. Both rules are permanent parts of the current file;
+no separate patcher script needs to exist in the repo for them to remain in effect. See `CHANGELOG.md` for
+the historical patch record (the one-shot patcher scripts themselves were removed once confirmed fully
+merged and zero-referenced elsewhere).
 
 ## Critical business rules
 

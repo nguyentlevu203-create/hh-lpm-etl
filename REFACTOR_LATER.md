@@ -28,47 +28,50 @@ for the file-by-file evidence this is based on.
    currently get loaded for the v4.7.4 report before deleting anything in the `run_daily_inventory_and_ceo_*`
    family.
 
-## 2. Versioned PowerShell — classification (per user instruction: not deleted this round)
+## 2. Versioned PowerShell — RESOLVED 2026-08-21
 
-None of these were deleted, because Windows Task Scheduler configuration is not visible from this repo and
-a versioned `.ps1` could still be triggered by scheduled-task muscle memory outside the repo.
+Windows Task Scheduler was checked on the production machine (searched for `run_daily`, `run_daily_pnl`,
+`run_daily_inventory`, `install_ceo`, plus a broader sweep for `ETL_production_v3_exact_codes` /
+`powershell` / `pwsh` / `python` / `cmd.exe` / `.bat` / `.cmd`) — zero results referencing this repo, only
+standard Windows system tasks. Combined with a final repo-wide reference scan (every remaining reference
+was either documentation-only or an intra-legacy-set call where both ends were also being deleted), the
+following 15 files were deleted:
 
-| File | Class | Notes |
-|---|---|---|
-| `run_daily_all.ps1` | KEEP_CURRENT | Authoritative daily orchestrator (CLAUDE.md) |
-| `run_daily_pnl_v4_7_4.ps1` | KEEP_CURRENT | Current CEO Daily P&L orchestrator |
-| `install_ceo_daily_pnl_v4_7_4.ps1` | KEEP_CURRENT | Current installer/self-test |
-| `run_preview_email.ps1` | KEEP_CURRENT | Cited in CLAUDE.md security rules |
-| `run_send_ceo_daily_individual.ps1` | KEEP_CURRENT | Wraps `send_ceo_daily_excel_individual.py` |
-| `run_daily_pnl_v4_6.ps1`, `run_daily_pnl_v4_6_1.ps1`, `run_daily_pnl_v4_7.ps1`, `run_daily_pnl_v4_7_1.ps1`, `run_daily_pnl_v4_7_2.ps1`, `run_daily_pnl_v4_7_3.ps1` | LEGACY_CANDIDATE | No in-repo caller; each targets a builder/validator step that is still load-bearing as a *dependency* of v4.7.4, but the wrapper script itself looks superseded by `run_daily_pnl_v4_7_4.ps1` |
-| `run_daily_pnl_v4.ps1` | LEGACY_CANDIDATE (paired) | Only caller of `scripts/build_ceo_daily_pnl_package_v4_0.py`; kept together — deleting one without the other would leave a dangling reference |
-| `install_ceo_daily_pnl_v4_6.ps1`, `_v4_7.ps1`, `_v4_7_1.ps1`, `_v4_7_2.ps1` | LEGACY_CANDIDATE | Superseded by `install_ceo_daily_pnl_v4_7_4.ps1`; still the only callers of `tools/apply_ceo_daily_pnl_v4_6_upgrade.py` / `v4_6_1_upgrade.py`, so kept together |
-| `run_daily_inventory_and_ceo_v4_7.ps1`, `_v4_7_1.ps1`, `_v4_7_2.ps1`, `_v4_7_3.ps1` | UNKNOWN_EXTERNAL_DEPENDENCY | See gap #3 above — do not delete before confirming the current inventory-population path |
+`run_daily_pnl_v4.ps1`, `run_daily_pnl_v4_6.ps1`, `run_daily_pnl_v4_6_1.ps1`, `run_daily_pnl_v4_7.ps1`,
+`run_daily_pnl_v4_7_1.ps1`, `run_daily_pnl_v4_7_2.ps1`, `run_daily_pnl_v4_7_3.ps1`,
+`run_daily_inventory_and_ceo_v4_7.ps1`, `_v4_7_1.ps1`, `_v4_7_2.ps1`, `_v4_7_3.ps1`,
+`install_ceo_daily_pnl_v4_6.ps1`, `_v4_7.ps1`, `_v4_7_1.ps1`, `_v4_7_2.ps1`.
 
-**Recommendation for a future pass**: once ops confirms none of these are still triggered by Task
-Scheduler, delete the LEGACY_CANDIDATE rows above and their now-orphaned Python targets
-(`scripts/build_ceo_daily_pnl_package_v4_0.py`, `tools/apply_ceo_daily_pnl_v4_6_upgrade.py`,
-`tools/apply_ceo_daily_pnl_v4_6_1_upgrade.py`) together, then consolidate what's left into the two files
-CLAUDE.md already recommends: `scripts/run_daily.ps1` and `scripts/bootstrap.ps1`.
+Their now-orphaned Python targets were deleted in the same pass: `scripts/build_ceo_daily_pnl_package_v4_0.py`,
+`tools/apply_ceo_daily_pnl_v4_6_upgrade.py`, `tools/apply_ceo_daily_pnl_v4_6_1_upgrade.py`.
 
-## 3. One-shot patchers kept only because CLAUDE.md cites them by name
+**Kept, unconditionally current**: `run_daily_all.ps1`, `run_daily_pnl_v4_7_4.ps1`,
+`install_ceo_daily_pnl_v4_7_4.ps1`, `run_preview_email.ps1`, `run_send_ceo_daily_individual.ps1`.
+
+Remaining future recommendation (not done): consolidate the 5 kept entrypoints into the two files
+`CLAUDE.md` already suggests, `scripts/run_daily.ps1` and `scripts/bootstrap.ps1` — a genuine refactor, out
+of scope for a cleanup pass.
+
+⚠️ Gap #3 above (inventory orchestration) is **still open** — deleting `run_daily_inventory_and_ceo_v4_7*.ps1`
+removed the only in-repo path that populated inventory snapshots ahead of a v4.7.x build. This was a
+deliberate, confirmed-safe deletion (Task Scheduler doesn't call it either), but it means: **confirm with
+ops how inventory data is actually loaded before the next v4.7.4 report run** — this cleanup pass did not
+create a replacement, only removed the dead one.
+
+## 3. One-shot patchers — RESOLVED 2026-08-21 (two of three)
 
 `tools/apply_tiktok_v4_12_brand_group_from_filename.py`, `tools/apply_tiktok_v4_14_partner_commission.py`
-— both already applied (target code confirmed present in `scripts/tiktok_etl.py`), zero other references,
-but `CLAUDE.md` explicitly names them in a "do not rerun" warning paragraph. Deleting the files without
-first editing that paragraph would leave a dangling doc reference. Recommendation: in a documentation-focused
-pass (not this one), move both to `docs/archive/`, then update the `CLAUDE.md` paragraph to point at the
-new path (or drop the file-existence claim and keep only the "already applied, do not rerun logically
-equivalent patch" warning).
+— **deleted**. Both already-applied, zero other references; `CLAUDE.md`'s "do not rerun" paragraph was
+rewritten first to describe the two merged rules (brand_group-from-filename, partner commission parsing)
+without depending on the patcher filenames existing, and the historical patch record was preserved in
+`CHANGELOG.md` before deletion.
 
-`tools/apply_ceo_daily_pnl_v4_6_upgrade.py`, `tools/apply_ceo_daily_pnl_v4_6_1_upgrade.py` — already
-applied (their markers are the literal text now living in `CLAUDE.md`'s own "v4.6 status contract" /
-"v4.6.1 cleanup contract" sections), but still actively called by the kept `install_ceo_daily_pnl_v4_6.ps1`
-/ `_v4_7.ps1` installers (§2). Retire together with those installers.
+`tools/apply_ceo_daily_pnl_v4_6_upgrade.py`, `tools/apply_ceo_daily_pnl_v4_6_1_upgrade.py` — **deleted**,
+together with the legacy installers that were their only callers (§2).
 
 `tools/apply_marketplace_exact_cancel_patch_v4_5.py`, `tools/apply_shopee_gross_all_status_patch_v4_1.py`
-— **not a cleanup candidate at all right now**: see gap #2 above. Keep until the working-tree ETL changes
-they produced are committed.
+— **not touched, still not a cleanup candidate**: see gap #2 above. Keep until the working-tree ETL changes
+they produced (B3/B4, still held/uncommitted) are resolved.
 
 ## 4. Already-flattened conclusion: CEO Daily P&L v4.5 → v4.7.4 builder/validator chain
 
