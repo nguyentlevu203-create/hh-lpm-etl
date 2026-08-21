@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import os
 import re
+import unicodedata
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
@@ -64,9 +65,38 @@ ALLOWED_LABELS = {
 
 # v2.12 exact Nhanh business rules.
 # IMPORTANT: status matching is exact after trimming outer spaces only.
-NHANH_NO_BO_STATUSES = {"Đã hủy", "Hệ Thống hủy", "Đã hoàn", "Khách hủy"}
+# v4.6 exact Nhanh status semantics. Outer trim only; no fuzzy matching.
+NHANH_CANCELLED_STATUSES_V46 = {"Đã hủy", "Hệ Thống hủy", "Khách hủy", "HVC hủy"}
+NHANH_RETURN_STATUSES_V46 = {"Đang hoàn", "Xác nhận hoàn", "Đã hoàn"}
+NHANH_FAILED_STATUSES_V46 = {"Thất bại"}
+# Preserve deployed BO policy; Đã hoàn remains no-BO, while Đang hoàn/Xác nhận hoàn/Thất bại
+# are not assigned a new BO treatment without a separate owner decision.
+NHANH_NO_BO_STATUSES = set(NHANH_CANCELLED_STATUSES_V46) | {"Đã hoàn"}
 NHANH_RETURN_STATUSES = {"Đã hoàn"}
 NHANH_RETURN_FEE_VND = 25000.0
+
+
+def normalize_nhanh_status_v461(value: object) -> str:
+    """Unicode NFC + case-insensitive + trim/collapse whitespace; no accent folding."""
+    if value is None:
+        return ""
+    try:
+        if pd.isna(value):
+            return ""
+    except Exception:
+        pass
+    text = unicodedata.normalize("NFC", str(value))
+    return re.sub(r"\s+", " ", text).strip().casefold()
+
+
+def is_nhanh_cancelled_status_v461(value: object) -> bool:
+    normalized = normalize_nhanh_status_v461(value)
+    return normalized in {normalize_nhanh_status_v461(x) for x in NHANH_CANCELLED_STATUSES_V46}
+
+
+def is_nhanh_completed_return_status_v461(value: object) -> bool:
+    return normalize_nhanh_status_v461(value) == normalize_nhanh_status_v461("Đã hoàn")
+
 
 HEADER_KEYWORDS = [
     "id", "mã đơn", "ma don", "trạng thái", "trang thai", "khách hàng", "khach hang", "nhãn", "nhan",
@@ -220,10 +250,10 @@ def process_order_file(path: Path) -> pd.DataFrame:
     out["order_date"] = out["order_time"].map(lambda x: x.date() if x else None)
     out["status"] = df[c_status].map(lambda x: safe_text(x, 200)) if c_status else ""
     # v2.12: exact order status matching. Trim outer spaces only.
-    # Only these statuses are treated as cancellation/return for Nhanh operational reporting:
+    # v4.6.1: cancellation is normalized-exact (NFC/case-insensitive/trim-collapse); no fuzzy/substring matching:
     # "Đã hủy", "Hệ Thống hủy", "Đã hoàn", "Khách hủy".
     out["status_exact"] = df[c_status].map(lambda x: exact_cell_text(x, 200)) if c_status else ""
-    out["is_cancelled"] = out["status_exact"].isin(NHANH_NO_BO_STATUSES)
+    out["is_cancelled"] = out["status_exact"].map(is_nhanh_cancelled_status_v461)
     out["source"] = df[c_source].map(lambda x: safe_text(x, 200)) if c_source else ""
     out["label"] = df[c_label].map(lambda x: safe_text(x, 200).strip())
     out["sales_employee"] = df[c_emp].map(lambda x: safe_text(x, 200)) if c_emp else ""
@@ -236,7 +266,7 @@ def process_order_file(path: Path) -> pd.DataFrame:
     # If exact status is "Đã hoàn", add 25,000 VND return fee.
     ship_cost = money_series(df[c_ship_cost])
     ship_charged_to_customer = money_series(df[c_ship_customer])
-    return_fee = out["status_exact"].eq("Đã hoàn").astype(float) * NHANH_RETURN_FEE_VND
+    return_fee = out["status_exact"].map(is_nhanh_completed_return_status_v461).astype(float) * NHANH_RETURN_FEE_VND
     out["shipping_fee"] = ship_cost - ship_charged_to_customer + return_fee
     out["product_name"] = df[c_prod].map(lambda x: safe_text(x, 500)) if c_prod else ""
     out["product_code"] = df[c_sku].map(clean_code) if c_sku else ""
