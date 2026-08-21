@@ -1035,7 +1035,7 @@ def calculate_fees(fact_df: pd.DataFrame) -> pd.DataFrame:
         f_book = round(safe_num(row["fee_base_item"]) * safe_num(row.get("book_rate", 0)), 0)
         f_fix = round(safe_num(row["fee_base_item"]) * rate_fixed, 0)
         f_pay = round(safe_num(row["fee_base_item"]) * 0.06, 0)
-        f_vxp = round(safe_num(row["fee_base_item"]) * 0.04, 0)
+        f_vxp = round(safe_num(row["fee_base_item"]) * 0.05, 0)
         f_infra = 3000
         f_pack = round(safe_num(row["qty_num"]) * pack_per_item, 0)
         f_cogs = safe_num(row["line_cogs"])
