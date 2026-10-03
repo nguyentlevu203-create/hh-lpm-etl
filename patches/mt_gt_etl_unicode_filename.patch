@@ -1,0 +1,14 @@
+--- a/scripts/mt_gt_etl.py
++++ b/scripts/mt_gt_etl.py
+@@
+ import os
+ import re
+ import sys
+ import traceback
++import unicodedata
+@@
+-        fname = path.name.lower()
++        # macOS/Drive may store Vietnamese filenames in NFD form. Normalize to
++        # NFC before matching "Phân loại" / "Nhân viên" so master files are not
++        # silently skipped.
++        fname = unicodedata.normalize("NFC", path.name).lower()
