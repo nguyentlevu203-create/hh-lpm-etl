@@ -44,7 +44,7 @@ from etl_common import (
     safe_text,
 )
 
-SHOPEE_ETL_VERSION = "v4.11.3_windows_locked_file_archive_retry"
+SHOPEE_ETL_VERSION = "v4.50_exact_cancel_gross_all_status"
 
 BASE_IN = Path(os.getenv("SHOPEE_BASE_IN", "data/Shopee"))
 BASE_OUT = Path(os.getenv("SHOPEE_BASE_OUT", "processed/Shopee"))
@@ -65,6 +65,17 @@ SHOPEE_SELLER_SKU_HEADER = "SKU phân loại hàng"
 
 SHOPEE_ADS_COST_HEADER = "Chi phí"
 
+
+
+CANCELLED_STATUS_EXACT = "đã hủy"
+
+def normalize_marketplace_status(value: object) -> str:
+    """Normalize harmless presentation noise for exact status comparison."""
+    text = unicodedata.normalize("NFC", safe_text(value, 200))
+    return re.sub(r"\s+", " ", text).strip().casefold()
+
+def is_exact_cancelled_status(value: object) -> bool:
+    return normalize_marketplace_status(value) == CANCELLED_STATUS_EXACT
 
 SHOPEE_CANCELLED_STATUS_EXACT_V46 = "đã hủy"
 
@@ -361,14 +372,23 @@ def process_order_files(aff_map: Dict[str, float], pay_map: Dict[str, float]) ->
         c_svc = find_col(df.columns, ["phí dịch vụ", "phi dich vu", "service fee"]) or "Phí Dịch Vụ"
         c_pay = find_col(df.columns, ["Phí xử lý giao dịch","phí thanh toán", "phi thanh toan", "payment fee"]) or "Phí thanh toán"
         c_paid = find_col(df.columns, ["người mua thanh toán", "buyer paid", "customer paid"]) or "Tổng số tiền người mua thanh toán"
-        c_voucher = find_col(df.columns, ["mã giảm giá của shop", "shop voucher", "voucher shop"]) or "Mã giảm giá của Shop"
+        # CEO Net Sales bridge: use exact Shopee headers. Do not fuzzy-match
+        # these fields because seller-funded and platform-funded deductions have
+        # different accounting treatment.
+        c_voucher = find_exact_header(df.columns, "Mã giảm giá của Shop")
         c_price = find_col(df.columns, ["giá gốc", "gia goc", "original price"]) or "Giá gốc"
         c_qty = find_col(df.columns, ["số lượng", "so luong", "quantity"]) or "Số lượng"
-        c_subsidy = find_col(df.columns, ["người bán trợ giá", "nguoi ban tro gia", "seller subsidy"]) or "Tổng số tiền được người bán trợ giá"
+        c_subsidy = find_exact_header(df.columns, "Người bán trợ giá")
+        c_platform_subsidy = find_exact_header(df.columns, "Được Shopee trợ giá")
+        c_total_subsidy = find_exact_header(df.columns, "Tổng số tiền được người bán trợ giá")
         c_name = find_col(df.columns, ["tên sản phẩm", "ten san pham", "product name"]) or "Tên sản phẩm"
         c_package_code = find_optional_exact_header(df.columns, "Mã Kiện Hàng")
 
-        require_columns(df, [c_id, c_st, c_dt, c_sku, c_fix, c_svc, c_pay, c_paid, c_voucher, c_price, c_qty, c_subsidy, c_name])
+        require_columns(df, [
+            c_id, c_st, c_dt, c_sku, c_fix, c_svc, c_pay, c_paid,
+            c_voucher, c_price, c_qty, c_subsidy, c_platform_subsidy,
+            c_total_subsidy, c_name,
+        ])
         df["is_cancelled_row"] = df[c_st].map(is_shopee_cancelled_status_v46)
         if c_package_code is not None:
             df["__has_package_code_row"] = df[c_package_code].map(has_real_text)
@@ -390,16 +410,37 @@ def process_order_files(aff_map: Dict[str, float], pay_map: Dict[str, float]) ->
             # Keep the OLD Shopee PnL calculation unchanged.
             # The new Gross Sales column is the ONLY new output.
             # - old total_gross_all_rows is still used for seller_revenue.
-            # - gross_sales_main_products is stored separately in shopee.orders.gross_sales.
+            # - gross_sales_main_products is stored for every status in shopee.orders.gross_sales.
             # This prevents changing seller_revenue / est_payout / fees behavior.
             total_gross_all_rows = safe_num((price_series * qty_series).sum())
             total_gross_main_products = safe_num((price_series[main_product_mask] * qty_series[main_product_mask]).sum())
-            gross_sales = 0.0 if is_cancelled else total_gross_main_products
+            # SHOPEE_GROSS_ALL_STATUS_V4_1
+            # Gross Sales is the total main-product order value across every status,
+            # including cancelled and returned/refunded orders. Net Sales remains
+            # seller_revenue and is still zero for cancelled orders.
+            gross_sales = total_gross_main_products
 
             # Preserve OLD logic exactly: do not exclude gift rows from seller_revenue,
             # and do not zero seller_subsidy/shop_voucher before rev_before_cancel.
             seller_subsidy = safe_num(money_series(group[c_subsidy]).sum())
-            shop_voucher = safe_num(money_series(group[c_voucher]).sum())
+            platform_subsidy = safe_num(money_series(group[c_platform_subsidy]).sum())
+            total_subsidy = safe_num(money_series(group[c_total_subsidy]).sum())
+
+            # "Mã giảm giá của Shop" is an order-level amount repeated on every
+            # SKU line. MAX records it once; SUM would double count multi-SKU orders.
+            shop_voucher = safe_num(money_series(group[c_voucher]).max())
+
+            # Source invariant confirmed in Shopee exports:
+            # total subsidy = seller-funded subsidy + Shopee-funded subsidy.
+            if abs(total_subsidy - seller_subsidy - platform_subsidy) > 1.0:
+                raise ValueError(
+                    "Sai đối soát trợ giá Shopee. "
+                    f"order={oid_clean}, seller={seller_subsidy}, "
+                    f"platform={platform_subsidy}, total={total_subsidy}"
+                )
+
+            # Keep the legacy revenue formula otherwise unchanged. Platform-funded
+            # subsidy is stored for audit and is not deducted from seller revenue.
             rev_before_cancel = safe_num(total_gross_all_rows - seller_subsidy - shop_voucher)
             seller_revenue = 0.0 if is_cancelled else rev_before_cancel
             customer_paid = 0.0 if is_cancelled else safe_num(money_series(group[c_paid]).max())
@@ -441,6 +482,7 @@ def process_order_files(aff_map: Dict[str, float], pay_map: Dict[str, float]) ->
                     "seller_sku_source_column": c_sku,
                     "sku_parts": split_shopee_combo_sku(seller_sku_exact),
                     "qty": qty,
+                    "price": safe_num(item.get(c_price, 0)),
                     "is_gift": is_shopee_gift_row(item.get(c_name, ""), item.get(c_price, 0)),
                     "raw": row_to_json(item),
                 })
@@ -453,8 +495,14 @@ def process_order_files(aff_map: Dict[str, float], pay_map: Dict[str, float]) ->
                 "is_cancelled": is_cancelled,
                 "shop_label": shop_label,
                 "gross_sales": gross_sales,
+                # Legacy keys remain for compatibility with existing reports.
                 "seller_discount": seller_subsidy,
                 "platform_voucher": shop_voucher,
+                # Explicit CEO bridge fields.
+                "seller_subsidy_amount": seller_subsidy,
+                "platform_subsidy_amount": platform_subsidy,
+                "total_subsidy_amount": total_subsidy,
+                "shop_voucher_amount": shop_voucher,
                 "seller_revenue": seller_revenue,
                 "customer_paid": customer_paid,
                 "fixed_fee": fixed_fee,
@@ -655,7 +703,7 @@ def load_to_db(order_rows: List[dict], settlement_rows: List[dict], ads_rows: Li
 
                     item_values.append((
                         order_id, line_no, item.get("name", ""), sku or None, None,
-                        int(item.get("qty", 0)), 0.0, bool(item.get("is_gift", False)),
+                        int(item.get("qty", 0)), safe_num(item.get("price", 0.0)), bool(item.get("is_gift", False)),
                         unit_cogs, batch_id, r.get("source_file"), Json(json_safe(item.get("raw", {}))),
                     ))
             if item_values:
@@ -682,6 +730,10 @@ def load_to_db(order_rows: List[dict], settlement_rows: List[dict], ads_rows: Li
                     safe_num(r.get("gross_sales", 0.0)),
                     safe_num(r.get("seller_discount", 0.0)),
                     safe_num(r.get("platform_voucher", 0.0)),
+                    safe_num(r.get("seller_subsidy_amount", 0.0)),
+                    safe_num(r.get("platform_subsidy_amount", 0.0)),
+                    safe_num(r.get("total_subsidy_amount", 0.0)),
+                    safe_num(r.get("shop_voucher_amount", 0.0)),
                     r.get("source_file"),
                 )
                 for r in valid_orders if r.get("date") is not None
@@ -692,13 +744,19 @@ def load_to_db(order_rows: List[dict], settlement_rows: List[dict], ads_rows: Li
                     """
                     INSERT INTO shopee.order_financials_extra(
                         external_order_id, shop_label, order_date, gross_sales,
-                        seller_discount, platform_voucher, source_file
+                        seller_discount, platform_voucher,
+                        seller_subsidy_amount, platform_subsidy_amount,
+                        total_subsidy_amount, shop_voucher_amount, source_file
                     ) VALUES %s
                     ON CONFLICT (external_order_id, shop_label) DO UPDATE SET
                         order_date = EXCLUDED.order_date,
                         gross_sales = EXCLUDED.gross_sales,
                         seller_discount = EXCLUDED.seller_discount,
                         platform_voucher = EXCLUDED.platform_voucher,
+                        seller_subsidy_amount = EXCLUDED.seller_subsidy_amount,
+                        platform_subsidy_amount = EXCLUDED.platform_subsidy_amount,
+                        total_subsidy_amount = EXCLUDED.total_subsidy_amount,
+                        shop_voucher_amount = EXCLUDED.shop_voucher_amount,
                         source_file = EXCLUDED.source_file,
                         updated_at = now()
                     """,
