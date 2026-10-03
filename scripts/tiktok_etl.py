@@ -82,10 +82,30 @@ TIKTOK_PLATFORM_FEE_OLD = {
     "SUA_CHUA": 0.1031,
 }
 TIKTOK_PLATFORM_FEE_NEW = {
-    "LPM": 0.178,
+    "LPM": 0.2154,
     "SUA_CHUA": 0.150,
 }
 
+# TikTok payment/infrastructure fee policy.
+# New rates start from 2026-08-01 (inclusive):
+#   - Before 2026-08-01: payment fee 6.0%, infrastructure fee 3,000 VND/order.
+#   - From 2026-08-01: payment fee 6.6%, infrastructure fee 3,300 VND/order.
+TIKTOK_PAYMENT_INFRA_CHANGE_DATE = date(2026, 8, 1)
+TIKTOK_PAYMENT_FEE_OLD = 0.06
+TIKTOK_PAYMENT_FEE_NEW = 0.066
+TIKTOK_INFRA_FEE_OLD = 3000
+TIKTOK_INFRA_FEE_NEW = 3300
+
+
+CANCELLED_STATUS_EXACT = "đã hủy"
+
+def normalize_marketplace_status(value: object) -> str:
+    """Normalize harmless presentation noise for exact status comparison."""
+    text = unicodedata.normalize("NFC", safe_text(value, 200))
+    return re.sub(r"\s+", " ", text).strip().casefold()
+
+def is_exact_cancelled_status(value: object) -> bool:
+    return normalize_marketplace_status(value) == CANCELLED_STATUS_EXACT
 
 TIKTOK_CANCELLED_STATUS_EXACT_V46 = "canceled"
 
@@ -608,7 +628,8 @@ def process_orders(costs: Dict[str, float], cat_map: Dict[str, str]) -> Tuple[pd
         "time": find_col(df_o.columns, ["created time", "thời gian tạo", "thời gian đặt hàng", "ngày tạo", "order date"]),
         "qty": find_col(df_o.columns, ["quantity", "số lượng", "number of items", "số mặt hàng", "sl"]),
         "price": find_col(df_o.columns, ["original price", "giá gốc", "sku unit original price", "giá bán lẻ"]),
-        "discount": find_col(df_o.columns, ["seller discount", "chiết khấu từ người bán", "chiết khấu", "giảm giá"]),
+        # CEO Net Sales bridge: exact TikTok seller-funded SKU discount.
+        "discount": find_one_exact_header(df_o.columns, ["SKU Seller Discount"]),
         "gmv": find_col(df_o.columns, ["subtotal after discount", "sau chiết khấu", "tổng cộng", "doanh thu"]),
         "category": find_col(df_o.columns, ["sku's product category", "product category", "hạng mục sản phẩm", "ngành hàng", "category"]),
         "name": find_col(df_o.columns, ["product name", "tên sản phẩm", "ten san pham"]),
@@ -623,7 +644,8 @@ def process_orders(costs: Dict[str, float], cat_map: Dict[str, str]) -> Tuple[pd
     df_o["qty_num"] = money_series(df_o[co["qty"]]).astype(int) if co["qty"] else 1
     df_o.loc[df_o["qty_num"] < 0, "qty_num"] = 0
     df_o["price_num"] = money_series(df_o[co["price"]]) if co["price"] else 0.0
-    df_o["disc_num"] = money_series(df_o[co["discount"]]).abs() if co["discount"] else 0.0
+    df_o["disc_num"] = money_series(df_o[co["discount"]]).abs()
+    df_o["seller_discount_amount"] = df_o["disc_num"]
     df_o["gmv_item"] = money_series(df_o[co["gmv"]]) if co["gmv"] else (df_o["price_num"] * df_o["qty_num"] - df_o["disc_num"])
     df_o["fee_base_item"] = (df_o["price_num"] * df_o["qty_num"]) - df_o["disc_num"]
     df_o["cat_clean"] = df_o[co["category"]].map(lambda x: safe_text(x).lower()) if co["category"] else ""
@@ -677,6 +699,7 @@ def process_orders(costs: Dict[str, float], cat_map: Dict[str, str]) -> Tuple[pd
         "qty_num": "sum",
         "fee_base_item": "sum",
         "gmv_item": "sum",
+        "seller_discount_amount": "sum",
         "line_cogs": "sum",
         "__source_file": "first",
     })
@@ -1034,9 +1057,15 @@ def calculate_fees(fact_df: pd.DataFrame) -> pd.DataFrame:
         pack_per_item = 2000
         f_book = round(safe_num(row["fee_base_item"]) * safe_num(row.get("book_rate", 0)), 0)
         f_fix = round(safe_num(row["fee_base_item"]) * rate_fixed, 0)
-        f_pay = round(safe_num(row["fee_base_item"]) * 0.06, 0)
+
+        # Payment + infrastructure fee change from 2026-08-01 onward.
+        # All unrelated fee logic remains unchanged.
+        order_date = parse_date(row.get("order_date")) if row.get("order_date") is not None else None
+        use_new_payment_infra = bool(order_date and order_date >= TIKTOK_PAYMENT_INFRA_CHANGE_DATE)
+        payment_rate = TIKTOK_PAYMENT_FEE_NEW if use_new_payment_infra else TIKTOK_PAYMENT_FEE_OLD
+        f_pay = round(safe_num(row["fee_base_item"]) * payment_rate, 0)
         f_vxp = round(safe_num(row["fee_base_item"]) * 0.05, 0)
-        f_infra = 3000
+        f_infra = TIKTOK_INFRA_FEE_NEW if use_new_payment_infra else TIKTOK_INFRA_FEE_OLD
         f_pack = round(safe_num(row["qty_num"]) * pack_per_item, 0)
         f_cogs = safe_num(row["line_cogs"])
         estimated = safe_num(row["fee_base_item"]) - (f_fix + f_pay + f_vxp + f_infra + safe_num(row["comm_amt"]))
@@ -1166,6 +1195,7 @@ def load_to_db(fact_df: pd.DataFrame, item_df: pd.DataFrame, ads_rows: List[dict
                 vals.append((
                     r["order_id"], r["__shop_label"], r["order_date"], safe_text(r["order_status"], 200), bool(r["is_cancelled"]), safe_text(r["brand_group"], 100),
                     int(safe_num(r["qty_num"])), safe_num(r["fee_base_item"]), safe_num(r["gmv_item"]),
+                    safe_num(r.get("seller_discount_amount", 0)),
                     safe_num(r["fixed_fee"]), safe_num(r["payment_fee"]), safe_num(r["vxp_fee"]), safe_num(r["infra_fee"]),
                     safe_num(r.get("comm_amt", 0)), safe_num(r.get("booking_fee", 0)), safe_num(r.get("return_fee", 0)),
                     safe_num(r.get("pack_cost", 0)), safe_num(r.get("bo_cost", 0)), max(safe_num(r.get("cogs_amount", 0)), 0),
@@ -1177,7 +1207,7 @@ def load_to_db(fact_df: pd.DataFrame, item_df: pd.DataFrame, ads_rows: List[dict
                 """
                 INSERT INTO tiktok.orders_pnl(
                     external_order_id, shop_label, order_date, order_status, is_cancelled, brand_group,
-                    total_sku_qty, fee_base_revenue, gmv_before_cancel,
+                    total_sku_qty, fee_base_revenue, gmv_before_cancel, seller_discount_amount,
                     fixed_fee, payment_fee, vxp_fee, infrastructure_fee, commission_amount, booking_fee,
                     return_shipping_fee, packaging_cost, backoffice_cost, cogs_amount,
                     settlement_paid, settlement_unpaid, estimated_payout,
@@ -1191,6 +1221,7 @@ def load_to_db(fact_df: pd.DataFrame, item_df: pd.DataFrame, ads_rows: List[dict
                     total_sku_qty = EXCLUDED.total_sku_qty,
                     fee_base_revenue = EXCLUDED.fee_base_revenue,
                     gmv_before_cancel = EXCLUDED.gmv_before_cancel,
+                    seller_discount_amount = EXCLUDED.seller_discount_amount,
                     fixed_fee = EXCLUDED.fixed_fee,
                     payment_fee = EXCLUDED.payment_fee,
                     vxp_fee = EXCLUDED.vxp_fee,
@@ -1229,7 +1260,8 @@ def load_to_db(fact_df: pd.DataFrame, item_df: pd.DataFrame, ads_rows: List[dict
                     sku = row.get("seller_sku", "")
                     item_values.append((
                         key[0], key[1], line_counter[key], safe_text(row.get("product_name", ""), 500), sku or None, None,
-                        int(safe_num(row.get("qty_num", 0))), safe_num(row.get("price_num", 0)), max(safe_num(row.get("line_unit_cogs", 0)), 0),
+                        int(safe_num(row.get("qty_num", 0))), safe_num(row.get("price_num", 0)),
+                        safe_num(row.get("seller_discount_amount", 0)), max(safe_num(row.get("line_unit_cogs", 0)), 0),
                         batch_id, row.get("__source_file"), Json(json_safe(row_to_json(row))),
                     ))
             if item_values:
@@ -1238,7 +1270,7 @@ def load_to_db(fact_df: pd.DataFrame, item_df: pd.DataFrame, ads_rows: List[dict
                     """
                     INSERT INTO tiktok.order_items(
                         external_order_id, shop_label, line_no, product_name, seller_sku, barcode,
-                        quantity, price, unit_cogs, batch_id, source_file, raw_payload
+                        quantity, price, seller_discount_amount, unit_cogs, batch_id, source_file, raw_payload
                     ) VALUES %s
                     """,
                     item_values,
